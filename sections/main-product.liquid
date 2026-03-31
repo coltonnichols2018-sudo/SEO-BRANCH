@@ -224,60 +224,105 @@
     {%- assign has_hr = true -%}
   {%- endif -%}
 
-  {%- comment -%} Check if description contains dimension keywords {%- endcomment -%}
-  {%- assign has_dimensions_in_desc = false -%}
-  {%- assign desc_lower = product.description | downcase -%}
-  {%- if desc_lower contains 'dimension' or desc_lower contains 'inches' or desc_lower contains '" w' or desc_lower contains '" h' or desc_lower contains '" d' or desc_lower contains 'width' or desc_lower contains 'height' or desc_lower contains 'depth' -%}
-    {%- assign has_dimensions_in_desc = true -%}
-  {%- endif -%}
+  {%- comment -%} Ashley-style tabbed product info {%- endcomment -%}
+  <style>
+    .product-tabs { margin: 20px 0 30px; }
+    .product-tabs__nav {
+      display: flex;
+      border-bottom: 2px solid #333;
+      gap: 0;
+      margin-bottom: 0;
+    }
+    .product-tabs__btn {
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .product-tabs__btn:hover { color: #111; }
+    .product-tabs__btn.active {
+      color: #111;
+      border-bottom-color: #111;
+    }
+    .product-tabs__panel {
+      display: none;
+      padding: 24px 4px;
+      line-height: 1.7;
+    }
+    .product-tabs__panel.active { display: block; }
+    .product-tabs__panel table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9em;
+    }
+    .product-tabs__panel th,
+    .product-tabs__panel td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .product-tabs__panel th {
+      font-weight: 600;
+      background: #f5f5f5;
+      border-bottom: 2px solid #333;
+    }
+    @media screen and (max-width: 749px) {
+      .product-tabs__btn { padding: 10px 14px; font-size: 13px; }
+      .product-tabs__panel { padding: 16px 2px; }
+      .product-tabs__panel table { font-size: 0.8em; }
+      .product-tabs__panel th, .product-tabs__panel td { padding: 8px 6px; }
+    }
+  </style>
 
-  {%- if has_hr -%}
-    {%- comment -%} Product has <hr> divider: show overview above, dimensions below {%- endcomment -%}
-    <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-      {{ product.description | split: '<hr' | first }}
+  <div class="product-tabs quick-add-hidden" {{ block.shopify_attributes }}>
+    <div class="product-tabs__nav" role="tablist">
+      <button class="product-tabs__btn active" role="tab" aria-selected="true" data-tab="overview" onclick="switchProductTab(this, 'overview')">Overview</button>
+      <button class="product-tabs__btn" role="tab" aria-selected="false" data-tab="dimensions" onclick="switchProductTab(this, 'dimensions')">Dimensions</button>
+      <button class="product-tabs__btn" role="tab" aria-selected="false" data-tab="details" onclick="switchProductTab(this, 'details')">Details</button>
     </div>
 
-    <details open style="margin:20px 0 40px; padding:20px; border:2px solid #333; border-radius:12px; background:#f9f9f9;">
-      <summary style="font-weight:bold; font-size:19px; cursor:pointer;">
-        📐 Configurations & Exact Dimensions ({{ product.variants.size }} options)
-      </summary>
-      <div style="margin-top:20px; line-height:1.8;">
-        {{ product.description | split: '<hr' | last }}
-      </div>
-    </details>
-
-  {%- else -%}
-    {%- comment -%} No <hr> divider {%- endcomment -%}
-    <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-      {{ product.description }}
+    {%- comment -%} === OVERVIEW TAB === {%- endcomment -%}
+    <div class="product-tabs__panel active rte" id="tab-overview" role="tabpanel">
+      {%- if has_hr -%}
+        {{ product.description | split: '<hr' | first }}
+      {%- else -%}
+        {{ product.description }}
+      {%- endif -%}
     </div>
 
-    {%- comment -%} ALWAYS show dimensions/measurements section for furniture products {%- endcomment -%}
-    {%- unless has_dimensions_in_desc -%}
-      <div class="product__dimensions" style="margin:20px 0 40px; padding:20px; border:2px solid #333; border-radius:12px; background:#f9f9f9;">
-        <h3 style="font-weight:bold; font-size:19px; margin:0 0 16px;">
-          📐 Measurements & Configurations
-        </h3>
-
+    {%- comment -%} === DIMENSIONS TAB === {%- endcomment -%}
+    <div class="product-tabs__panel" id="tab-dimensions" role="tabpanel">
+      {%- if has_hr -%}
+        <div class="rte" style="line-height:1.8;">
+          {{ product.description | split: '<hr' | last }}
+        </div>
+      {%- else -%}
         {%- if product.variants.size > 1 -%}
-          <table style="width:100%; border-collapse:collapse; font-size:0.9em; margin-bottom:16px;">
+          <h3 style="margin:0 0 16px; font-size:1.1em;">Available Configurations ({{ product.variants.size }} options)</h3>
+          <table>
             <thead>
-              <tr style="border-bottom:2px solid #333; text-align:left;">
-                <th style="padding:8px;">Configuration</th>
-                <th style="padding:8px;">SKU</th>
-                <th style="padding:8px;">Price</th>
-                <th style="padding:8px;">Status</th>
+              <tr>
+                <th>Configuration</th>
+                <th>SKU</th>
+                <th>Price</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {%- for variant in product.variants -%}
-                <tr style="border-bottom:1px solid #ddd;">
-                  <td style="padding:8px; font-weight:500;">{{ variant.title }}</td>
-                  <td style="padding:8px; opacity:0.7; font-size:0.9em;">{{ variant.sku | default: '—' }}</td>
-                  <td style="padding:8px;">{{ variant.price | money }}</td>
-                  <td style="padding:8px;">
+                <tr>
+                  <td style="font-weight:500;">{{ variant.title }}</td>
+                  <td style="opacity:0.6; font-size:0.9em;">{{ variant.sku | default: '—' }}</td>
+                  <td>{{ variant.price | money }}</td>
+                  <td>
                     {%- if variant.available -%}
-                      <span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>
+                      <span style="color:#2e7d32;">&#10003; In Stock</span>
                     {%- else -%}
                       <span style="color:#c62828;">Sold Out</span>
                     {%- endif -%}
@@ -288,23 +333,94 @@
           </table>
         {%- endif -%}
 
-        <div style="background:#fff; padding:16px; border-radius:8px; border:1px solid #e0e0e0;">
-          <p style="margin:0 0 8px; font-weight:600; font-size:1em;">
-            Need exact measurements for this {{ product.type | default: 'item' | downcase }}?
-          </p>
-          <p style="margin:0; line-height:1.6;">
-            Every configuration has different dimensions. <strong>Call or text Colton at
-            <a href="tel:+15024940376" style="color:#111; text-decoration:underline;">(502) 494-0376</a></strong>
-            and we'll send you the exact measurements, photos from every angle, and help you make sure it fits your space.
-          </p>
-          <p style="margin:8px 0 0; font-size:0.85em; opacity:0.7;">
-            You can also visit us at 5907 Terry Rd to see it in person and measure it yourself!
+        <div style="margin-top:20px; padding:16px; background:#f9f9f9; border-radius:8px; border:1px solid #e0e0e0;">
+          <p style="margin:0 0 6px; font-weight:600;">Need exact measurements?</p>
+          <p style="margin:0; font-size:0.95em;">
+            Call or text <a href="tel:+15024940376" style="font-weight:600; text-decoration:underline;">(502) 494-0376</a>
+            — we'll send you exact dimensions, photos from every angle, and help make sure it fits your space.
+            Or visit us at <strong>5907 Terry Rd</strong> to measure in person.
           </p>
         </div>
-      </div>
-    {%- endunless -%}
+      {%- endif -%}
+    </div>
 
-                {%- endif -%}
+    {%- comment -%} === DETAILS TAB === {%- endcomment -%}
+    <div class="product-tabs__panel" id="tab-details" role="tabpanel">
+      <table>
+        {%- if product.vendor != blank -%}
+        <tr>
+          <td style="font-weight:600; width:40%;">Brand</td>
+          <td>{{ product.vendor }}</td>
+        </tr>
+        {%- endif -%}
+        {%- if product.type != blank -%}
+        <tr>
+          <td style="font-weight:600;">Type</td>
+          <td>{{ product.type }}</td>
+        </tr>
+        {%- endif -%}
+        {%- if product.selected_or_first_available_variant.sku != blank -%}
+        <tr>
+          <td style="font-weight:600;">SKU</td>
+          <td>{{ product.selected_or_first_available_variant.sku }}</td>
+        </tr>
+        {%- endif -%}
+        {%- if product.selected_or_first_available_variant.barcode != blank -%}
+        <tr>
+          <td style="font-weight:600;">Barcode</td>
+          <td>{{ product.selected_or_first_available_variant.barcode }}</td>
+        </tr>
+        {%- endif -%}
+        {%- if product.selected_or_first_available_variant.weight > 0 -%}
+        <tr>
+          <td style="font-weight:600;">Weight</td>
+          <td>{{ product.selected_or_first_available_variant.weight | weight_with_unit: product.selected_or_first_available_variant.weight_unit }}</td>
+        </tr>
+        {%- endif -%}
+        <tr>
+          <td style="font-weight:600;">Availability</td>
+          <td>
+            {%- if product.available -%}
+              <span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>
+            {%- else -%}
+              <span style="color:#c62828;">Currently Unavailable</span>
+            {%- endif -%}
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">Financing</td>
+          <td>$40 down, no credit check — <a href="/pages/financing" style="text-decoration:underline;">Apply now</a></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">Delivery</td>
+          <td>1–2 weeks, within 50 miles of Louisville — <a href="/pages/delivery" style="text-decoration:underline;">Learn more</a></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">Warranty</td>
+          <td>Manufacturer warranty included</td>
+        </tr>
+      </table>
+
+      {%- if product.tags.size > 0 -%}
+        <div style="margin-top:16px;">
+          <span style="font-weight:600; font-size:0.9em;">Tags: </span>
+          {%- for tag in product.tags -%}
+            <a href="/collections/all/{{ tag | handle }}" style="font-size:0.85em; opacity:0.7; text-decoration:underline;">{{ tag }}</a>{%- unless forloop.last -%}, {% endunless %}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <script>
+    function switchProductTab(btn, tabId) {
+      document.querySelectorAll('.product-tabs__btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      document.querySelectorAll('.product-tabs__panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      document.getElementById('tab-' + tabId).classList.add('active');
+    }
+  </script>
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
