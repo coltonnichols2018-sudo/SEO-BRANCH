@@ -406,6 +406,10 @@
     <!-- SEO: Schema Markup (LocalBusiness, FAQ, Product, Breadcrumbs) -->
     {% render 'schema-markup' %}
 
+    {%- if template contains 'product' -%}
+      <script src="{{ 'product-dimensions.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
     <!-- Messenger Chat Bubble -->
 <div id="fb-root"></div>
 <script>
