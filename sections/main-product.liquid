@@ -431,41 +431,36 @@
     if(!d){for(var k in dims){if(h.indexOf(k)>-1||k.indexOf(h)>-1){d=dims[k];break;}}}
 
     if(d){
-      var e=t.querySelector('table');
-      if(e){e.insertAdjacentHTML('beforebegin',d);e.style.display='none';}
-      else{t.querySelector('.dims-cta').insertAdjacentHTML('beforebegin',d);}
+      var cards=t.querySelector('.variant-cards');
+      if(cards){cards.insertAdjacentHTML('beforebegin',d);cards.style.display='none';}
+      else{var cta=t.querySelector('.dims-cta');if(cta)cta.insertAdjacentHTML('beforebegin',d);else t.insertAdjacentHTML('afterbegin',d);}
       var det=document.getElementById('accordion-dimensions');
       if(det)det.setAttribute('open','');
       return;
     }
 
-    /* STEP 2: No hardcoded data — scan Overview for dimension/weight text and copy it */
+    /* STEP 2: Scan Overview for dimension/weight text and MOVE it to Dimensions */
     var overview=document.querySelector('.accordion-content.rte');
     if(!overview)return;
-    var found=[];
-    var allEls=overview.querySelectorAll('p,li,strong,b,span,div,h1,h2,h3,h4,h5,h6');
-    var keywords=/(\d+[\.\d]*\s*("|in|inch|lb|lbs|pound|kg|cm|mm)|\bwidth\b|\bdepth\b|\bheight\b|\bweight\b|\bdimension|\bW\s*x\s*\d|\bD\s*x\s*\d|\bH\b.*\d+"|seat\s*height|arm\s*height|seat\s*depth)/i;
-    var seen=new Set();
-    allEls.forEach(function(el){
-      if(keywords.test(el.textContent)){
-        var parent=el;
-        while(parent&&parent!==overview&&parent.tagName!=='P'&&parent.tagName!=='LI'&&parent.tagName!=='DIV'&&!parent.tagName.match(/^H\d$/)){
-          parent=parent.parentElement;
-        }
-        if(parent&&parent!==overview&&!seen.has(parent)){
-          seen.add(parent);
-          found.push(parent.outerHTML);
-        }
+    var kw=/(\d+[\.\d]*\s*("|in|inch|lb|lbs|pound)|\bwidth\b|\bdepth\b|\bheight\b|\bweight\b|\bdimension|\bW\s*x\s*\d|seat\s*height|arm\s*height|seat\s*depth)/i;
+    var toMove=[];
+    var children=overview.querySelectorAll(':scope > p, :scope > div, :scope > ul, :scope > ol, :scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6, :scope > table');
+    children.forEach(function(el){
+      if(kw.test(el.textContent)){
+        toMove.push(el);
       }
     });
 
-    if(found.length>0){
-      var html='<div class="auto-dimensions" style="line-height:1.8">'+found.join('')+'</div>';
-      var cta=t.querySelector('.dims-cta');
-      if(cta)cta.insertAdjacentHTML('beforebegin',html);
-      else t.insertAdjacentHTML('afterbegin',html);
-      var fallback=t.querySelector('table');
-      if(fallback)fallback.style.display='none';
+    if(toMove.length>0){
+      var wrapper=document.createElement('div');
+      wrapper.className='auto-dimensions';
+      wrapper.style.lineHeight='1.8';
+      toMove.forEach(function(el){
+        wrapper.appendChild(el);
+      });
+      var cards2=t.querySelector('.variant-cards');
+      if(cards2){t.insertBefore(wrapper,cards2);cards2.style.display='none';}
+      else{var cta2=t.querySelector('.dims-cta');if(cta2)t.insertBefore(wrapper,cta2);else t.insertBefore(wrapper,t.firstChild);}
       var det2=document.getElementById('accordion-dimensions');
       if(det2)det2.setAttribute('open','');
     }
