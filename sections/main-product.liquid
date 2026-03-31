@@ -224,8 +224,15 @@
     {%- assign has_hr = true -%}
   {%- endif -%}
 
+  {%- comment -%} Check if description contains dimension keywords {%- endcomment -%}
+  {%- assign has_dimensions_in_desc = false -%}
+  {%- assign desc_lower = product.description | downcase -%}
+  {%- if desc_lower contains 'dimension' or desc_lower contains 'inches' or desc_lower contains '" w' or desc_lower contains '" h' or desc_lower contains '" d' or desc_lower contains 'width' or desc_lower contains 'height' or desc_lower contains 'depth' -%}
+    {%- assign has_dimensions_in_desc = true -%}
+  {%- endif -%}
+
   {%- if has_hr -%}
-    {%- comment -%} Product has <hr> divider: show overview above, dimensions below in collapsible {%- endcomment -%}
+    {%- comment -%} Product has <hr> divider: show overview above, dimensions below {%- endcomment -%}
     <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
       {{ product.description | split: '<hr' | first }}
     </div>
@@ -240,21 +247,23 @@
     </details>
 
   {%- else -%}
-    {%- comment -%} No <hr> divider: show full description, then auto-generate dimensions from variants {%- endcomment -%}
+    {%- comment -%} No <hr> divider {%- endcomment -%}
     <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
       {{ product.description }}
     </div>
 
-    {%- if product.variants.size > 1 -%}
-      <details open style="margin:20px 0 40px; padding:20px; border:2px solid #333; border-radius:12px; background:#f9f9f9;">
-        <summary style="font-weight:bold; font-size:19px; cursor:pointer;">
-          📐 Available Options ({{ product.variants.size }} configurations)
-        </summary>
-        <div style="margin-top:20px; line-height:1.8;">
-          <table style="width:100%; border-collapse:collapse; font-size:0.9em;">
+    {%- comment -%} ALWAYS show dimensions/measurements section for furniture products {%- endcomment -%}
+    {%- unless has_dimensions_in_desc -%}
+      <div class="product__dimensions" style="margin:20px 0 40px; padding:20px; border:2px solid #333; border-radius:12px; background:#f9f9f9;">
+        <h3 style="font-weight:bold; font-size:19px; margin:0 0 16px;">
+          📐 Measurements & Configurations
+        </h3>
+
+        {%- if product.variants.size > 1 -%}
+          <table style="width:100%; border-collapse:collapse; font-size:0.9em; margin-bottom:16px;">
             <thead>
               <tr style="border-bottom:2px solid #333; text-align:left;">
-                <th style="padding:8px;">Option</th>
+                <th style="padding:8px;">Configuration</th>
                 <th style="padding:8px;">SKU</th>
                 <th style="padding:8px;">Price</th>
                 <th style="padding:8px;">Status</th>
@@ -264,11 +273,11 @@
               {%- for variant in product.variants -%}
                 <tr style="border-bottom:1px solid #ddd;">
                   <td style="padding:8px; font-weight:500;">{{ variant.title }}</td>
-                  <td style="padding:8px; opacity:0.7;">{{ variant.sku | default: '—' }}</td>
+                  <td style="padding:8px; opacity:0.7; font-size:0.9em;">{{ variant.sku | default: '—' }}</td>
                   <td style="padding:8px;">{{ variant.price | money }}</td>
                   <td style="padding:8px;">
                     {%- if variant.available -%}
-                      <span style="color:#2e7d32;">In Stock</span>
+                      <span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>
                     {%- else -%}
                       <span style="color:#c62828;">Sold Out</span>
                     {%- endif -%}
@@ -277,12 +286,23 @@
               {%- endfor -%}
             </tbody>
           </table>
-          <p style="margin-top:12px; font-size:0.85em; opacity:0.7;">
-            For exact measurements on any configuration, call or text <a href="tel:+15024940376">(502) 494-0376</a> — we're happy to help!
+        {%- endif -%}
+
+        <div style="background:#fff; padding:16px; border-radius:8px; border:1px solid #e0e0e0;">
+          <p style="margin:0 0 8px; font-weight:600; font-size:1em;">
+            Need exact measurements for this {{ product.type | default: 'item' | downcase }}?
+          </p>
+          <p style="margin:0; line-height:1.6;">
+            Every configuration has different dimensions. <strong>Call or text Colton at
+            <a href="tel:+15024940376" style="color:#111; text-decoration:underline;">(502) 494-0376</a></strong>
+            and we'll send you the exact measurements, photos from every angle, and help you make sure it fits your space.
+          </p>
+          <p style="margin:8px 0 0; font-size:0.85em; opacity:0.7;">
+            You can also visit us at 5907 Terry Rd to see it in person and measure it yourself!
           </p>
         </div>
-      </details>
-    {%- endif -%}
+      </div>
+    {%- endunless -%}
 
                 {%- endif -%}
               {%- when 'sku' -%}
