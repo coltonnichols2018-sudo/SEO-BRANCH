@@ -1,0 +1,66 @@
+{
+  "_comment": "Breadcrumb schema helps Google display breadcrumb navigation in search results. Add to each collection/product page.",
+
+  "homepage": {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bubbasmattressfurniturelouisville.com/"
+      }
+    ]
+  },
+
+  "collection_page_example": {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bubbasmattressfurniturelouisville.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Living Room",
+        "item": "https://www.bubbasmattressfurniturelouisville.com/collections/living-room"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Recliners",
+        "item": "https://www.bubbasmattressfurniturelouisville.com/collections/living-room-recliners"
+      }
+    ]
+  },
+
+  "product_page_example": {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bubbasmattressfurniturelouisville.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Mattresses",
+        "item": "https://www.bubbasmattressfurniturelouisville.com/collections/mattresses"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Queen Mattress",
+        "item": "https://www.bubbasmattressfurniturelouisville.com/products/queen-mattress"
+      }
+    ]
+  }
+}

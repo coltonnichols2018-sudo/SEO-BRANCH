@@ -1,0 +1,129 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FurnitureStore",
+  "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization",
+  "name": "Bubba's Mattress & Furniture",
+  "alternateName": "Bubba's Mattress and Furniture Louisville",
+  "description": "Louisville's premier Ashley Furniture destination offering quality mattresses, living room furniture, bedroom sets, and outdoor furniture with financing and local delivery within 50 miles.",
+  "url": "https://www.bubbasmattressfurniturelouisville.com/",
+  "telephone": "+1-502-494-0376",
+  "email": "",
+  "image": "https://www.bubbasmattressfurniturelouisville.com/logo.png",
+  "logo": "https://www.bubbasmattressfurniturelouisville.com/logo.png",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "5907 Terry Road",
+    "addressLocality": "Louisville",
+    "addressRegion": "KY",
+    "postalCode": "40216",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 38.1814,
+    "longitude": -85.8221
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Louisville",
+      "sameAs": "https://en.wikipedia.org/wiki/Louisville,_Kentucky"
+    },
+    {
+      "@type": "State",
+      "name": "Kentucky"
+    },
+    {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": 38.1814,
+        "longitude": -85.8221
+      },
+      "geoRadius": "80467"
+    }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday"],
+      "opens": "11:30",
+      "closes": "18:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Thursday",
+      "opens": "11:30",
+      "closes": "17:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Friday",
+      "opens": "11:30",
+      "closes": "18:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "11:30",
+      "closes": "18:00"
+    }
+  ],
+  "priceRange": "$$",
+  "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Financing"],
+  "currenciesAccepted": "USD",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Furniture & Mattress Products",
+    "itemListElement": [
+      {
+        "@type": "OfferCatalog",
+        "name": "Mattresses",
+        "description": "Quality mattresses including memory foam, hybrid, innerspring, and adjustable bases from Ashley Sleep"
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Living Room Furniture",
+        "description": "Sofas, sectionals, recliners, loveseats, and accent chairs from Ashley Furniture"
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Bedroom Furniture",
+        "description": "Bedroom sets, dressers, nightstands, and bed frames"
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Outdoor Furniture",
+        "description": "Outdoor fire pits, patio tables, and outdoor seating"
+      }
+    ]
+  },
+  "brand": {
+    "@type": "Brand",
+    "name": "Ashley Furniture"
+  },
+  "sameAs": [
+    "https://www.facebook.com/Bubbasmattressfurniturelouisville/",
+    "https://www.facebook.com/MattressbyAppointmentLouisville/",
+    "https://www.instagram.com/bubbasfurnitureandmattress/"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "36",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "Financing Available",
+      "value": "Yes"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "Local Delivery",
+      "value": "Within 50 miles"
+    }
+  ]
+}

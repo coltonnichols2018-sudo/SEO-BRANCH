@@ -1,0 +1,38 @@
+{
+  "_comment": "TEMPLATE: Duplicate and customize for each major product category page. Replace placeholder values with actual product details.",
+
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Ashley Furniture Queen Mattress - Louisville KY",
+  "description": "Shop quality queen mattresses at Bubba's Mattress & Furniture in Louisville, KY. Ashley Sleep mattresses with financing available and local delivery within 50 miles.",
+  "brand": {
+    "@type": "Brand",
+    "name": "Ashley Sleep"
+  },
+  "category": "Mattresses",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": "299",
+    "highPrice": "1999",
+    "offerCount": "20",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "FurnitureStore",
+      "name": "Bubba's Mattress & Furniture",
+      "url": "https://www.bubbasmattressfurniturelouisville.com/"
+    }
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "Financing",
+      "value": "Available"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "Delivery",
+      "value": "Local delivery within 50 miles"
+    }
+  ]
+}
