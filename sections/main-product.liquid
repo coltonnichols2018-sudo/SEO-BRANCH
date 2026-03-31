@@ -431,6 +431,28 @@
     </details>
 
   </div>
+
+  <script>
+  (function(){
+    var dims={
+      'ophannon-sectional':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">O\'Phannon 2-Piece Sectional with Chaise</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>Overall Sectional</strong></td><td>125"</td><td>86"</td><td>38"</td><td>260 lbs</td></tr><tr><td><strong>LAF Sofa Chaise</strong></td><td>87"</td><td>61"</td><td>38"</td><td>147 lbs</td></tr><tr><td><strong>RAF Corner Chaise</strong></td><td>37"</td><td>86"</td><td>38"</td><td>113 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 23" · Seat Height: 21" · Arm Height: 26"</p>',
+      'rawcliffe':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Rawcliffe Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>LAF Sofa</strong></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr><tr><td><strong>Wedge</strong></td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr><tr><td><strong>Armless Chair</strong></td><td>39"</td><td>44"</td><td>38"</td><td>70 lbs</td></tr><tr><td><strong>RAF Sofa</strong></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 24" · Seat Height: 21" · Arm Height: 26"</p>',
+      'barrelton':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Barrelton Modular Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>Corner Chair</strong></td><td>41"</td><td>41"</td><td>37"</td><td>75 lbs</td></tr><tr><td><strong>Armless Chair</strong></td><td>30"</td><td>41"</td><td>37"</td><td>58 lbs</td></tr><tr><td><strong>Corner Chaise</strong></td><td>41"</td><td>64"</td><td>37"</td><td>92 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 23" · Seat Height: 20" · Arm Height: 26"</p>'
+    };
+    var t=document.getElementById('tab-dimensions');
+    if(!t)return;
+    var m=window.location.pathname.match(/\/products\/([^/?#]+)/);
+    if(!m)return;
+    var h=m[1].toLowerCase(),d=dims[h];
+    if(!d){for(var k in dims){if(h.indexOf(k)>-1||k.indexOf(h)>-1){d=dims[k];break;}}}
+    if(!d)return;
+    var e=t.querySelector('table');
+    if(e){e.insertAdjacentHTML('beforebegin',d);e.style.display='none';}
+    else{t.insertAdjacentHTML('afterbegin',d);}
+    var det=document.getElementById('accordion-dimensions');
+    if(det)det.setAttribute('open','');
+  })();
+  </script>
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
