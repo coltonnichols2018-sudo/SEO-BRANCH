@@ -1,0 +1,352 @@
+{% comment %}
+  Related products (STRICT) + Slider + Category-priority + Auto-hide (safe)
+  - REQUIRED (strict): Collection:<value> AND (Brand:<value> OR vendor == <value>)
+  - RANKING ONLY: same Category:<value> first, then same productType, then in-stock
+  - Title includes store name and primary address (city/state)
+  - Uses Storefront API via /api/2024-07/graphql.json
+  - Auto-hide: defaults to hiding ONLY this snippet (data-auto-hide="self").
+               Set data-auto-hide="block" to hide the nearest .shopify-block wrapper instead.
+{% endcomment %}
+
+{% liquid
+  assign current_collection_value = ''
+  assign current_brand_value = ''
+  assign current_category_value = ''
+  assign current_product_type = product.type | default: ''
+
+  for tag in product.tags
+    assign parts = tag | split: ':'
+    if parts.size == 2
+      assign k = parts[0] | strip | downcase
+      assign v = parts[1] | strip
+      if k == 'collection' and v != ''
+        assign current_collection_value = v
+      elsif k == 'brand' and v != ''
+        assign current_brand_value = v
+      elsif k == 'category' and v != ''
+        assign current_category_value = v
+      endif
+    endif
+  endfor
+
+  if current_brand_value == '' and product.vendor != blank
+    assign current_brand_value = product.vendor | strip
+  endif
+
+  assign norm_type = product.type | default: '' | strip | downcase
+
+  capture store_location
+    assign city   = shop.address.city | default: '' | strip
+    assign region = shop.address.province_code | default: shop.address.province | default: '' | strip
+    if city != '' and region != ''
+      echo city | append: ', ' | append: region
+    elsif city != ''
+      echo city
+    elsif shop.address.country != blank
+      echo shop.address.country
+    endif
+  endcapture
+%}
+
+{% if current_collection_value != '' and current_brand_value != '' %}
+<div id="related-by-tags"
+     hidden
+     data-auto-hide="self"
+     data-sf-token="98177612937650d05d0bafdb981eda6d"
+     data-collection="{{ current_collection_value | strip | escape }}"
+     data-brand="{{ current_brand_value | strip | escape }}"
+     data-category="{{ current_category_value | strip | escape }}"
+     data-product-type="{{ norm_type | escape }}"
+     data-exclude-handle="{{ product.handle | escape }}"
+     data-limit="24"
+     data-weight-category="40"
+     data-weight-type="10"
+     data-weight-stock="1"
+     data-debug="false"
+     style="margin:2rem 0">
+  <h3 class="related-products-title" style="text-align:center;margin-bottom:1rem">
+    More from The {{ current_collection_value }} Collection — At {{ shop.name }}{% if store_location != blank %} in {{ store_location | strip }}{% endif %}
+  </h3>
+
+  <div class="related-slider">
+    <button class="related-arrow related-prev" aria-label="Previous" type="button">‹</button>
+    <div class="related-track" tabindex="0" role="region" aria-label="Related products slider"></div>
+    <button class="related-arrow related-next" aria-label="Next" type="button">›</button>
+  </div>
+
+  <div class="related-status" style="text-align:center;font-size:.9rem;color:#666"></div>
+
+  <style>
+    .related-slider{position:relative}
+    .related-arrow{
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:40px;height:40px;border-radius:999px;border:1px solid #e5e5e5;background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,.08); cursor:pointer; z-index:2;
+      display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1
+    }
+    .related-prev{left:-.5rem}
+    .related-next{right:-.5rem}
+    @media (max-width:768px){ .related-prev{left:.25rem} .related-next{right:.25rem} }
+
+    .related-track{
+      display:flex; gap:1rem; overflow-x:auto; overscroll-behavior-x:contain;
+      scroll-snap-type:x mandatory; padding:.25rem 0 .5rem; scrollbar-width:thin
+    }
+    .related-track::-webkit-scrollbar{height:8px}
+    .related-track::-webkit-scrollbar-thumb{background:#ddd;border-radius:8px}
+
+    .related-slide{
+      scroll-snap-align:start;
+      flex:0 0 calc((100% - 3rem)/4);
+      border:1px solid #e5e5e5;border-radius:12px;overflow:hidden;
+      transition:transform .2s ease, box-shadow .2s ease; background:#fff
+    }
+    .related-slide:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    @media (max-width:1200px){ .related-slide{flex-basis:calc((100% - 2rem)/3)} }
+    @media (max-width:900px){  .related-slide{flex-basis:calc((100% - 1rem)/2)} }
+    @media (max-width:600px){  .related-slide{flex-basis:80%} }
+
+    .related-product-link{display:block;text-decoration:none;color:inherit}
+
+    /* SQUARE + ZOOMED-OUT (no crop) */
+    .related-product-image{
+      width:100%;
+      aspect-ratio:1/1;
+      overflow:hidden;
+      background:#f8f8f8;
+      display:block;
+    }
+    .related-product-image img{
+      width:100%;
+      height:100%;
+      object-fit:contain;        /* ← changed from cover */
+      object-position:center;    /* keep centered inside the square */
+      display:block;
+    }
+
+    .related-product-info{padding:1rem}
+    .related-product-title{font-size:1rem;margin:.25rem 0 .5rem;font-weight:500}
+    .related-product-type{font-size:.875rem;color:#666;margin:0 0 .5rem;font-style:italic}
+    .related-product-price-compare{text-decoration:line-through;color:#999;font-size:.875rem;margin-left:.4rem}
+    .related-product-sold-out{color:#d73502;font-weight:500;font-size:.875rem;margin:0}
+  </style>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('related-by-tags');
+  if(!root) return;
+
+  var token   = root.dataset.sfToken;
+  var collVal = root.dataset.collection;
+  var brandVal= root.dataset.brand;
+  var catVal  = root.dataset.category || '';
+  var ptype   = root.dataset.productType;
+  var exclude = root.dataset.excludeHandle;
+  var limit   = parseInt(root.dataset.limit || '8', 10);
+  var debug   = root.dataset.debug === 'true';
+
+  var W_CATEGORY = Number(root.dataset.weightCategory || 40);
+  var W_TYPE     = Number(root.dataset.weightType     || 10);
+  var W_STOCK    = Number(root.dataset.weightStock    || 1);
+
+  var statusEl = root.querySelector('.related-status');
+  var track    = root.querySelector('.related-track');
+  var prevBtn  = root.querySelector('.related-prev');
+  var nextBtn  = root.querySelector('.related-next');
+
+  function setStatus(s){ if(statusEl) statusEl.textContent = s; }
+
+  function hideContainer(){
+    var mode = (root.dataset.autoHide || 'self').toLowerCase();
+    if (mode === 'block') {
+      var blk = root.closest('.shopify-block,[data-block-id],[data-block-type]');
+      if (blk) { blk.style.display = 'none'; return; }
+    }
+    root.style.display = 'none';
+  }
+  function showContainer(){
+    root.style.removeProperty('display');
+    root.removeAttribute('hidden');
+  }
+
+  if(!token){ if(debug){console.warn('[Related] Missing Storefront API token');} hideContainer(); return; }
+
+  function esc(s){ return (s||'').replace(/"/g,'\\"'); }
+  function norm(s){ return (s||'').toString().trim().toLowerCase(); }
+
+  function tagVariants(prefix, value){
+    var pv = [prefix, prefix.toLowerCase(), prefix.toUpperCase()];
+    var vv = [value, value.toLowerCase(), value.toUpperCase()];
+    var out = [];
+    pv.forEach(function(p){ vv.forEach(function(v){
+      out.push(p + ':'  + v); out.push(p + ': ' + v);
+    });});
+    return out.map(norm);
+  }
+
+  var collTagNorms  = tagVariants('Collection', collVal);
+  var brandTagNorms = tagVariants('Brand',      brandVal);
+  var brandNorm     = norm(brandVal);
+  var catTagNorms   = catVal ? tagVariants('Category', catVal) : [];
+
+  function hasCollectionTag(p){
+    if(!p.tags) return false;
+    for(var i=0;i<p.tags.length;i++){ if(collTagNorms.indexOf(norm(p.tags[i])) !== -1) return true; }
+    return false;
+  }
+  function hasBrandOrVendor(p){
+    var brandOK = false;
+    if(p.tags){ for(var i=0;i<p.tags.length;i++){ if(brandTagNorms.indexOf(norm(p.tags[i])) !== -1){ brandOK = true; break; } } }
+    var vendorOK = p.vendor && norm(p.vendor) === brandNorm;
+    return brandOK || vendorOK;
+  }
+  function isSameCategory(p){
+    if(!catTagNorms.length || !p.tags) return false;
+    for(var i=0;i<p.tags.length;i++){ if(catTagNorms.indexOf(norm(p.tags[i])) !== -1) return true; }
+    return false;
+  }
+
+  function tagOrExact(list){ return '(' + list.map(function(t){ return 'tag:"' + esc(t) + '"'; }).join(' OR ') + ')'; }
+  function vendorClause(v){ return 'vendor:"' + esc(v) + '"'; }
+
+  var collTagsRaw  = ['Collection:' + collVal, 'Collection: ' + collVal];
+  var brandTagsRaw = ['Brand:' + brandVal,     'Brand: ' + brandVal];
+
+  var Q1 = tagOrExact(collTagsRaw) + ' AND (' + tagOrExact(brandTagsRaw) + ' OR ' + vendorClause(brandVal) + ')';
+  var Q2 = tagOrExact(collTagsRaw);
+  var Q3 = '(' + tagOrExact(brandTagsRaw) + ' OR ' + vendorClause(brandVal) + ')';
+  var Q4 = 'title:"' + esc(collVal) + '"';
+  var queries = [Q1, Q2, Q3, Q4];
+
+  var ENDPOINT = '/api/2024-07/graphql.json';
+  var gql = `
+    query Related($q: String!, $n: Int!) {
+      products(first: $n, query: $q) {
+        nodes {
+          handle title vendor productType availableForSale tags
+          featuredImage { url altText }
+          priceRange { minVariantPrice { amount currencyCode } }
+          compareAtPriceRange { maxVariantPrice { amount currencyCode } }
+        }
+      }
+    }
+  `;
+
+  async function runQuery(q, n){
+    var res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','X-Shopify-Storefront-Access-Token': token},
+      body: JSON.stringify({ query: gql, variables: { q: q, n: n } })
+    });
+    var json = await res.json().catch(function(){ return null; });
+    if(!res.ok || (json && json.errors)){
+      if(debug) console.error('[Related] query fail', res.status, json && json.errors);
+      throw new Error('query');
+    }
+    return (json && json.data && json.data.products && json.data.products.nodes) ? json.data.products.nodes : [];
+  }
+
+  function uniqByHandle(arr){
+    var seen = new Set(), out = [];
+    for(var i=0;i<arr.length;i++){ var h = arr[i].handle; if(h && !seen.has(h)){ seen.add(h); out.push(arr[i]); } }
+    return out;
+  }
+
+  function score(p){
+    var s = 0;
+    if(isSameCategory(p)) s += W_CATEGORY;
+    if(ptype && p.productType && p.productType.toLowerCase() === ptype) s += W_TYPE;
+    if(p.availableForSale) s += W_STOCK;
+    return s;
+  }
+
+  // CHANGED: object-fit: contain (no crop) for the inline style too
+  function imgHTML(img, title){
+    if(!img) return '';
+    var alt = (img.altText || title || '').replace(/"/g,'&quot;');
+    var u = img.url;
+    return '<img src="' + u + '?width=720" ' +
+           'srcset="' + u + '?width=360 360w, ' + u + '?width=540 540w, ' + u + '?width=720 720w, ' + u + '?width=900 900w, ' + u + '?width=1080 1080w, ' + u + '?width=1280 1280w" ' +
+           'sizes="(min-width:1200px) 25vw, (min-width:768px) 33vw, 80vw" ' +
+           'alt="' + alt + '" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">';
+  }
+
+  function cardHTML(p){
+    var price = p.priceRange && p.priceRange.minVariantPrice;
+    var cap   = p.compareAtPriceRange && p.compareAtPriceRange.maxVariantPrice;
+    var onSale = cap && Number(cap.amount) > Number(price ? price.amount : 0);
+    var priceHTML = onSale
+      ? '<span style="font-weight:600;margin-right:.5rem">' + new Intl.NumberFormat(undefined,{style:'currency',currency:(price&&price.currencyCode)||'USD'}).format(Number(price&&price.amount||0)) + '</span>' +
+        '<span class="related-product-price-compare">' + new Intl.NumberFormat(undefined,{style:'currency',currency:(cap&&cap.currencyCode)||'USD'}).format(Number(cap&&cap.amount||0)) + '</span>'
+      : '<span style="font-weight:500">' + new Intl.NumberFormat(undefined,{style:'currency',currency:(price&&price.currencyCode)||'USD'}).format(Number(price&&price.amount||0)) + '</span>';
+
+    return '' +
+      '<div class="related-slide">' +
+        '<a href="/products/' + p.handle + '" class="related-product-link">' +
+          (p.featuredImage ? '<div class="related-product-image">' + imgHTML(p.featuredImage, p.title) + '</div>' : '') +
+          '<div class="related-product-info">' +
+            '<h4 class="related-product-title">' + p.title + '</h4>' +
+            ((p.productType && (!ptype || p.productType.toLowerCase() !== ptype)) ? '<p class="related-product-type">' + p.productType + '</p>' : '') +
+            '<div class="related-product-price">' + priceHTML + '</div>' +
+            (p.availableForSale ? '' : '<p class="related-product-sold-out">Sold Out</p>') +
+          '</div>' +
+        '</a>' +
+      '</div>';
+  }
+
+  function renderSlider(items){
+    if(!items.length){ hideContainer(); return; }
+    showContainer();
+
+    setStatus('');
+    track.innerHTML = items.map(cardHTML).join('');
+
+    function cardWidth(){
+      var first = track.querySelector('.related-slide');
+      var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 16);
+      return first ? first.getBoundingClientRect().width + gap : 300;
+    }
+    function scrollByCards(n){
+      track.scrollBy({ left: n * cardWidth(), behavior:'smooth' });
+    }
+    prevBtn.addEventListener('click', function(){ scrollByCards(-1 * Math.max(1, Math.floor(track.clientWidth / cardWidth()))); });
+    nextBtn.addEventListener('click', function(){ scrollByCards( 1 * Math.max(1, Math.floor(track.clientWidth / cardWidth()))); });
+
+    track.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight'){ e.preventDefault(); nextBtn.click(); }
+      if(e.key === 'ArrowLeft'){  e.preventDefault(); prevBtn.click(); }
+    });
+
+    function updateArrows(){
+      var canScroll = track.scrollWidth > track.clientWidth + 4;
+      prevBtn.style.display = canScroll ? 'flex' : 'none';
+      nextBtn.style.display = canScroll ? 'flex' : 'none';
+    }
+    updateArrows();
+    new ResizeObserver(updateArrows).observe(track);
+  }
+
+  (async function(){
+    try{
+      setStatus('Loading…');
+      var pool = [];
+
+      for(var i=0;i<queries.length;i++){
+        var raw = await runQuery(queries[i], 200);
+        raw = uniqByHandle(raw.filter(function(p){ return p.handle !== exclude; }));
+        var filtered = raw.filter(function(p){ return hasCollectionTag(p) && hasBrandOrVendor(p); });
+        pool = uniqByHandle(pool.concat(filtered));
+        if(pool.length >= limit) break;
+      }
+
+      pool.sort(function(a,b){ return score(b) - score(a); });
+      renderSlider(pool.slice(0, limit));
+    }catch(err){
+      if(debug) console.error('[Related] Final error:', err);
+      hideContainer();
+    }
+  })();
+})();
+</script>
+{% endif %}
