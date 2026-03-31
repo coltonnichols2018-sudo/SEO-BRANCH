@@ -434,23 +434,60 @@
 
   <script>
   (function(){
+    var t=document.getElementById('tab-dimensions');
+    if(!t)return;
+
+    /* STEP 1: Known product dimensions (hardcoded from Ashley data) */
     var dims={
       'ophannon-sectional':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">O\'Phannon 2-Piece Sectional with Chaise</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>Overall Sectional</strong></td><td>125"</td><td>86"</td><td>38"</td><td>260 lbs</td></tr><tr><td><strong>LAF Sofa Chaise</strong></td><td>87"</td><td>61"</td><td>38"</td><td>147 lbs</td></tr><tr><td><strong>RAF Corner Chaise</strong></td><td>37"</td><td>86"</td><td>38"</td><td>113 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 23" · Seat Height: 21" · Arm Height: 26"</p>',
       'rawcliffe':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Rawcliffe Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>LAF Sofa</strong></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr><tr><td><strong>Wedge</strong></td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr><tr><td><strong>Armless Chair</strong></td><td>39"</td><td>44"</td><td>38"</td><td>70 lbs</td></tr><tr><td><strong>RAF Sofa</strong></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 24" · Seat Height: 21" · Arm Height: 26"</p>',
       'barrelton':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Barrelton Modular Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>Corner Chair</strong></td><td>41"</td><td>41"</td><td>37"</td><td>75 lbs</td></tr><tr><td><strong>Armless Chair</strong></td><td>30"</td><td>41"</td><td>37"</td><td>58 lbs</td></tr><tr><td><strong>Corner Chaise</strong></td><td>41"</td><td>64"</td><td>37"</td><td>92 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 23" · Seat Height: 20" · Arm Height: 26"</p>'
     };
-    var t=document.getElementById('tab-dimensions');
-    if(!t)return;
+
     var m=window.location.pathname.match(/\/products\/([^/?#]+)/);
     if(!m)return;
     var h=m[1].toLowerCase(),d=dims[h];
     if(!d){for(var k in dims){if(h.indexOf(k)>-1||k.indexOf(h)>-1){d=dims[k];break;}}}
-    if(!d)return;
-    var e=t.querySelector('table');
-    if(e){e.insertAdjacentHTML('beforebegin',d);e.style.display='none';}
-    else{t.insertAdjacentHTML('afterbegin',d);}
-    var det=document.getElementById('accordion-dimensions');
-    if(det)det.setAttribute('open','');
+
+    if(d){
+      var e=t.querySelector('table');
+      if(e){e.insertAdjacentHTML('beforebegin',d);e.style.display='none';}
+      else{t.querySelector('.dims-cta').insertAdjacentHTML('beforebegin',d);}
+      var det=document.getElementById('accordion-dimensions');
+      if(det)det.setAttribute('open','');
+      return;
+    }
+
+    /* STEP 2: No hardcoded data — scan Overview for dimension/weight text and copy it */
+    var overview=document.querySelector('.accordion-content.rte');
+    if(!overview)return;
+    var found=[];
+    var allEls=overview.querySelectorAll('p,li,strong,b,span,div,h1,h2,h3,h4,h5,h6');
+    var keywords=/(\d+[\.\d]*\s*("|in|inch|lb|lbs|pound|kg|cm|mm)|\bwidth\b|\bdepth\b|\bheight\b|\bweight\b|\bdimension|\bW\s*x\s*\d|\bD\s*x\s*\d|\bH\b.*\d+"|seat\s*height|arm\s*height|seat\s*depth)/i;
+    var seen=new Set();
+    allEls.forEach(function(el){
+      if(keywords.test(el.textContent)){
+        var parent=el;
+        while(parent&&parent!==overview&&parent.tagName!=='P'&&parent.tagName!=='LI'&&parent.tagName!=='DIV'&&!parent.tagName.match(/^H\d$/)){
+          parent=parent.parentElement;
+        }
+        if(parent&&parent!==overview&&!seen.has(parent)){
+          seen.add(parent);
+          found.push(parent.outerHTML);
+        }
+      }
+    });
+
+    if(found.length>0){
+      var html='<div class="auto-dimensions" style="line-height:1.8">'+found.join('')+'</div>';
+      var cta=t.querySelector('.dims-cta');
+      if(cta)cta.insertAdjacentHTML('beforebegin',html);
+      else t.insertAdjacentHTML('afterbegin',html);
+      var fallback=t.querySelector('table');
+      if(fallback)fallback.style.display='none';
+      var det2=document.getElementById('accordion-dimensions');
+      if(det2)det2.setAttribute('open','');
+    }
   })();
   </script>
               {%- when 'sku' -%}
