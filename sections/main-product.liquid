@@ -225,7 +225,6 @@
   {%- endif -%}
 
   {%- comment -%} Ashley-style tabbed product info — clean design {%- endcomment -%}
-  {%- render 'product-dimensions-data', product: product -%}
   <style>
     .product-tabs { margin: 24px 0 30px; }
     .product-tabs__nav {
@@ -319,14 +318,82 @@
     </div>
 
     {%- comment -%} === DIMENSIONS TAB === {%- endcomment -%}
+    {%- assign ptl = product.title | downcase | remove: "'" | remove: "'" | remove: "'" -%}
+    {%- assign ph = product.handle | downcase -%}
+    {%- assign has_auto_dims = false -%}
+    {%- if ptl contains 'ophannon' or ph contains 'ophannon' or ptl contains 'rawcliffe' or ph contains 'rawcliffe' or ptl contains 'barrelton' or ph contains 'barrelton' -%}
+      {%- assign has_auto_dims = true -%}
+    {%- endif -%}
+
     <div class="product-tabs__panel" id="tab-dimensions" role="tabpanel">
       {%- if has_hr -%}
         <div class="rte" style="line-height:1.8;">
           {{ product.description | split: '<hr' | last }}
         </div>
-      {%- elsif dimension_data != blank -%}
-        {%- comment -%} Auto-populated from product-dimensions-data.liquid lookup {%- endcomment -%}
-        {{ dimension_data }}
+      {%- elsif has_auto_dims -%}
+        {%- comment -%} Auto dimensions from Ashley data {%- endcomment -%}
+        {%- if ptl contains 'ophannon' or ph contains 'ophannon' -%}
+          <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">O'Phannon 2-Piece Sectional with Chaise</h3>
+          <table>
+            <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:500;">Overall Sectional</td><td>125"</td><td>86"</td><td>38"</td><td>260 lbs</td></tr>
+              <tr><td style="font-weight:500;">LAF Sofa Chaise</td><td>87"</td><td>61"</td><td>38"</td><td>147 lbs</td></tr>
+              <tr><td style="font-weight:500;">RAF Corner Chaise</td><td>37"</td><td>86"</td><td>38"</td><td>113 lbs</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:16px;">
+            <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+            <p style="margin:0; font-size:0.9em; line-height:1.8;">Seat Depth: 23" &middot; Seat Height: 21" &middot; Arm Height: 26"</p>
+          </div>
+        {%- elsif ptl contains 'rawcliffe' or ph contains 'rawcliffe' -%}
+          {%- if ptl contains '4-piece' or ptl contains '4 piece' -%}
+            <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Rawcliffe 4-Piece Sectional</h3>
+            <table>
+              <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:500;">Overall Sectional</td><td>170"</td><td>131"</td><td>38"</td><td>423 lbs</td></tr>
+                <tr><td style="font-weight:500;">LAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+                <tr><td style="font-weight:500;">Wedge</td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr>
+                <tr><td style="font-weight:500;">Armless Chair</td><td>39"</td><td>44"</td><td>38"</td><td>70 lbs</td></tr>
+                <tr><td style="font-weight:500;">RAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:16px;">
+              <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+              <p style="margin:0; font-size:0.9em; line-height:1.8;">Seat Depth: 24" &middot; Seat Height: 21" &middot; Arm Height: 26"</p>
+            </div>
+          {%- else -%}
+            <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Rawcliffe 3-Piece Sectional</h3>
+            <table>
+              <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:500;">Overall Sectional</td><td>131"</td><td>131"</td><td>38"</td><td>340 lbs</td></tr>
+                <tr><td style="font-weight:500;">LAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+                <tr><td style="font-weight:500;">Wedge</td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr>
+                <tr><td style="font-weight:500;">RAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:16px;">
+              <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+              <p style="margin:0; font-size:0.9em; line-height:1.8;">Seat Depth: 24" &middot; Seat Height: 21" &middot; Arm Height: 26"</p>
+            </div>
+          {%- endif -%}
+        {%- elsif ptl contains 'barrelton' or ph contains 'barrelton' -%}
+          <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Barrelton Modular Sectional</h3>
+          <table>
+            <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:500;">Corner Chair</td><td>41"</td><td>41"</td><td>37"</td><td>75 lbs</td></tr>
+              <tr><td style="font-weight:500;">Armless Chair</td><td>30"</td><td>41"</td><td>37"</td><td>58 lbs</td></tr>
+              <tr><td style="font-weight:500;">LAF/RAF Corner Chaise</td><td>41"</td><td>64"</td><td>37"</td><td>92 lbs</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:16px;">
+            <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+            <p style="margin:0; font-size:0.9em; line-height:1.8;">Seat Depth: 23" &middot; Seat Height: 20" &middot; Arm Height: 26"<br>Modular pieces can be configured in any arrangement.</p>
+          </div>
+        {%- endif -%}
       {%- else -%}
         {%- if product.variants.size > 1 -%}
           <table>
