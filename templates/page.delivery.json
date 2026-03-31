@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "map_section": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width\" style=\"padding: 20px 0;\">\n<h2>Our Delivery Area</h2>\n<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3136.8846223426276!2d-85.8666865!3d38.166120899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88691501cfe0428b%3A0xf0697f17b1074278!2sBubba&#39;s%20Mattress%20and%20Furniture!5e0!3m2!1sen!2sus\" width=\"100%\" height=\"400\" style=\"border:0; border-radius: 8px;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" title=\"Bubba's Mattress & Furniture delivery area - Louisville KY 50 mile radius\"></iframe>\n<p style=\"text-align:center; margin-top: 12px;\">We deliver within 50 miles of our store. Not sure if you're in range? <a href=\"tel:+15024940376\">Call (502) 494-0376</a></p>\n</div>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": ["main", "map_section"]
+}

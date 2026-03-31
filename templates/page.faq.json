@@ -1,0 +1,130 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 0
+      }
+    },
+    "faq_accordion": {
+      "type": "collapsible-content",
+      "blocks": {
+        "q1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Where is Bubba's Mattress & Furniture located?",
+            "icon": "map_pin",
+            "row_content": "<p>We're located at <strong>5907 Terry Rd, Louisville, KY 40258<\/strong>. Easy to find with plenty of parking. Look for our sign on Terry Road near the intersection with Lower Hunters Trace.<\/p>",
+            "page": ""
+          }
+        },
+        "q2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you offer financing with no credit check?",
+            "icon": "dollar_sign",
+            "row_content": "<p>Yes! We offer multiple financing options starting at just <strong>$40 down with no credit check required<\/strong>. Our financing partners include Progressive Leasing, Acima, Koalifi, and Synchrony. A traditional bank account is required for lease-to-own options.<\/p>",
+            "page": ""
+          }
+        },
+        "q3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What brands do you carry?",
+            "icon": "check_mark",
+            "row_content": "<p>We are Louisville's <strong>Ashley Furniture destination<\/strong>. We carry the full Ashley lineup including sofas, sectionals, bedroom sets, mattresses, dining room furniture, recliners, outdoor furniture, and home accents.<\/p>",
+            "page": ""
+          }
+        },
+        "q4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you offer delivery?",
+            "icon": "truck",
+            "row_content": "<p>Yes! We offer <strong>local delivery within 50 miles of Louisville<\/strong>. Items typically arrive within 1-2 weeks from the Ashley warehouse. Orders over $999 qualify for free delivery. You'll receive a call or text when your item ships and again when it arrives to schedule delivery.<\/p>",
+            "page": ""
+          }
+        },
+        "q5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What are your store hours?",
+            "icon": "clock",
+            "row_content": "<p><strong>Monday-Wednesday:<\/strong> 11:30 AM - 6:30 PM<br><strong>Thursday:<\/strong> 11:30 AM - 5:00 PM<br><strong>Friday:<\/strong> 11:30 AM - 6:30 PM<br><strong>Saturday:<\/strong> 11:30 AM - 6:00 PM<br><strong>Sunday:<\/strong> Closed<\/p>",
+            "page": ""
+          }
+        },
+        "q6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I try mattresses before I buy?",
+            "icon": "check_mark",
+            "row_content": "<p>Absolutely! We encourage you to come in and test our mattresses in person. We carry Ashley Sleep mattresses in memory foam, hybrid, and innerspring options. Take your time — no pressure, no rush. Our team will help you find the right comfort level for your sleep style.<\/p>",
+            "page": ""
+          }
+        },
+        "q7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I contact Bubba's?",
+            "icon": "chat_bubble",
+            "row_content": "<p>You can <strong>call or text Colton directly at (502) 494-0376<\/strong> anytime during business hours. You can also email us at coltonnichols@bubbasmattressandfurniture.com, message us on Facebook, or just walk into our store at 5907 Terry Rd.<\/p>",
+            "page": ""
+          }
+        },
+        "q8": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you offer pickup?",
+            "icon": "map_pin",
+            "row_content": "<p>Yes! All pickups are done at our store: <strong>5907 Terry Rd, Louisville, KY 40258<\/strong>. Please bring a valid ID and your order confirmation when picking up. We'll have everything ready for you.<\/p>",
+            "page": ""
+          }
+        },
+        "q9": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What areas do you serve?",
+            "icon": "truck",
+            "row_content": "<p>We serve all of Louisville and surrounding areas within 50 miles, including <strong>Valley Station, Pleasure Ridge Park (PRP), Shively, Okolona, Fairdale, Jeffersontown, St. Matthews, Middletown, Shepherdsville, Radcliff, Elizabethtown, New Albany IN, Clarksville IN, and Jeffersonville IN<\/strong>.<\/p>",
+            "page": ""
+          }
+        },
+        "q10": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is Bubba's an authorized Ashley Furniture dealer?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes, we are an <strong>authorized Ashley Furniture dealer<\/strong>. All our products are brand new, come with full manufacturer warranty, and ship directly from the Ashley warehouse. You get the same quality as the big stores with better prices and personal service.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"],
+      "settings": {
+        "caption": "",
+        "heading": "Frequently Asked Questions",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "section",
+        "color_scheme": "",
+        "container_color_scheme": "scheme-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "padding_top": 20,
+        "padding_bottom": 36
+      }
+    },
+    "faq_schema": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<script type=\"application/ld+json\">\n{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"Where is Bubba's Mattress & Furniture located?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We're located at 5907 Terry Rd, Louisville, KY 40258. Easy to find with plenty of parking.\"}},{\"@type\":\"Question\",\"name\":\"Do you offer financing with no credit check?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Yes! We offer multiple financing options starting at just $40 down with no credit check required. Our partners include Progressive Leasing, Acima, Koalifi, and Synchrony.\"}},{\"@type\":\"Question\",\"name\":\"What brands do you carry?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We are Louisville's Ashley Furniture destination. We carry the full Ashley lineup including sofas, sectionals, bedroom sets, mattresses, dining room furniture, recliners, outdoor furniture, and home accents.\"}},{\"@type\":\"Question\",\"name\":\"Do you offer delivery?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Yes! We offer local delivery within 50 miles of Louisville. Items typically arrive within 1-2 weeks. Orders over $999 qualify for free delivery.\"}},{\"@type\":\"Question\",\"name\":\"What are your store hours?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Monday-Wednesday: 11:30 AM - 6:30 PM, Thursday: 11:30 AM - 5:00 PM, Friday: 11:30 AM - 6:30 PM, Saturday: 11:30 AM - 6:00 PM, Sunday: Closed\"}},{\"@type\":\"Question\",\"name\":\"Can I try mattresses before I buy?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Absolutely! We carry Ashley Sleep mattresses in memory foam, hybrid, and innerspring options. Come in and test them in person.\"}},{\"@type\":\"Question\",\"name\":\"How do I contact Bubba's?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Call or text Colton directly at (502) 494-0376 anytime during business hours.\"}},{\"@type\":\"Question\",\"name\":\"What areas do you serve?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We serve Louisville and surrounding areas within 50 miles including Valley Station, PRP, Shively, Okolona, Jeffersontown, Shepherdsville, Radcliff, Elizabethtown, New Albany IN, and Clarksville IN.\"}},{\"@type\":\"Question\",\"name\":\"Is Bubba's an authorized Ashley Furniture dealer?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Yes, we are an authorized Ashley Furniture dealer. All products are brand new with full manufacturer warranty.\"}}]}\n</script>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": ["main", "faq_accordion", "faq_schema"]
+}
