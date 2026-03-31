@@ -219,25 +219,71 @@
                   {%- endif -%}
                 </p>
              {%- when 'description' -%}
-  {% assign desc_length = product.description | strip_html | size %}
-  {% if desc_length > 800 %}
+  {%- assign has_hr = false -%}
+  {%- if product.description contains '<hr' -%}
+    {%- assign has_hr = true -%}
+  {%- endif -%}
+
+  {%- if has_hr -%}
+    {%- comment -%} Product has <hr> divider: show overview above, dimensions below in collapsible {%- endcomment -%}
     <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
       {{ product.description | split: '<hr' | first }}
     </div>
 
-    <details style="margin:40px 0; padding:20px; border:2px solid #333; border-radius:12px; background:#f9f9f9;">
+    <details open style="margin:20px 0 40px; padding:20px; border:2px solid #333; border-radius:12px; background:#f9f9f9;">
       <summary style="font-weight:bold; font-size:19px; cursor:pointer;">
-        📐 Click to view all configurations & exact dimensions ({{ product.variants.size }} options)
+        📐 Configurations & Exact Dimensions ({{ product.variants.size }} options)
       </summary>
       <div style="margin-top:20px; line-height:1.8;">
-        {{ product.description | split: '<hr' | last | prepend: '' }}
+        {{ product.description | split: '<hr' | last }}
       </div>
     </details>
-  {% else %}
+
+  {%- else -%}
+    {%- comment -%} No <hr> divider: show full description, then auto-generate dimensions from variants {%- endcomment -%}
     <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
       {{ product.description }}
     </div>
-  
+
+    {%- if product.variants.size > 1 -%}
+      <details open style="margin:20px 0 40px; padding:20px; border:2px solid #333; border-radius:12px; background:#f9f9f9;">
+        <summary style="font-weight:bold; font-size:19px; cursor:pointer;">
+          📐 Available Options ({{ product.variants.size }} configurations)
+        </summary>
+        <div style="margin-top:20px; line-height:1.8;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.9em;">
+            <thead>
+              <tr style="border-bottom:2px solid #333; text-align:left;">
+                <th style="padding:8px;">Option</th>
+                <th style="padding:8px;">SKU</th>
+                <th style="padding:8px;">Price</th>
+                <th style="padding:8px;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for variant in product.variants -%}
+                <tr style="border-bottom:1px solid #ddd;">
+                  <td style="padding:8px; font-weight:500;">{{ variant.title }}</td>
+                  <td style="padding:8px; opacity:0.7;">{{ variant.sku | default: '—' }}</td>
+                  <td style="padding:8px;">{{ variant.price | money }}</td>
+                  <td style="padding:8px;">
+                    {%- if variant.available -%}
+                      <span style="color:#2e7d32;">In Stock</span>
+                    {%- else -%}
+                      <span style="color:#c62828;">Sold Out</span>
+                    {%- endif -%}
+                  </td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+          <p style="margin-top:12px; font-size:0.85em; opacity:0.7;">
+            For exact measurements on any configuration, call or text <a href="tel:+15024940376">(502) 494-0376</a> — we're happy to help!
+          </p>
+        </div>
+      </details>
+    {%- endif -%}
+
                 {%- endif -%}
               {%- when 'sku' -%}
                 <p
