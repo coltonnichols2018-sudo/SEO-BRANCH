@@ -15,7 +15,9 @@
   ============================================================
 {% endcomment %}
 
-{% comment %} ===== LOCAL BUSINESS SCHEMA (all pages) ===== {% endcomment %}
+{% comment %} ===== LOCAL BUSINESS SCHEMA (non-homepage pages only) ===== {% endcomment %}
+{% comment %} Homepage already has LocalBusiness schema in its custom liquid section {% endcomment %}
+{% unless template == 'index' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -23,23 +25,23 @@
   "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization",
   "name": "Bubba's Mattress & Furniture",
   "alternateName": "Bubba's Mattress and Furniture Louisville",
-  "description": "Louisville's premier Ashley Furniture destination offering quality mattresses, living room furniture, bedroom sets, and outdoor furniture with financing and local delivery.",
+  "description": "Affordable Ashley Furniture store in Louisville, KY. No credit check financing from $40 down. Mattresses, bedroom sets, sofas, dining sets and more. Free delivery on orders over $999.",
   "url": "https://www.bubbasmattressfurniturelouisville.com/",
   "telephone": "+1-502-494-0376",
   "image": "{{ 'logo.png' | asset_url }}",
   "logo": "{{ 'logo.png' | asset_url }}",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "5907 Terry Road",
+    "streetAddress": "5907 Terry Rd",
     "addressLocality": "Louisville",
     "addressRegion": "KY",
-    "postalCode": "40216",
+    "postalCode": "40258",
     "addressCountry": "US"
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 38.1814,
-    "longitude": -85.8221
+    "latitude": 38.1661,
+    "longitude": -85.8667
   },
   "openingHoursSpecification": [
     {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday"], "opens": "11:30", "closes": "18:30"},
@@ -49,12 +51,19 @@
   ],
   "priceRange": "$$",
   "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Financing"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "285"
+  },
+  "areaServed": ["Louisville", "Shively", "Valley Station", "Pleasure Ridge Park", "Okolona", "Jeffersontown", "Shepherdsville", "Radcliff", "Elizabethtown"],
   "sameAs": [
     "https://www.facebook.com/Bubbasmattressfurniturelouisville/",
     "https://www.instagram.com/bubbasfurnitureandmattress/"
   ]
 }
 </script>
+{% endunless %}
 
 {% comment %} ===== WEBSITE SCHEMA ===== {% endcomment %}
 <script type="application/ld+json">
