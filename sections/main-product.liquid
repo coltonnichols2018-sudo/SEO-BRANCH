@@ -224,56 +224,59 @@
     {%- assign has_hr = true -%}
   {%- endif -%}
 
-  {%- comment -%} Ashley-style tabbed product info — clean design {%- endcomment -%}
+  {%- comment -%} Product info accordion dropdowns {%- endcomment -%}
   <style>
-    .product-tabs { margin: 24px 0 30px; }
-    .product-tabs__nav {
+    .product-accordion { margin: 24px 0 20px; }
+    .product-accordion details {
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .product-accordion details:first-child {
+      border-top: 1px solid #e0e0e0;
+    }
+    .product-accordion summary {
       display: flex;
-      border-bottom: 1px solid #d4d4d4;
-      gap: 0;
-      margin-bottom: 0;
-    }
-    .product-tabs__btn {
-      padding: 14px 24px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 4px;
       font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-      color: #888;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .product-tabs__btn:hover { color: #333; }
-    .product-tabs__btn.active {
-      color: #111;
-      border-bottom-color: #111;
       font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: #111;
+      list-style: none;
+      user-select: none;
     }
-    .product-tabs__panel {
-      display: none;
-      padding: 28px 0;
+    .product-accordion summary::-webkit-details-marker { display: none; }
+    .product-accordion summary::after {
+      content: '+';
+      font-size: 20px;
+      font-weight: 300;
+      color: #666;
+      transition: transform 0.2s ease;
+    }
+    .product-accordion details[open] summary::after {
+      content: '−';
+    }
+    .product-accordion .accordion-content {
+      padding: 0 4px 24px;
       line-height: 1.7;
       font-size: 0.95em;
       color: #333;
     }
-    .product-tabs__panel.active { display: block; }
-    .product-tabs__panel table {
+    .product-accordion table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.9em;
       margin-bottom: 8px;
     }
-    .product-tabs__panel th,
-    .product-tabs__panel td {
+    .product-accordion th,
+    .product-accordion td {
       padding: 12px 16px;
       text-align: left;
       border-bottom: 1px solid #eee;
     }
-    .product-tabs__panel th {
+    .product-accordion th {
       font-weight: 600;
       font-size: 0.8em;
       text-transform: uppercase;
@@ -282,8 +285,8 @@
       background: #fafafa;
       border-bottom: 1px solid #ddd;
     }
-    .product-tabs__panel tr:last-child td { border-bottom: none; }
-    .product-tabs__cta {
+    .product-accordion tr:last-child td { border-bottom: none; }
+    .product-accordion .dims-cta {
       margin-top: 20px;
       padding: 20px;
       background: #fafafa;
@@ -291,157 +294,143 @@
       border-radius: 4px;
       line-height: 1.6;
     }
-    .product-tabs__cta p { margin: 0; }
-    .product-tabs__cta a { color: #111; font-weight: 600; }
+    .product-accordion .dims-cta p { margin: 0; }
+    .product-accordion .dims-cta a { color: #111; font-weight: 600; }
     @media screen and (max-width: 749px) {
-      .product-tabs__btn { padding: 12px 16px; font-size: 12px; }
-      .product-tabs__panel { padding: 20px 0; }
-      .product-tabs__panel table { font-size: 0.8em; }
-      .product-tabs__panel th, .product-tabs__panel td { padding: 10px 8px; }
+      .product-accordion summary { padding: 14px 2px; font-size: 13px; }
+      .product-accordion .accordion-content { padding: 0 2px 20px; }
+      .product-accordion table { font-size: 0.8em; }
+      .product-accordion th, .product-accordion td { padding: 10px 8px; }
     }
   </style>
 
-  <div class="product-tabs quick-add-hidden" {{ block.shopify_attributes }}>
-    <div class="product-tabs__nav" role="tablist">
-      <button class="product-tabs__btn active" role="tab" aria-selected="true" data-tab="overview" onclick="switchProductTab(this, 'overview')">Overview</button>
-      <button class="product-tabs__btn" role="tab" aria-selected="false" data-tab="dimensions" onclick="switchProductTab(this, 'dimensions')">Dimensions</button>
-      <button class="product-tabs__btn" role="tab" aria-selected="false" data-tab="details" onclick="switchProductTab(this, 'details')">Details</button>
-    </div>
+  <div class="product-accordion quick-add-hidden" {{ block.shopify_attributes }}>
 
-    {%- comment -%} === OVERVIEW TAB === {%- endcomment -%}
-    <div class="product-tabs__panel active rte" id="tab-overview" role="tabpanel">
-      {%- if has_hr -%}
-        {{ product.description | split: '<hr' | first }}
-      {%- else -%}
-        {{ product.description }}
-      {%- endif -%}
-    </div>
-
-    {%- comment -%} === DIMENSIONS TAB === {%- endcomment -%}
-    {%- comment -%} Dimensions are injected by product-dimensions.js (client-side) for known products {%- endcomment -%}
-    <div class="product-tabs__panel" id="tab-dimensions" role="tabpanel">
-      {%- if has_hr -%}
-        <div class="rte" style="line-height:1.8;">
-          {{ product.description | split: '<hr' | last }}
-        </div>
-      {%- else -%}
-        {%- if product.variants.size > 1 -%}
-          <table>
-            <thead>
-              <tr>
-                <th>Configuration</th>
-                <th>SKU</th>
-                <th>Price</th>
-                <th>Availability</th>
-              </tr>
-            </thead>
-            <tbody>
-              {%- for variant in product.variants -%}
-                <tr>
-                  <td style="font-weight:500;">{{ variant.title }}</td>
-                  <td style="opacity:0.6; font-size:0.9em;">{{ variant.sku | default: '—' }}</td>
-                  <td>{{ variant.price | money }}</td>
-                  <td>
-                    {%- if variant.available -%}
-                      <span style="color:#2e7d32;">In Stock</span>
-                    {%- else -%}
-                      <span style="color:#999;">Sold Out</span>
-                    {%- endif -%}
-                  </td>
-                </tr>
-              {%- endfor -%}
-            </tbody>
-          </table>
+    {%- comment -%} === OVERVIEW === {%- endcomment -%}
+    <details open>
+      <summary>Overview</summary>
+      <div class="accordion-content rte">
+        {%- if has_hr -%}
+          {{ product.description | split: '<hr' | first }}
+        {%- else -%}
+          {{ product.description }}
         {%- endif -%}
-      {%- endif -%}
-
-      <div class="product-tabs__cta">
-        <p style="font-weight:600; margin-bottom:6px;">Need exact measurements for your space?</p>
-        <p style="font-size:0.9em; color:#555;">
-          Call or text <a href="tel:+15024940376">(502) 494-0376</a>
-          — we'll send you dimensions, photos from every angle, and help you make sure it fits.
-          Or visit us at <a href="/pages/about-us">5907 Terry Rd</a> to measure in person.
-        </p>
       </div>
-    </div>
+    </details>
 
-    {%- comment -%} === DETAILS TAB === {%- endcomment -%}
-    <div class="product-tabs__panel" id="tab-details" role="tabpanel">
-      <table>
-        {%- if product.vendor != blank -%}
-        <tr>
-          <td style="font-weight:600; width:40%;">Brand</td>
-          <td>{{ product.vendor }}</td>
-        </tr>
+    {%- comment -%} === DIMENSIONS === {%- endcomment -%}
+    {%- comment -%} Real measurements injected by product-dimensions.js for known products {%- endcomment -%}
+    <details id="accordion-dimensions">
+      <summary>Dimensions</summary>
+      <div class="accordion-content" id="tab-dimensions">
+        {%- if has_hr -%}
+          <div class="rte" style="line-height:1.8;">
+            {{ product.description | split: '<hr' | last }}
+          </div>
+        {%- else -%}
+          {%- if product.variants.size > 1 -%}
+            <table>
+              <thead>
+                <tr>
+                  <th>Configuration</th>
+                  <th>SKU</th>
+                  <th>Price</th>
+                  <th>Availability</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for variant in product.variants -%}
+                  <tr>
+                    <td style="font-weight:500;">{{ variant.title }}</td>
+                    <td style="opacity:0.6; font-size:0.9em;">{{ variant.sku | default: '—' }}</td>
+                    <td>{{ variant.price | money }}</td>
+                    <td>
+                      {%- if variant.available -%}
+                        <span style="color:#2e7d32;">In Stock</span>
+                      {%- else -%}
+                        <span style="color:#999;">Sold Out</span>
+                      {%- endif -%}
+                    </td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          {%- endif -%}
         {%- endif -%}
-        {%- if product.type != blank -%}
-        <tr>
-          <td style="font-weight:600;">Type</td>
-          <td>{{ product.type }}</td>
-        </tr>
-        {%- endif -%}
-        {%- if product.selected_or_first_available_variant.sku != blank -%}
-        <tr>
-          <td style="font-weight:600;">SKU</td>
-          <td>{{ product.selected_or_first_available_variant.sku }}</td>
-        </tr>
-        {%- endif -%}
-        {%- if product.selected_or_first_available_variant.barcode != blank -%}
-        <tr>
-          <td style="font-weight:600;">Barcode</td>
-          <td>{{ product.selected_or_first_available_variant.barcode }}</td>
-        </tr>
-        {%- endif -%}
-        {%- if product.selected_or_first_available_variant.weight > 0 -%}
-        <tr>
-          <td style="font-weight:600;">Weight</td>
-          <td>{{ product.selected_or_first_available_variant.weight | weight_with_unit: product.selected_or_first_available_variant.weight_unit }}</td>
-        </tr>
-        {%- endif -%}
-        <tr>
-          <td style="font-weight:600;">Availability</td>
-          <td>
-            {%- if product.available -%}
-              <span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>
-            {%- else -%}
-              <span style="color:#c62828;">Currently Unavailable</span>
-            {%- endif -%}
-          </td>
-        </tr>
-        <tr>
-          <td style="font-weight:600;">Financing</td>
-          <td>$40 down, no credit check — <a href="/pages/financing" style="text-decoration:underline;">Apply now</a></td>
-        </tr>
-        <tr>
-          <td style="font-weight:600;">Delivery</td>
-          <td>1–2 weeks, within 50 miles of Louisville — <a href="/pages/delivery" style="text-decoration:underline;">Learn more</a></td>
-        </tr>
-        <tr>
-          <td style="font-weight:600;">Warranty</td>
-          <td>Manufacturer warranty included</td>
-        </tr>
-      </table>
 
-      {%- if product.tags.size > 0 -%}
-        <div style="margin-top:16px;">
-          <span style="font-weight:600; font-size:0.9em;">Tags: </span>
-          {%- for tag in product.tags -%}
-            <a href="/collections/all/{{ tag | handle }}" style="font-size:0.85em; opacity:0.7; text-decoration:underline;">{{ tag }}</a>{%- unless forloop.last -%}, {% endunless %}
-          {%- endfor -%}
+        <div class="dims-cta">
+          <p style="font-weight:600; margin-bottom:6px;">Need exact measurements for your space?</p>
+          <p style="font-size:0.9em; color:#555;">
+            Call or text <a href="tel:+15024940376">(502) 494-0376</a>
+            — we'll send you dimensions, photos from every angle, and help you make sure it fits.
+            Or visit us at <a href="/pages/about-us">5907 Terry Rd</a> to measure in person.
+          </p>
         </div>
-      {%- endif -%}
-    </div>
-  </div>
+      </div>
+    </details>
 
-  <script>
-    function switchProductTab(btn, tabId) {
-      document.querySelectorAll('.product-tabs__btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-      document.querySelectorAll('.product-tabs__panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      document.getElementById('tab-' + tabId).classList.add('active');
-    }
-  </script>
+    {%- comment -%} === DETAILS === {%- endcomment -%}
+    <details>
+      <summary>Details</summary>
+      <div class="accordion-content">
+        <table>
+          {%- if product.vendor != blank -%}
+          <tr>
+            <td style="font-weight:600; width:40%;">Brand</td>
+            <td>{{ product.vendor }}</td>
+          </tr>
+          {%- endif -%}
+          {%- if product.type != blank -%}
+          <tr>
+            <td style="font-weight:600;">Type</td>
+            <td>{{ product.type }}</td>
+          </tr>
+          {%- endif -%}
+          {%- if product.selected_or_first_available_variant.sku != blank -%}
+          <tr>
+            <td style="font-weight:600;">SKU</td>
+            <td>{{ product.selected_or_first_available_variant.sku }}</td>
+          </tr>
+          {%- endif -%}
+          {%- if product.selected_or_first_available_variant.barcode != blank -%}
+          <tr>
+            <td style="font-weight:600;">Barcode</td>
+            <td>{{ product.selected_or_first_available_variant.barcode }}</td>
+          </tr>
+          {%- endif -%}
+          {%- if product.selected_or_first_available_variant.weight > 0 -%}
+          <tr>
+            <td style="font-weight:600;">Weight</td>
+            <td>{{ product.selected_or_first_available_variant.weight | weight_with_unit: product.selected_or_first_available_variant.weight_unit }}</td>
+          </tr>
+          {%- endif -%}
+          <tr>
+            <td style="font-weight:600;">Availability</td>
+            <td>
+              {%- if product.available -%}
+                <span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>
+              {%- else -%}
+                <span style="color:#c62828;">Currently Unavailable</span>
+              {%- endif -%}
+            </td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Financing</td>
+            <td>$40 down, no credit check — <a href="/pages/financing" style="text-decoration:underline;">Apply now</a></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Delivery</td>
+            <td>1–2 weeks, within 50 miles of Louisville — <a href="/pages/delivery" style="text-decoration:underline;">Learn more</a></td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;">Warranty</td>
+            <td>Manufacturer warranty included</td>
+          </tr>
+        </table>
+      </div>
+    </details>
+
+  </div>
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
