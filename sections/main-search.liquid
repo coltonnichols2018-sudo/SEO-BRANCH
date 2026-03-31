@@ -142,6 +142,17 @@
         {%- endunless -%}
         {%- if search.results_count == 0 and search.filters == empty -%}
           <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+          <div class="search-no-results-help" style="margin-top: 2rem; text-align: center;">
+            <p>Try browsing our popular categories:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 1rem;">
+              <a href="/collections/mattresses" class="button button--secondary">Mattresses</a>
+              <a href="/collections/living-room-recliners" class="button button--secondary">Recliners</a>
+              <a href="/collections/living-room-sofas" class="button button--secondary">Sofas</a>
+              <a href="/collections/bedroom" class="button button--secondary">Bedroom</a>
+              <a href="/collections/dining-room" class="button button--secondary">Dining Room</a>
+            </div>
+            <p style="margin-top: 1.5rem;">Or call us at <a href="tel:+15024940376">(502) 494-0376</a> — we can help you find what you're looking for!</p>
+          </div>
         {%- endif -%}
       {%- endif -%}
     </div>

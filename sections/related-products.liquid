@@ -56,6 +56,19 @@
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
+
+  {% comment %} SEO: Cross-linking to key pages from product pages {% endcomment %}
+  <div class="page-width" style="padding: 20px 0; text-align: center; font-size: 0.85em; opacity: 0.7;">
+    <p>
+      <a href="/collections/mattresses">Mattresses</a> &middot;
+      <a href="/collections/living-room-recliners">Recliners</a> &middot;
+      <a href="/collections/living-room-sofas">Sofas</a> &middot;
+      <a href="/collections/bedroom">Bedroom</a> &middot;
+      <a href="/collections/dining-room">Dining</a> &middot;
+      <a href="/pages/financing">Financing</a> &middot;
+      <a href="/pages/delivery">Delivery</a>
+    </p>
+  </div>
 </div>
 
 {% schema %}
