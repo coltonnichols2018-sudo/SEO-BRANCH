@@ -263,7 +263,11 @@
       <meta itemprop="postalCode" content="40216">
       <meta itemprop="addressCountry" content="US">
     </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.85em; opacity: 0.75;">
+    <style>
+      .footer-seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.85em; opacity: 0.75; }
+      @media screen and (max-width: 749px) { .footer-seo-grid { grid-template-columns: 1fr; } }
+    </style>
+    <div class="footer-seo-grid">
       <div>
         <p style="margin: 0 0 8px; font-weight: bold;">Store Hours</p>
         <p style="margin: 0; line-height: 1.6;">
