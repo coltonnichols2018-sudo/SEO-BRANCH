@@ -1,0 +1,325 @@
+<section
+  class="custom-carousel-wrapper {{ section.settings.padding_top }} {{ section.settings.padding_bottom }}"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  <h2 class="carousel-title {{ section.settings.title_size }}" style="color: {{ section.settings.title_color }};">
+    {{ section.settings.carousel_title }}
+  </h2>
+
+  <div class="carousel-outer">
+    <button class="carousel-arrow left" onclick="scrollCarousel(this, -1)">&#10094;</button>
+
+    <div class="carousel-container" id="carousel-{{ section.id }}">
+      {% for i in (1..15) %}
+        {% capture image_key %}image_{{ i }}{% endcapture %}
+        {% assign image = section.settings[image_key] %}
+        {% if image %}
+          <div class="carousel-slide">
+            <img src="{{ image | img_url: 'master' }}" alt="Carousel Image {{ i }}" />
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <button class="carousel-arrow right" onclick="scrollCarousel(this, 1)">&#10095;</button>
+  </div>
+</section>
+
+<style>
+  .custom-carousel-wrapper {
+    position: relative;
+    text-align: left;
+  }
+
+  .pt-none { padding-top: 0 !important; }
+  .pt-small { padding-top: 5px; }
+  .pt-medium { padding-top: 20px; }
+  .pt-large { padding-top: 40px; }
+
+  .pb-none { padding-bottom: 0 !important; }
+  .pb-small { padding-bottom: 10px; }
+  .pb-medium { padding-bottom: 20px; }
+  .pb-large { padding-bottom: 40px; }
+
+  .carousel-title {
+    margin-bottom: 20px;
+    margin-left: 45px;
+    letter-spacing: 0.5px;
+  }
+
+  .carousel-title.small {
+    font-size: 3rem;
+  }
+
+  .carousel-title.medium {
+    font-size: 3.25rem;
+  }
+
+  .carousel-title.large {
+    font-size: 4.75rem;
+  }
+
+  .carousel-outer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 10px;
+  }
+
+  .carousel-slide {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    width: 350px;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 0px;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0px;
+  }
+
+  .carousel-arrow {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s;
+  }
+
+  .carousel-arrow:hover {
+    background: none;
+  }
+
+  .carousel-arrow.left {
+    margin-right: 20px;
+  }
+
+  .carousel-arrow.right {
+    margin-left: 20px;
+  }
+
+  .carousel-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @media (max-width: 300px) {
+    .carousel-slide {
+      width: 100px;
+      height: 100px;
+    }
+
+    .carousel-arrow {
+      font-size: 24px;
+      padding: 8px 12px;
+    }
+  }
+</style>
+
+<script>
+  function scrollCarousel(btn, direction) {
+    const container = btn.closest('.carousel-outer').querySelector('.carousel-container');
+    const slide = container.querySelector('.carousel-slide');
+    if (slide) {
+      const scrollAmount = slide.offsetWidth + 20;
+      container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const carousels = document.querySelectorAll(".carousel-container");
+
+    carousels.forEach(function (carousel) {
+      let autoplay;
+
+      const startAutoplay = () => {
+        autoplay = setInterval(() => {
+          const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+          const nearEnd = carousel.scrollLeft + 5 >= maxScrollLeft;
+
+          if (nearEnd) {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            carousel.scrollBy({ left: 270, behavior: 'smooth' });
+          }
+        }, 3000);
+      };
+
+      const stopAutoplay = () => clearInterval(autoplay);
+
+      // Only add hover listeners on devices with a mouse
+      if (window.matchMedia('(hover: hover)').matches) {
+        carousel.addEventListener('mouseenter', stopAutoplay);
+        carousel.addEventListener('mouseleave', startAutoplay);
+      }
+
+      startAutoplay(); // Start autoplay on all devices
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Image Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "carousel_title",
+      "label": "Carousel Title",
+      "default": "Featured Looks"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_size",
+      "label": "Title Size",
+      "default": "medium",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "default": "pt-medium",
+      "options": [
+        { "value": "pt-none", "label": "None" },
+        { "value": "pt-small", "label": "Small" },
+        { "value": "pt-medium", "label": "Medium" },
+        { "value": "pt-large", "label": "Large" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "default": "pb-large",
+      "options": [
+        { "value": "pb-none", "label": "None" },
+        { "value": "pb-small", "label": "Small" },
+        { "value": "pb-medium", "label": "Medium" },
+        { "value": "pb-large", "label": "Large" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Image 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_7",
+      "label": "Image 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_8",
+      "label": "Image 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_9",
+      "label": "Image 9"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_10",
+      "label": "Image 10"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_11",
+      "label": "Image 11"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_12",
+      "label": "Image 12"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_13",
+      "label": "Image 13"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_14",
+      "label": "Image 14"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_15",
+      "label": "Image 15"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Carousel"
+    }
+  ]
+}
+{% endschema %}
+
+
+

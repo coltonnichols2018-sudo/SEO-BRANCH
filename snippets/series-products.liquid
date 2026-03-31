@@ -1,0 +1,50 @@
+{% assign current_product = product %}
+{% assign collection_name = '' %}
+{% assign category_name = '' %}
+
+{%- for tag in product.tags -%}
+  {% if tag contains 'Collection:' %}
+    {% assign collection_name = tag | remove: 'Collection:' | strip %}
+  {% endif %}
+  {% if tag contains 'Category:' %}
+    {% assign category_name = tag | remove: 'Category:' | strip %}
+  {% endif %}
+{%- endfor -%}
+
+{% assign matching_products = '' | split: ',' %}
+
+{% if collection_name != '' and category_name != '' %}
+  {% assign collection_tag = 'Collection:' | append: collection_name %}
+  {% assign category_tag = 'Category:' | append: category_name %}
+
+  {% for p in collections.all.products %}
+    {% assign is_same_collection = false %}
+    {% assign is_same_category = false %}
+
+    {% for tag in p.tags %}
+      {% if tag == collection_tag %}
+        {% assign is_same_collection = true %}
+      {% endif %}
+      {% if tag == category_tag %}
+        {% assign is_same_category = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if is_same_collection and is_same_category and p.id != current_product.id %}
+      {% assign matching_products = matching_products | push: p %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if matching_products.size > 0 %}
+  <div class="series-products">
+    <h2 class="h3">More from the {{ collection_name }} Collection</h2>
+    <div class="grid grid--2-col-tablet grid--4-col-desktop">
+      {% for related_product in matching_products %}
+        <div class="grid__item">
+          {% render 'card-product', product: related_product %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
