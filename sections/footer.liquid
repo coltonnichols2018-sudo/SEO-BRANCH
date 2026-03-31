@@ -250,6 +250,43 @@
     {%- endunless -%}
   {%- endif -%}
 
+  <!-- SEO: Local Business Footer with Store Hours and Service Areas -->
+  <div class="footer__seo-content page-width" style="padding: 20px 0; border-top: 1px solid rgba(var(--color-foreground), 0.08);" itemscope itemtype="https://schema.org/FurnitureStore">
+    <meta itemprop="name" content="Bubba's Mattress & Furniture">
+    <meta itemprop="url" content="https://www.bubbasmattressfurniturelouisville.com/">
+    <meta itemprop="telephone" content="+1-502-494-0376">
+    <meta itemprop="priceRange" content="$$">
+    <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" style="display:none;">
+      <meta itemprop="streetAddress" content="5907 Terry Road">
+      <meta itemprop="addressLocality" content="Louisville">
+      <meta itemprop="addressRegion" content="KY">
+      <meta itemprop="postalCode" content="40216">
+      <meta itemprop="addressCountry" content="US">
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.85em; opacity: 0.75;">
+      <div>
+        <p style="margin: 0 0 8px; font-weight: bold;">Store Hours</p>
+        <p style="margin: 0; line-height: 1.6;">
+          Mon–Wed: 11:30 AM – 6:30 PM<br>
+          Thursday: 11:30 AM – 5:00 PM<br>
+          Friday: 11:30 AM – 6:30 PM<br>
+          Saturday: 11:30 AM – 6:00 PM<br>
+          Sunday: Closed
+        </p>
+      </div>
+      <div>
+        <p style="margin: 0 0 8px; font-weight: bold;">Serving Louisville & Surrounding Areas</p>
+        <p style="margin: 0; line-height: 1.6;">
+          Valley Station &middot; PRP &middot; Shively &middot; Okolona &middot; Fairdale &middot; Jeffersontown &middot; St. Matthews &middot; Shepherdsville &middot; Radcliff &middot; Elizabethtown &middot; New Albany, IN &middot; Clarksville, IN
+        </p>
+        <p style="margin: 8px 0 0;">
+          <a href="/pages/delivery" style="text-decoration: underline;">Local delivery within 50 miles</a> &middot;
+          <a href="/pages/financing" style="text-decoration: underline;">Financing available</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div
     class="footer__content-bottom{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     {% if settings.animations_reveal_on_scroll %}
