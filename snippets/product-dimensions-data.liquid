@@ -1,0 +1,96 @@
+{% comment %}
+  Product Dimensions Database
+  Auto-populates the Dimensions tab with Ashley Furniture measurements.
+  Match is by product title (case-insensitive partial match).
+
+  TO ADD MORE PRODUCTS: Copy a section block below and fill in the data.
+  The template checks product.title for a match against the "name" field.
+{% endcomment %}
+
+{%- assign dimension_data = '' -%}
+{%- assign product_title_lower = product.title | downcase -%}
+
+{%- if product_title_lower contains 'ophannon' -%}
+  {%- if product_title_lower contains '2-piece' or product.variants.size <= 3 -%}
+    {%- capture dimension_data -%}
+      <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">O'Phannon 2-Piece Sectional with Chaise</h3>
+      <table>
+        <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:500;">Overall Sectional</td><td>125"</td><td>86"</td><td>38"</td><td>260 lbs</td></tr>
+          <tr><td style="font-weight:500;">LAF Sofa Chaise</td><td>87"</td><td>61"</td><td>38"</td><td>147 lbs</td></tr>
+          <tr><td style="font-weight:500;">RAF Corner Chaise</td><td>37"</td><td>86"</td><td>38"</td><td>113 lbs</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px;">
+        <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+        <p style="margin:0; font-size:0.9em; line-height:1.8;">
+          Seat Depth: 23" &middot; Seat Height: 21" &middot; Arm Height: 26"
+        </p>
+      </div>
+    {%- endcapture -%}
+  {%- endif -%}
+
+{%- elsif product_title_lower contains 'rawcliffe' -%}
+  {%- if product_title_lower contains '4-piece' or product_title_lower contains '4 piece' -%}
+    {%- capture dimension_data -%}
+      <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Rawcliffe 4-Piece Sectional</h3>
+      <table>
+        <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:500;">Overall Sectional</td><td>170"</td><td>131"</td><td>38"</td><td>423 lbs</td></tr>
+          <tr><td style="font-weight:500;">LAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+          <tr><td style="font-weight:500;">Wedge</td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr>
+          <tr><td style="font-weight:500;">Armless Chair</td><td>39"</td><td>44"</td><td>38"</td><td>70 lbs</td></tr>
+          <tr><td style="font-weight:500;">RAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px;">
+        <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+        <p style="margin:0; font-size:0.9em; line-height:1.8;">
+          Seat Depth: 24" &middot; Seat Height: 21" &middot; Arm Height: 26"
+        </p>
+      </div>
+    {%- endcapture -%}
+  {%- else -%}
+    {%- capture dimension_data -%}
+      <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Rawcliffe 3-Piece Sectional</h3>
+      <table>
+        <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:500;">Overall Sectional</td><td>131"</td><td>131"</td><td>38"</td><td>340 lbs</td></tr>
+          <tr><td style="font-weight:500;">LAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+          <tr><td style="font-weight:500;">Wedge</td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr>
+          <tr><td style="font-weight:500;">RAF Sofa</td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px;">
+        <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+        <p style="margin:0; font-size:0.9em; line-height:1.8;">
+          Seat Depth: 24" &middot; Seat Height: 21" &middot; Arm Height: 26"
+        </p>
+      </div>
+    {%- endcapture -%}
+  {%- endif -%}
+
+{%- elsif product_title_lower contains 'barrelton' -%}
+  {%- capture dimension_data -%}
+    <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Barrelton Modular Sectional</h3>
+    <table>
+      <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:500;">Corner Chair</td><td>41"</td><td>41"</td><td>37"</td><td>75 lbs</td></tr>
+        <tr><td style="font-weight:500;">Armless Chair</td><td>30"</td><td>41"</td><td>37"</td><td>58 lbs</td></tr>
+        <tr><td style="font-weight:500;">LAF/RAF Corner Chaise</td><td>41"</td><td>64"</td><td>37"</td><td>92 lbs</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:16px;">
+      <p style="margin:0 0 4px; font-weight:600; font-size:0.9em;">Additional Measurements</p>
+      <p style="margin:0; font-size:0.9em; line-height:1.8;">
+        Seat Depth: 23" &middot; Seat Height: 20" &middot; Arm Height: 26"<br>
+        Modular pieces can be configured in any arrangement. Dimensions vary by configuration.
+      </p>
+    </div>
+  {%- endcapture -%}
+
+{%- endif -%}
