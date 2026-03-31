@@ -292,6 +292,33 @@
   {{ article | structured_data }}
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt_or_content | strip_html | truncate: 160 | json }},
+  {% if article.image %}
+  "image": "https:{{ article.image | image_url: width: 1200 }}",
+  {% endif %}
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "dateModified": "{{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Bubba's Mattress & Furniture",
+    "url": "https://www.bubbasmattressfurniturelouisville.com/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ request.origin }}{{ article.url }}"
+  }
+}
+</script>
+
 {% schema %}
 {
   "name": "t:sections.main-article.name",

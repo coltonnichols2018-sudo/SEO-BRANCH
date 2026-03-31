@@ -8,16 +8,63 @@
       margin-top: 2rem;
     }
   }
+
+  .template-404 .button-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .template-404 .helpful-links {
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .template-404 .helpful-links ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .template-404 .helpful-links a {
+    text-decoration: underline;
+  }
 </style>
 
 <div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
   <h1 class="title">
     {{ 'templates.404.title' | t }}
   </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+  <p>
+    {{ 'templates.404.subtext' | t }}
+  </p>
+
+  <div class="button-group">
+    <a href="/" class="button button--primary">
+      Back to Home
+    </a>
+    <a href="{{ routes.all_products_collection_url }}" class="button button--secondary">
+      {{ 'general.continue_shopping' | t }}
+    </a>
+  </div>
+
+  <div class="helpful-links">
+    <h2>Popular Categories</h2>
+    <ul>
+      <li><a href="/collections/mattresses">Mattresses</a></li>
+      <li><a href="/collections/living-room-recliners">Recliners</a></li>
+      <li><a href="/collections/living-room-sofas">Sofas</a></li>
+      <li><a href="/collections/bedroom">Bedroom</a></li>
+      <li><a href="/collections/dining-room">Dining Room</a></li>
+      <li><a href="/pages/financing">Financing</a></li>
+    </ul>
+    <p style="margin-top: 1.5rem;">
+      Need help? Call or text <a href="tel:+15024940376">(502) 494-0376</a>
+    </p>
+  </div>
 </div>

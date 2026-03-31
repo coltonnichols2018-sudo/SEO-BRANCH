@@ -71,39 +71,7 @@
 }
 </script>
 
-{% comment %} ===== BREADCRUMB SCHEMA ===== {% endcomment %}
-{% if template contains 'collection' or template contains 'product' %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://www.bubbasmattressfurniturelouisville.com/"
-    }
-    {% if collection %}
-    ,{
-      "@type": "ListItem",
-      "position": 2,
-      "name": "{{ collection.title }}",
-      "item": "https://www.bubbasmattressfurniturelouisville.com{{ collection.url }}"
-    }
-    {% endif %}
-    {% if product %}
-    ,{
-      "@type": "ListItem",
-      "position": {% if collection %}3{% else %}2{% endif %},
-      "name": "{{ product.title }}",
-      "item": "https://www.bubbasmattressfurniturelouisville.com{{ product.url }}"
-    }
-    {% endif %}
-  ]
-}
-</script>
-{% endif %}
+{% comment %} ===== BREADCRUMB SCHEMA handled by breadcrumbs.liquid snippet ===== {% endcomment %}
 
 {% comment %} ===== PRODUCT SCHEMA (product pages only) ===== {% endcomment %}
 {% if template contains 'product' %}

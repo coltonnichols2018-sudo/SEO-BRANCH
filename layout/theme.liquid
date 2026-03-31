@@ -26,6 +26,12 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
+    <!-- SEO: DNS Prefetch for faster third-party resource loading -->
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//connect.facebook.net">
+    <link rel="dns-prefetch" href="//cdn.shopify.com">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
@@ -330,6 +336,9 @@
     {% sections 'header-group' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {%- unless template == 'index' or template == 'password' or template contains '404' -%}
+        {% render 'breadcrumbs' %}
+      {%- endunless -%}
       {{ content_for_layout }}
     </main>
 

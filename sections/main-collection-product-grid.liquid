@@ -195,6 +195,32 @@
   {%- endif -%}
 </div>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ collection.title | json }},
+  "url": "{{ request.origin }}{{ collection.url }}",
+  {% if collection.description != blank %}
+  "description": {{ collection.description | strip_html | truncate: 200 | json }},
+  {% endif %}
+  "numberOfItems": {{ collection.products_count }},
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {%- for product in collection.products limit: 12 -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": "{{ request.origin }}{{ product.url }}",
+        "name": {{ product.title | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+}
+</script>
+
 {% schema %}
 {
   "name": "t:sections.main-collection-product-grid.name",
