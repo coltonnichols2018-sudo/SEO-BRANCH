@@ -416,53 +416,58 @@
   <script>
   (function(){
     var t=document.getElementById('tab-dimensions');
-    if(!t)return;
+    var ov=document.querySelector('.accordion-content.rte');
+    if(!t||!ov)return;
 
-    /* STEP 1: Known product dimensions (hardcoded from Ashley data) */
+    /* Hardcoded dimensions for specific products */
     var dims={
-      'ophannon-sectional':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">O\'Phannon 2-Piece Sectional with Chaise</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>Overall Sectional</strong></td><td>125"</td><td>86"</td><td>38"</td><td>260 lbs</td></tr><tr><td><strong>LAF Sofa Chaise</strong></td><td>87"</td><td>61"</td><td>38"</td><td>147 lbs</td></tr><tr><td><strong>RAF Corner Chaise</strong></td><td>37"</td><td>86"</td><td>38"</td><td>113 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 23" · Seat Height: 21" · Arm Height: 26"</p>',
-      'rawcliffe':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Rawcliffe Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>LAF Sofa</strong></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr><tr><td><strong>Wedge</strong></td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr><tr><td><strong>Armless Chair</strong></td><td>39"</td><td>44"</td><td>38"</td><td>70 lbs</td></tr><tr><td><strong>RAF Sofa</strong></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 24" · Seat Height: 21" · Arm Height: 26"</p>',
-      'barrelton':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Barrelton Modular Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><strong>Corner Chair</strong></td><td>41"</td><td>41"</td><td>37"</td><td>75 lbs</td></tr><tr><td><strong>Armless Chair</strong></td><td>30"</td><td>41"</td><td>37"</td><td>58 lbs</td></tr><tr><td><strong>Corner Chaise</strong></td><td>41"</td><td>64"</td><td>37"</td><td>92 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em;line-height:1.8"><strong>Additional:</strong> Seat Depth: 23" · Seat Height: 20" · Arm Height: 26"</p>'
+      'ophannon-sectional':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">O\'Phannon Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><b>Overall</b></td><td>125"</td><td>86"</td><td>38"</td><td>260 lbs</td></tr><tr><td><b>LAF Sofa Chaise</b></td><td>87"</td><td>61"</td><td>38"</td><td>147 lbs</td></tr><tr><td><b>RAF Corner Chaise</b></td><td>37"</td><td>86"</td><td>38"</td><td>113 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em"><b>Additional:</b> Seat Depth: 23" · Seat Height: 21" · Arm Height: 26"</p>',
+      'rawcliffe':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Rawcliffe Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><b>LAF Sofa</b></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr><tr><td><b>Wedge</b></td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr><tr><td><b>Armless Chair</b></td><td>39"</td><td>44"</td><td>38"</td><td>70 lbs</td></tr><tr><td><b>RAF Sofa</b></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr></tbody></table>',
+      'barrelton':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Barrelton Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><b>Corner Chair</b></td><td>41"</td><td>41"</td><td>37"</td><td>75 lbs</td></tr><tr><td><b>Armless Chair</b></td><td>30"</td><td>41"</td><td>37"</td><td>58 lbs</td></tr><tr><td><b>Corner Chaise</b></td><td>41"</td><td>64"</td><td>37"</td><td>92 lbs</td></tr></tbody></table>'
     };
-
     var m=window.location.pathname.match(/\/products\/([^/?#]+)/);
-    if(!m)return;
-    var h=m[1].toLowerCase(),d=dims[h];
-    if(!d){for(var k in dims){if(h.indexOf(k)>-1||k.indexOf(h)>-1){d=dims[k];break;}}}
-
-    if(d){
-      var cards=t.querySelector('.variant-cards');
-      if(cards){cards.insertAdjacentHTML('beforebegin',d);cards.style.display='none';}
-      else{var cta=t.querySelector('.dims-cta');if(cta)cta.insertAdjacentHTML('beforebegin',d);else t.insertAdjacentHTML('afterbegin',d);}
-      var det=document.getElementById('accordion-dimensions');
-      if(det)det.setAttribute('open','');
-      return;
+    if(m){
+      var h=m[1].toLowerCase(),hd=dims[h];
+      if(!hd){for(var k in dims){if(h.indexOf(k)>-1||k.indexOf(h)>-1){hd=dims[k];break;}}}
+      if(hd){
+        var vc=t.querySelector('.variant-cards');
+        if(vc){t.insertBefore(Object.assign(document.createElement('div'),{innerHTML:hd}),vc);vc.style.display='none';}
+        else{var ct=t.querySelector('.dims-cta');if(ct)ct.insertAdjacentHTML('beforebegin',hd);else t.insertAdjacentHTML('afterbegin',hd);}
+        document.getElementById('accordion-dimensions').setAttribute('open','');
+        return;
+      }
     }
 
-    /* STEP 2: Scan Overview for dimension/weight text and MOVE it to Dimensions */
-    var overview=document.querySelector('.accordion-content.rte');
-    if(!overview)return;
-    var kw=/(\d+[\.\d]*\s*("|in|inch|lb|lbs|pound)|\bwidth\b|\bdepth\b|\bheight\b|\bweight\b|\bdimension|\bW\s*x\s*\d|seat\s*height|arm\s*height|seat\s*depth)/i;
-    var toMove=[];
-    var children=overview.querySelectorAll(':scope > p, :scope > div, :scope > ul, :scope > ol, :scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6, :scope > table');
-    children.forEach(function(el){
-      if(kw.test(el.textContent)){
-        toMove.push(el);
-      }
-    });
+    /* Auto-extract: split description HTML into overview vs dimensions */
+    var html=ov.innerHTML;
+    var tmp=document.createElement('div');
+    tmp.innerHTML=html;
+    var overviewParts=[];
+    var dimParts=[];
+    var kw=/\d+[\.\d]*\s*(lb|lbs|pound|kg)|(\d+[\.\d]*\s*")|(\d+[\.\d]*\s*in\b)|\bwidth\b|\bdepth\b|\bheight\b|\bweight\b|\bdimension/i;
 
-    if(toMove.length>0){
-      var wrapper=document.createElement('div');
-      wrapper.className='auto-dimensions';
-      wrapper.style.lineHeight='1.8';
-      toMove.forEach(function(el){
-        wrapper.appendChild(el);
-      });
-      var cards2=t.querySelector('.variant-cards');
-      if(cards2){t.insertBefore(wrapper,cards2);cards2.style.display='none';}
-      else{var cta2=t.querySelector('.dims-cta');if(cta2)t.insertBefore(wrapper,cta2);else t.insertBefore(wrapper,t.firstChild);}
-      var det2=document.getElementById('accordion-dimensions');
-      if(det2)det2.setAttribute('open','');
+    /* Walk every child node of the description */
+    var nodes=tmp.childNodes;
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i];
+      var text=n.textContent||'';
+      if(kw.test(text)){
+        dimParts.push(n.outerHTML||n.textContent);
+      } else {
+        overviewParts.push(n.outerHTML||n.textContent);
+      }
+    }
+
+    if(dimParts.length>0){
+      /* Replace overview with just the non-dimension content */
+      ov.innerHTML=overviewParts.join('');
+
+      /* Put dimension content into the Dimensions tab */
+      var dimHTML='<div style="line-height:1.8">'+dimParts.join('')+'</div>';
+      var vc2=t.querySelector('.variant-cards');
+      if(vc2){t.insertBefore(Object.assign(document.createElement('div'),{innerHTML:dimHTML}),vc2);vc2.style.display='none';}
+      else{var ct2=t.querySelector('.dims-cta');if(ct2)ct2.insertAdjacentHTML('beforebegin',dimHTML);else t.insertAdjacentHTML('afterbegin',dimHTML);}
+      document.getElementById('accordion-dimensions').setAttribute('open','');
     }
   })();
   </script>
