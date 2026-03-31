@@ -264,17 +264,58 @@
       font-size: 0.95em;
       color: #333;
     }
+    /* Variant cards in Dimensions dropdown */
+    .variant-cards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .variant-card {
+      padding: 14px 16px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 6px;
+    }
+    .variant-card__name { font-weight: 600; font-size: 0.95em; margin-bottom: 6px; color: #111; }
+    .variant-card__details { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.85em; color: #555; }
+
+    /* Details list rows */
+    .details-list { display: flex; flex-direction: column; }
+    .details-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9em;
+    }
+    .details-row:last-child { border-bottom: none; }
+    .details-label { font-weight: 600; color: #111; min-width: 100px; }
+
+    /* Dims CTA box */
+    .product-accordion .dims-cta {
+      margin-top: 20px;
+      padding: 20px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 6px;
+      line-height: 1.6;
+    }
+    .product-accordion .dims-cta p { margin: 0; }
+    .product-accordion .dims-cta a { color: #111; font-weight: 600; }
+
+    /* Tables injected by JS (hardcoded dimensions) */
     .product-accordion table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.9em;
       margin-bottom: 8px;
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .product-accordion th,
     .product-accordion td {
-      padding: 12px 16px;
+      padding: 10px 12px;
       text-align: left;
       border-bottom: 1px solid #eee;
+      white-space: nowrap;
     }
     .product-accordion th {
       font-weight: 600;
@@ -283,24 +324,15 @@
       letter-spacing: 0.05em;
       color: #555;
       background: #fafafa;
-      border-bottom: 1px solid #ddd;
     }
     .product-accordion tr:last-child td { border-bottom: none; }
-    .product-accordion .dims-cta {
-      margin-top: 20px;
-      padding: 20px;
-      background: #fafafa;
-      border: 1px solid #eee;
-      border-radius: 4px;
-      line-height: 1.6;
-    }
-    .product-accordion .dims-cta p { margin: 0; }
-    .product-accordion .dims-cta a { color: #111; font-weight: 600; }
+
     @media screen and (max-width: 749px) {
       .product-accordion summary { padding: 14px 2px; font-size: 13px; }
       .product-accordion .accordion-content { padding: 0 2px 20px; }
-      .product-accordion table { font-size: 0.8em; }
-      .product-accordion th, .product-accordion td { padding: 10px 8px; }
+      .details-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .variant-card { padding: 12px; }
+      .variant-card__details { gap: 8px; font-size: 0.8em; }
     }
   </style>
 
@@ -319,7 +351,6 @@
     </details>
 
     {%- comment -%} === DIMENSIONS === {%- endcomment -%}
-    {%- comment -%} Real measurements injected by product-dimensions.js for known products {%- endcomment -%}
     <details id="accordion-dimensions">
       <summary>Dimensions</summary>
       <div class="accordion-content" id="tab-dimensions">
@@ -329,32 +360,18 @@
           </div>
         {%- else -%}
           {%- if product.variants.size > 1 -%}
-            <table>
-              <thead>
-                <tr>
-                  <th>Configuration</th>
-                  <th>SKU</th>
-                  <th>Price</th>
-                  <th>Availability</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%- for variant in product.variants -%}
-                  <tr>
-                    <td style="font-weight:500;">{{ variant.title }}</td>
-                    <td style="opacity:0.6; font-size:0.9em;">{{ variant.sku | default: '—' }}</td>
-                    <td>{{ variant.price | money }}</td>
-                    <td>
-                      {%- if variant.available -%}
-                        <span style="color:#2e7d32;">In Stock</span>
-                      {%- else -%}
-                        <span style="color:#999;">Sold Out</span>
-                      {%- endif -%}
-                    </td>
-                  </tr>
-                {%- endfor -%}
-              </tbody>
-            </table>
+            <div class="variant-cards">
+              {%- for variant in product.variants -%}
+                <div class="variant-card">
+                  <div class="variant-card__name">{{ variant.title }}</div>
+                  <div class="variant-card__details">
+                    {%- if variant.sku != blank -%}<span>SKU: {{ variant.sku }}</span>{%- endif -%}
+                    <span>{{ variant.price | money }}</span>
+                    <span>{%- if variant.available -%}<span style="color:#2e7d32;">In Stock</span>{%- else -%}<span style="color:#999;">Sold Out</span>{%- endif -%}</span>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
           {%- endif -%}
         {%- endif -%}
 
@@ -373,60 +390,24 @@
     <details>
       <summary>Details</summary>
       <div class="accordion-content">
-        <table>
+        <div class="details-list">
           {%- if product.vendor != blank -%}
-          <tr>
-            <td style="font-weight:600; width:40%;">Brand</td>
-            <td>{{ product.vendor }}</td>
-          </tr>
+            <div class="details-row"><span class="details-label">Brand</span><span>{{ product.vendor }}</span></div>
           {%- endif -%}
           {%- if product.type != blank -%}
-          <tr>
-            <td style="font-weight:600;">Type</td>
-            <td>{{ product.type }}</td>
-          </tr>
+            <div class="details-row"><span class="details-label">Type</span><span>{{ product.type }}</span></div>
           {%- endif -%}
           {%- if product.selected_or_first_available_variant.sku != blank -%}
-          <tr>
-            <td style="font-weight:600;">SKU</td>
-            <td>{{ product.selected_or_first_available_variant.sku }}</td>
-          </tr>
-          {%- endif -%}
-          {%- if product.selected_or_first_available_variant.barcode != blank -%}
-          <tr>
-            <td style="font-weight:600;">Barcode</td>
-            <td>{{ product.selected_or_first_available_variant.barcode }}</td>
-          </tr>
+            <div class="details-row"><span class="details-label">SKU</span><span>{{ product.selected_or_first_available_variant.sku }}</span></div>
           {%- endif -%}
           {%- if product.selected_or_first_available_variant.weight > 0 -%}
-          <tr>
-            <td style="font-weight:600;">Weight</td>
-            <td>{{ product.selected_or_first_available_variant.weight | weight_with_unit: product.selected_or_first_available_variant.weight_unit }}</td>
-          </tr>
+            <div class="details-row"><span class="details-label">Weight</span><span>{{ product.selected_or_first_available_variant.weight | weight_with_unit: product.selected_or_first_available_variant.weight_unit }}</span></div>
           {%- endif -%}
-          <tr>
-            <td style="font-weight:600;">Availability</td>
-            <td>
-              {%- if product.available -%}
-                <span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>
-              {%- else -%}
-                <span style="color:#c62828;">Currently Unavailable</span>
-              {%- endif -%}
-            </td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Financing</td>
-            <td>$40 down, no credit check — <a href="/pages/financing" style="text-decoration:underline;">Apply now</a></td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Delivery</td>
-            <td>1–2 weeks, within 50 miles of Louisville — <a href="/pages/delivery" style="text-decoration:underline;">Learn more</a></td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Warranty</td>
-            <td>Manufacturer warranty included</td>
-          </tr>
-        </table>
+          <div class="details-row"><span class="details-label">Availability</span><span>{%- if product.available -%}<span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>{%- else -%}<span style="color:#c62828;">Currently Unavailable</span>{%- endif -%}</span></div>
+          <div class="details-row"><span class="details-label">Financing</span><span>$40 down, no credit check — <a href="/pages/financing" style="text-decoration:underline;">Apply now</a></span></div>
+          <div class="details-row"><span class="details-label">Delivery</span><span>1–2 weeks, within 50 miles — <a href="/pages/delivery" style="text-decoration:underline;">Learn more</a></span></div>
+          <div class="details-row"><span class="details-label">Warranty</span><span>Manufacturer warranty included</span></div>
+        </div>
       </div>
     </details>
 
