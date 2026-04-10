@@ -48,7 +48,7 @@
                 <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
               </h2>
               <div class="select">
-                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                {%- assign sort_by = collection.sort_by | default: 'price-ascending' -%}
                 <select
                   name="sort_by"
                   class="facet-filters__sort select__select caption-large"
