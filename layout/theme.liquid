@@ -27,7 +27,6 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    <!-- SEO: DNS Prefetch for faster third-party resource loading -->
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     <link rel="dns-prefetch" href="//connect.facebook.net">
     <link rel="dns-prefetch" href="//cdn.shopify.com">
@@ -46,13 +45,12 @@
 
     {% render 'meta-tags' %}
 
-    <!-- SEO: Geo Tags for Local Search -->
+    <!-- Local geo tags -->
     <meta name="geo.region" content="US-KY">
     <meta name="geo.placename" content="Louisville">
     <meta name="geo.position" content="38.1814;-85.8221">
     <meta name="ICBM" content="38.1814, -85.8221">
 
-    <!-- SEO: Robots & Author -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Bubba's Mattress & Furniture">
 
@@ -403,7 +401,6 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
     
-    <!-- SEO: Schema Markup (LocalBusiness, FAQ, Product, Breadcrumbs) -->
     {% render 'schema-markup' %}
 
     {%- if template contains 'product' -%}

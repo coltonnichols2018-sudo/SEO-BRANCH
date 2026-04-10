@@ -47,16 +47,12 @@
               </a>
 
               <div style="margin-top: 20px; font-size: 0.85em; text-align: center;">
-                <p style="margin: 0 0 10px; font-weight: 600;">Popular Categories</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
                   <a href="/collections/mattresses" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Mattresses</a>
                   <a href="/collections/living-room-recliners" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Recliners</a>
                   <a href="/collections/living-room-sofas" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Sofas</a>
                   <a href="/collections/bedroom" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Bedroom</a>
                 </div>
-                <p style="margin: 12px 0 0; opacity: 0.7;">
-                  &#128179; Starting at <strong>$40 down</strong> · No credit check
-                </p>
               </div>
 
               {%- if shop.customer_accounts_enabled and customer == null -%}
@@ -589,26 +585,22 @@
           </button>
         </div>
 
-        <!-- Trust signals & financing reminder -->
+        <!-- Delivery + financing info -->
         {%- if cart != empty -%}
-          <div class="cart-drawer__trust-signals" style="padding: 12px 0 4px; text-align: center; font-size: 0.8em; line-height: 1.6;">
+          <div style="padding: 12px 0 4px; text-align: center; font-size: 0.8em; line-height: 1.6;">
             {%- if cart.total_price >= 99900 -%}
               <p style="margin: 0 0 6px; color: #2e7d32; font-weight: 600;">
-                &#10003; You qualify for FREE delivery!
+                Free delivery on this order
               </p>
             {%- else -%}
               {%- assign remaining = 99900 | minus: cart.total_price -%}
               <p style="margin: 0 0 6px;">
-                Add {{ remaining | money }} more for <strong>FREE delivery</strong>
+                {{ remaining | money }} away from <strong>free delivery</strong>
               </p>
             {%- endif -%}
-            <p style="margin: 0 0 6px; opacity: 0.8;">
-              &#128179; <strong>$40 down</strong> · No credit check · <a href="/pages/financing" style="text-decoration: underline;">Apply now</a>
+            <p style="margin: 0; opacity: 0.7;">
+              <strong>$40 down</strong> · No credit check · <a href="/pages/financing" style="text-decoration: underline;">Apply here</a>
             </p>
-            <div style="display: flex; justify-content: center; gap: 12px; opacity: 0.6; margin-top: 6px; font-size: 0.9em;">
-              <span>&#128274; Secure checkout</span>
-              <span>&#9733; 285 five-star reviews</span>
-            </div>
           </div>
         {%- endif -%}
       </div>

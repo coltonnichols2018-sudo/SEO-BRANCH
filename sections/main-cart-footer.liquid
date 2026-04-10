@@ -125,26 +125,20 @@
                 </div>
               {%- endif -%}
 
-              <!-- Trust signals & financing -->
-              <div class="cart__trust-signals" style="margin-top: 16px; text-align: center; font-size: 0.85em; line-height: 1.7;">
+              <div style="margin-top: 16px; text-align: center; font-size: 0.85em; line-height: 1.7;">
                 {%- if cart.total_price >= 99900 -%}
-                  <p style="margin: 0 0 8px; color: #2e7d32; font-weight: 600;">
-                    &#10003; Your order qualifies for FREE delivery!
+                  <p style="margin: 0 0 8px; color: #2e7d32; font-weight: 500;">
+                    Free delivery on this order
                   </p>
                 {%- else -%}
                   {%- assign remaining = 99900 | minus: cart.total_price -%}
                   <p style="margin: 0 0 8px;">
-                    Add {{ remaining | money }} more for <strong>FREE delivery</strong> within 50 miles of Louisville
+                    {{ remaining | money }} away from <strong>free delivery</strong>
                   </p>
                 {%- endif -%}
-                <p style="margin: 0 0 8px;">
-                  &#128179; Need financing? <strong>$40 down, no credit check.</strong> <a href="/pages/financing" style="text-decoration: underline;">Learn more</a>
+                <p style="margin: 0; opacity: 0.7;">
+                  <strong>$40 down, no credit check.</strong> <a href="/pages/financing" style="text-decoration: underline;">Apply here</a> · Delivered in 1-2 weeks
                 </p>
-                <div style="display: flex; justify-content: center; gap: 16px; opacity: 0.6; flex-wrap: wrap;">
-                  <span>&#128274; Secure checkout</span>
-                  <span>&#9733; 285 five-star Google reviews</span>
-                  <span>&#128666; Delivered in 1-2 weeks</span>
-                </div>
               </div>
           {%- endcase -%}
         {% endfor %}
