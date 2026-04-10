@@ -114,6 +114,12 @@
                     price_class: 'price--large'
                   -%}
                 </div>
+                {%- assign monthly = product.selected_or_first_available_variant.price | divided_by: 2400 -%}
+                {%- if monthly > 0 -%}
+                <p style="margin:6px 0 0;font-size:13px;color:#555;">
+                  or ~${{ monthly }}/mo with <a href="/pages/financing" style="color:#555;text-decoration:underline;">financing</a>
+                </p>
+                {%- endif -%}
                 <div class="bubba-product-info">
                 
 
@@ -1017,6 +1023,44 @@
   </div>
 </product-info>
 {% render 'related-by-tags-ajax' %}
+
+{% comment %} Sticky add-to-cart bar for mobile {% endcomment %}
+<style>
+.sticky-atc{display:none}
+@media(max-width:749px){
+  .sticky-atc{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:998;
+    background:#fff;border-top:1px solid #ddd;padding:10px 16px;
+    align-items:center;justify-content:space-between;gap:12px;
+    box-shadow:0 -2px 12px rgba(0,0,0,0.08);
+  }
+  .sticky-atc__info{flex:1;min-width:0;}
+  .sticky-atc__title{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0;}
+  .sticky-atc__price{font-size:13px;margin:2px 0 0;opacity:0.8;}
+  .sticky-atc__btn{
+    background:#111;color:#fff;border:none;padding:12px 20px;
+    border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;
+    white-space:nowrap;flex-shrink:0;
+  }
+  .text-colton-btn{bottom:70px !important;}
+}
+</style>
+<div class="sticky-atc">
+  <div class="sticky-atc__info">
+    <p class="sticky-atc__title">{{ product.title | escape }}</p>
+    <p class="sticky-atc__price">{{ product.selected_or_first_available_variant.price | money }}</p>
+  </div>
+  {%- if product.available -%}
+  <button class="sticky-atc__btn" onclick="document.querySelector('.product-form__submit, [name=add]').click()">
+    Add to Cart
+  </button>
+  {%- else -%}
+  <a href="tel:+15024940376" class="sticky-atc__btn" style="text-decoration:none;color:#fff;">
+    Call for Availability
+  </a>
+  {%- endif -%}
+</div>
+
 {% schema %}
 {
   "name": "t:sections.main-product.name",

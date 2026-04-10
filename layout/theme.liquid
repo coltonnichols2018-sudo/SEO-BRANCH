@@ -427,5 +427,67 @@
   logged_in_greeting="👋 Welcome to Bubba's! Message us for prices, photos and financing info!"
   logged_out_greeting="👋 Welcome to Bubba's! Message us for prices, photos and financing info!">
 </div>
+
+{% comment %} ===== STICKY TEXT COLTON BUTTON (mobile only) ===== {% endcomment %}
+<style>
+.text-colton-btn{display:none}
+@media(max-width:749px){
+  .text-colton-btn{
+    display:flex;position:fixed;bottom:16px;left:16px;z-index:999;
+    background:#111;color:#fff;padding:12px 18px;border-radius:50px;
+    font-size:14px;font-weight:600;text-decoration:none;
+    box-shadow:0 4px 16px rgba(0,0,0,0.3);gap:8px;align-items:center;
+    transition:transform 0.2s;
+  }
+  .text-colton-btn:hover{transform:scale(1.05);color:#fff;}
+  .text-colton-btn svg{width:18px;height:18px;fill:#fff;}
+}
+</style>
+<a href="sms:+15024940376" class="text-colton-btn">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/></svg>
+  Text Colton
+</a>
+
+{% comment %} ===== RECENTLY VIEWED PRODUCTS ===== {% endcomment %}
+{%- if template contains 'product' -%}
+<script>
+(function(){
+  var key='bubba_recent',max=8,cur=window.location.pathname;
+  if(!cur.match(/\/products\//))return;
+  var s=[];try{s=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  s=s.filter(function(p){return p.url!==cur;});
+  s.unshift({url:cur,title:(document.querySelector('.product__title h1,.product__title h2')||{}).textContent?.trim()||'',image:(document.querySelector('.product__media img')||{}).src||'',price:(document.querySelector('.price-item--regular,.price-item--sale')||{}).textContent?.trim()||''});
+  if(s.length>max)s=s.slice(0,max);
+  try{localStorage.setItem(key,JSON.stringify(s));}catch(e){}
+})();
+</script>
+{%- endif -%}
+
+{%- if template contains 'product' or template == 'index' or template contains 'collection' -%}
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var s=[];try{s=JSON.parse(localStorage.getItem('bubba_recent')||'[]');}catch(e){return;}
+  var cur=window.location.pathname;
+  var items=s.filter(function(p){return p.url!==cur&&p.title&&p.image;});
+  if(items.length<2)return;
+  items=items.slice(0,6);
+  var h='<div class="recently-viewed page-width" style="padding:30px 0 40px">';
+  h+='<h2 style="text-align:center;margin:0 0 20px;font-size:1.1em;font-weight:600">Recently Viewed</h2>';
+  h+='<div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch">';
+  items.forEach(function(p){
+    h+='<a href="'+p.url+'" style="min-width:150px;max-width:180px;text-decoration:none;color:inherit;flex-shrink:0">';
+    h+='<div style="aspect-ratio:1;overflow:hidden;border-radius:8px;background:#f5f5f5;margin-bottom:8px"><img src="'+p.image+'" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>';
+    h+='<p style="margin:0;font-size:0.8em;font-weight:500;line-height:1.3">'+p.title+'</p>';
+    if(p.price)h+='<p style="margin:4px 0 0;font-size:0.8em;opacity:0.7">'+p.price+'</p>';
+    h+='</a>';
+  });
+  h+='</div></div>';
+  var r=document.querySelector('.related-products');
+  if(r)r.insertAdjacentHTML('afterend',h);
+  else{var m=document.getElementById('MainContent');if(m)m.insertAdjacentHTML('beforeend',h);}
+});
+</script>
+{%- endif -%}
+
   </body>
 </html>
