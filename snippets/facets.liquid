@@ -17,7 +17,7 @@
 {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign sort_by = results.sort_by | default: 'price-ascending'
+  assign sort_by = results.sort_by | default: results.default_sort_by
   assign total_active_values = 0
   assign default_presentation = 'text'
   if results.url
@@ -392,7 +392,7 @@
                   <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
                 </h2>
                 <div class="select">
-                  {%- assign sort_by = results.sort_by | default: 'price-ascending' -%}
+                  {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
                   <select
                     name="sort_by"
                     class="facet-filters__sort select__select caption-large"
@@ -832,7 +832,7 @@
               <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
             </h2>
             <div class="select">
-              {%- assign sort_by = results.sort_by | default: 'price-ascending' -%}
+              {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
               <select
                 name="sort_by"
                 class="facet-filters__sort select__select caption-large"
