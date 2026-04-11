@@ -441,20 +441,17 @@
       }
     }
 
-    /* Auto-extract: split description HTML into overview vs dimensions */
+    /* Auto-extract: split description into overview vs dimensions */
     var html=ov.innerHTML;
     var tmp=document.createElement('div');
     tmp.innerHTML=html;
     var overviewParts=[];
     var dimParts=[];
     var kw=/\d+[\.\d]*\s*(lb|lbs|pound|kg)|(\d+[\.\d]*\s*")|(\d+[\.\d]*\s*in\b)|\bwidth\b|\bdepth\b|\bheight\b|\bweight\b|\bdimension/i;
-
-    /* Walk every child node of the description */
     var nodes=tmp.childNodes;
     for(var i=0;i<nodes.length;i++){
       var n=nodes[i];
-      var text=n.textContent||'';
-      if(kw.test(text)){
+      if(kw.test(n.textContent||'')){
         dimParts.push(n.outerHTML||n.textContent);
       } else {
         overviewParts.push(n.outerHTML||n.textContent);
@@ -462,15 +459,70 @@
     }
 
     if(dimParts.length>0){
-      /* Replace overview with just the non-dimension content */
       ov.innerHTML=overviewParts.join('');
 
-      /* Put dimension content into the Dimensions tab */
-      var dimHTML='<div style="line-height:1.8">'+dimParts.join('')+'</div>';
+      /* Wrap each dimension block with data attributes for variant filtering */
+      var dimContainer=document.createElement('div');
+      dimContainer.id='dims-all-variants';
+      dimContainer.innerHTML=dimParts.join('');
+
+      /* Tag each block-level child with the variant name it contains */
+      var blocks=dimContainer.querySelectorAll(':scope > *');
+      blocks.forEach(function(block){
+        block.setAttribute('data-dim-block','true');
+      });
+
       var vc2=t.querySelector('.variant-cards');
-      if(vc2){t.insertBefore(Object.assign(document.createElement('div'),{innerHTML:dimHTML}),vc2);vc2.style.display='none';}
-      else{var ct2=t.querySelector('.dims-cta');if(ct2)ct2.insertAdjacentHTML('beforebegin',dimHTML);else t.insertAdjacentHTML('afterbegin',dimHTML);}
+      if(vc2){t.insertBefore(dimContainer,vc2);vc2.style.display='none';}
+      else{var ct2=t.querySelector('.dims-cta');if(ct2)t.insertBefore(dimContainer,ct2);else t.insertBefore(dimContainer,t.firstChild);}
       document.getElementById('accordion-dimensions').setAttribute('open','');
+
+      /* Listen for variant changes and filter dimensions */
+      function filterDimsByVariant(variantTitle){
+        if(!variantTitle)return;
+        var vt=variantTitle.toLowerCase();
+        var allBlocks=dimContainer.querySelectorAll('[data-dim-block]');
+        var anyMatch=false;
+
+        /* First pass: check if any blocks match the variant title */
+        allBlocks.forEach(function(b){
+          var txt=b.textContent.toLowerCase();
+          /* Check if this block's text contains words from the variant title */
+          var words=vt.replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(function(w){return w.length>2;});
+          var matches=words.filter(function(w){return txt.indexOf(w)>-1;});
+          if(matches.length>=2){anyMatch=true;}
+        });
+
+        if(!anyMatch){
+          /* No matches found — show everything (don't hide anything) */
+          allBlocks.forEach(function(b){b.style.display='';});
+          return;
+        }
+
+        /* Second pass: show only matching blocks */
+        allBlocks.forEach(function(b){
+          var txt=b.textContent.toLowerCase();
+          var words=vt.replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(function(w){return w.length>2;});
+          var matches=words.filter(function(w){return txt.indexOf(w)>-1;});
+          b.style.display=(matches.length>=2)?'':'none';
+        });
+      }
+
+      /* Subscribe to Shopify's variant change event */
+      if(window.subscribe && window.PUB_SUB_EVENTS){
+        subscribe(PUB_SUB_EVENTS.variantChange,function(evt){
+          if(evt.data&&evt.data.variant){
+            filterDimsByVariant(evt.data.variant.title||evt.data.variant.public_title||'');
+          }
+        });
+      }
+
+      /* Also filter on initial load based on selected variant */
+      var selected=document.querySelector('variant-selects input[type="radio"]:checked, variant-selects select');
+      if(selected){
+        var initialTitle=selected.value||selected.textContent||'';
+        if(initialTitle)filterDimsByVariant(initialTitle);
+      }
     }
   })();
   </script>
