@@ -417,7 +417,6 @@
         var vc=t.querySelector('.variant-cards');
         if(vc){t.insertBefore(Object.assign(document.createElement('div'),{innerHTML:hd}),vc);vc.style.display='none';}
         else{var ct=t.querySelector('.dims-cta');if(ct)ct.insertAdjacentHTML('beforebegin',hd);else t.insertAdjacentHTML('afterbegin',hd);}
-        document.getElementById('accordion-dimensions').setAttribute('open','');
         return;
       }
     }
@@ -456,7 +455,7 @@
       var vc2=t.querySelector('.variant-cards');
       if(vc2){t.insertBefore(dimContainer,vc2);vc2.style.display='none';}
       else{var ct2=t.querySelector('.dims-cta');if(ct2)t.insertBefore(dimContainer,ct2);else t.insertBefore(dimContainer,t.firstChild);}
-      document.getElementById('accordion-dimensions').setAttribute('open','');
+      /* dimensions moved but keep section closed */
 
       /* Listen for variant changes and filter dimensions */
       function filterDimsByVariant(variantTitle){
