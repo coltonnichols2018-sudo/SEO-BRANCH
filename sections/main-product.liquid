@@ -408,105 +408,156 @@
     var ov=document.querySelector('.accordion-content.rte');
     if(!t||!ov)return;
 
-    /* Hardcoded dimensions for specific products */
+    /* Ashley product dimensions database */
     var dims={
-      'ophannon-sectional':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">O\'Phannon Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><b>Overall</b></td><td>125"</td><td>86"</td><td>38"</td><td>260 lbs</td></tr><tr><td><b>LAF Sofa Chaise</b></td><td>87"</td><td>61"</td><td>38"</td><td>147 lbs</td></tr><tr><td><b>RAF Corner Chaise</b></td><td>37"</td><td>86"</td><td>38"</td><td>113 lbs</td></tr></tbody></table><p style="margin:16px 0 0;font-size:.9em"><b>Additional:</b> Seat Depth: 23" · Seat Height: 21" · Arm Height: 26"</p>',
-      'rawcliffe':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Rawcliffe Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><b>LAF Sofa</b></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr><tr><td><b>Wedge</b></td><td>45"</td><td>44"</td><td>38"</td><td>83 lbs</td></tr><tr><td><b>Armless Chair</b></td><td>39"</td><td>44"</td><td>38"</td><td>70 lbs</td></tr><tr><td><b>RAF Sofa</b></td><td>86"</td><td>44"</td><td>38"</td><td>135 lbs</td></tr></tbody></table>',
-      'barrelton':'<h3 style="margin:0 0 16px;font-size:1em;font-weight:600">Barrelton Sectional</h3><table><thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead><tbody><tr><td><b>Corner Chair</b></td><td>41"</td><td>41"</td><td>37"</td><td>75 lbs</td></tr><tr><td><b>Armless Chair</b></td><td>30"</td><td>41"</td><td>37"</td><td>58 lbs</td></tr><tr><td><b>Corner Chaise</b></td><td>41"</td><td>64"</td><td>37"</td><td>92 lbs</td></tr></tbody></table>'
+      'ophannon':{
+        title:"O'Phannon Sectional",
+        pieces:[
+          {name:'Overall (2-Piece)',w:'125"',d:'86"',h:'38"',wt:'260 lbs'},
+          {name:'LAF Sofa Chaise',w:'87"',d:'61"',h:'38"',wt:'147 lbs'},
+          {name:'RAF Corner Chaise',w:'37"',d:'86"',h:'38"',wt:'113 lbs'}
+        ],
+        extra:'Seat Depth: 23" · Seat Height: 21" · Arm Height: 26"'
+      },
+      'lindyn':{
+        title:"Lindyn Sectional",
+        pieces:[
+          {name:'Corner Chaise',w:'51"',d:'70"',h:'38"',wt:'146 lbs'},
+          {name:'Corner Chair',w:'51"',d:'44"',h:'38"',wt:'106 lbs'},
+          {name:'Armless Chair',w:'39"',d:'44"',h:'38"',wt:'86 lbs'},
+          {name:'Wedge',w:'44"',d:'44"',h:'38"',wt:'99 lbs'}
+        ],
+        configs:[
+          {name:'2-Piece Sectional',w:'102"',d:'44"',h:'38"'},
+          {name:'3-Piece w/ Chaise',w:'138"',d:'70"',h:'38"'},
+          {name:'5-Piece Symmetrical',w:'133"',d:'133"',h:'38"'},
+          {name:'6-Piece w/ Chaise',w:'173"',d:'134"',h:'38"'}
+        ]
+      },
+      'midnight-madness':{
+        title:"Midnight Madness Sectional",
+        pieces:[
+          {name:'Corner Chaise',w:'40"',d:'65"',h:'40"',wt:'127 lbs'},
+          {name:'Armless Loveseat',w:'70"',d:'41"',h:'40"',wt:''},
+          {name:'Armless Chair',w:'35"',d:'41"',h:'40"',wt:''},
+          {name:'Wedge',w:'41"',d:'41"',h:'40"',wt:'37 lbs'},
+          {name:'Ottoman',w:'39"',d:'39"',h:'22"',wt:'58 lbs'}
+        ],
+        configs:[
+          {name:'2-Piece Sectional Sofa',w:'120"',d:'65"',h:'40"',wt:'276 lbs'},
+          {name:'3-Piece Double Chaise',w:'150"',d:'65"',h:'40"',wt:''},
+          {name:'3-Piece Sectional',w:'121"',d:'121"',h:'40"',wt:''},
+          {name:'4-Piece w/ Chaise',w:'151"',d:'121"',h:'40"',wt:'408 lbs'},
+          {name:'5-Piece Sectional',w:'122"',d:'122"',h:'40"',wt:''},
+          {name:'6-Piece w/ Chaise',w:'151"',d:'122"',h:'40"',wt:''}
+        ]
+      },
+      'magic-man':{
+        title:"Magic Man Reclining Sectional",
+        pieces:[],
+        configs:[
+          {name:'2-Piece Reclining Loveseat',w:'84"',d:'40"',h:'34"',wt:'308 lbs'},
+          {name:'3-Piece w/ Console',w:'97"',d:'40"',h:'34"',wt:'363 lbs'},
+          {name:'3-Piece w/ Armless Chair',w:'116"',d:'40"',h:'34"',wt:'394 lbs'},
+          {name:'5-Piece Sectional',w:'122"',d:'122"',h:'34"',wt:'676 lbs'},
+          {name:'6-Piece w/ Console',w:'135"',d:'122"',h:'34"',wt:'731 lbs'}
+        ]
+      },
+      'rawcliffe':{
+        title:"Rawcliffe Sectional",
+        pieces:[
+          {name:'LAF/RAF Sofa',w:'86"',d:'44"',h:'38"',wt:'135 lbs'},
+          {name:'Wedge',w:'45"',d:'44"',h:'38"',wt:'83 lbs'},
+          {name:'Armless Chair',w:'39"',d:'44"',h:'38"',wt:'70 lbs'}
+        ],
+        extra:'Seat Depth: 24" · Seat Height: 21" · Arm Height: 26"'
+      },
+      'barrelton':{
+        title:"Barrelton Sectional",
+        pieces:[
+          {name:'Corner Chair',w:'41"',d:'41"',h:'37"',wt:'75 lbs'},
+          {name:'Armless Chair',w:'30"',d:'41"',h:'37"',wt:'58 lbs'},
+          {name:'Corner Chaise',w:'41"',d:'64"',h:'37"',wt:'92 lbs'}
+        ],
+        extra:'Seat Depth: 23" · Seat Height: 20" · Arm Height: 26"'
+      }
     };
+
+    /* Build clean HTML from dimension data */
+    function buildDimTable(d){
+      var h='';
+      if(d.configs&&d.configs.length){
+        h+='<p style="font-weight:600;margin:0 0 12px;font-size:0.95em;">Configurations</p>';
+        h+='<table><thead><tr><th>Configuration</th><th>W</th><th>D</th><th>H</th>';
+        if(d.configs.some(function(c){return c.wt;}))h+='<th>Weight</th>';
+        h+='</tr></thead><tbody>';
+        d.configs.forEach(function(c){
+          h+='<tr><td><b>'+c.name+'</b></td><td>'+c.w+'</td><td>'+c.d+'</td><td>'+c.h+'</td>';
+          if(d.configs.some(function(x){return x.wt;}))h+='<td>'+(c.wt||'—')+'</td>';
+          h+='</tr>';
+        });
+        h+='</tbody></table>';
+      }
+      if(d.pieces&&d.pieces.length){
+        h+='<p style="font-weight:600;margin:16px 0 12px;font-size:0.95em;">Individual Pieces</p>';
+        h+='<table><thead><tr><th>Piece</th><th>W</th><th>D</th><th>H</th>';
+        if(d.pieces.some(function(p){return p.wt;}))h+='<th>Weight</th>';
+        h+='</tr></thead><tbody>';
+        d.pieces.forEach(function(p){
+          h+='<tr><td><b>'+p.name+'</b></td><td>'+p.w+'</td><td>'+p.d+'</td><td>'+p.h+'</td>';
+          if(d.pieces.some(function(x){return x.wt;}))h+='<td>'+(p.wt||'—')+'</td>';
+          h+='</tr>';
+        });
+        h+='</tbody></table>';
+      }
+      if(d.extra)h+='<p style="margin:12px 0 0;font-size:.9em;opacity:0.7;">'+d.extra+'</p>';
+      return h;
+    }
+
+    /* Match product to dimension data */
     var m=window.location.pathname.match(/\/products\/([^/?#]+)/);
-    if(m){
-      var h=m[1].toLowerCase(),hd=dims[h];
-      if(!hd){for(var k in dims){if(h.indexOf(k)>-1||k.indexOf(h)>-1){hd=dims[k];break;}}}
-      if(hd){
-        var vc=t.querySelector('.variant-cards');
-        if(vc){t.insertBefore(Object.assign(document.createElement('div'),{innerHTML:hd}),vc);vc.style.display='none';}
-        else{var ct=t.querySelector('.dims-cta');if(ct)ct.insertAdjacentHTML('beforebegin',hd);else t.insertAdjacentHTML('afterbegin',hd);}
-        return;
-      }
+    if(!m)return;
+    var handle=m[1].toLowerCase();
+    var matched=null;
+    for(var k in dims){
+      if(handle.indexOf(k)>-1||k.indexOf(handle)>-1){matched=dims[k];break;}
     }
 
-    /* Auto-extract: split description into overview vs dimensions */
-    var html=ov.innerHTML;
-    var tmp=document.createElement('div');
-    tmp.innerHTML=html;
-    var overviewParts=[];
-    var dimParts=[];
-    var kw=/\d+[\.\d]*\s*(lb|lbs|pound|kg)|(\d+[\.\d]*\s*")|(\d+[\.\d]*\s*in\b)|\bwidth\b|\bdepth\b|\bheight\b|\bweight\b|\bdimension/i;
-    var nodes=tmp.childNodes;
-    for(var i=0;i<nodes.length;i++){
-      var n=nodes[i];
-      if(kw.test(n.textContent||'')){
-        dimParts.push(n.outerHTML||n.textContent);
-      } else {
-        overviewParts.push(n.outerHTML||n.textContent);
-      }
-    }
-
-    if(dimParts.length>0){
-      ov.innerHTML=overviewParts.join('');
-
-      /* Wrap each dimension block with data attributes for variant filtering */
-      var dimContainer=document.createElement('div');
-      dimContainer.id='dims-all-variants';
-      dimContainer.innerHTML=dimParts.join('');
-
-      /* Tag each block-level child with the variant name it contains */
-      var blocks=dimContainer.querySelectorAll(':scope > *');
-      blocks.forEach(function(block){
-        block.setAttribute('data-dim-block','true');
-      });
-
-      var vc2=t.querySelector('.variant-cards');
-      if(vc2){t.insertBefore(dimContainer,vc2);vc2.style.display='none';}
-      else{var ct2=t.querySelector('.dims-cta');if(ct2)t.insertBefore(dimContainer,ct2);else t.insertBefore(dimContainer,t.firstChild);}
-      /* dimensions moved but keep section closed */
-
-      /* Listen for variant changes and filter dimensions */
-      function filterDimsByVariant(variantTitle){
-        if(!variantTitle)return;
-        var vt=variantTitle.toLowerCase();
-        var allBlocks=dimContainer.querySelectorAll('[data-dim-block]');
-        var anyMatch=false;
-
-        /* First pass: check if any blocks match the variant title */
-        allBlocks.forEach(function(b){
-          var txt=b.textContent.toLowerCase();
-          /* Check if this block's text contains words from the variant title */
-          var words=vt.replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(function(w){return w.length>2;});
-          var matches=words.filter(function(w){return txt.indexOf(w)>-1;});
-          if(matches.length>=2){anyMatch=true;}
-        });
-
-        if(!anyMatch){
-          /* No matches found — show everything (don't hide anything) */
-          allBlocks.forEach(function(b){b.style.display='';});
-          return;
+    if(matched){
+      /* Replace all content in dimensions tab with clean data */
+      var cta=t.querySelector('.dims-cta');
+      var ctaHTML=cta?cta.outerHTML:'';
+      t.innerHTML=buildDimTable(matched)+(ctaHTML||'');
+      /* Also clean the overview — remove the Wondersign garbage dimension text */
+      var nodes=ov.childNodes;
+      for(var i=nodes.length-1;i>=0;i--){
+        var txt=nodes[i].textContent||'';
+        if(/\d+[\.\d]*\s*(lb|lbs)|\d+[\.\d]*"[WDHWDH]|\d+\.\d+"W\s*x/.test(txt)&&txt.length>100){
+          nodes[i].remove();
         }
-
-        /* Second pass: show only matching blocks */
-        allBlocks.forEach(function(b){
-          var txt=b.textContent.toLowerCase();
-          var words=vt.replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(function(w){return w.length>2;});
-          var matches=words.filter(function(w){return txt.indexOf(w)>-1;});
-          b.style.display=(matches.length>=2)?'':'none';
-        });
       }
+      return;
+    }
 
-      /* Subscribe to Shopify's variant change event */
-      if(window.subscribe && window.PUB_SUB_EVENTS){
-        subscribe(PUB_SUB_EVENTS.variantChange,function(evt){
-          if(evt.data&&evt.data.variant){
-            filterDimsByVariant(evt.data.variant.title||evt.data.variant.public_title||'');
-          }
-        });
+    /* No match — still clean up the Wondersign garbage from dimensions */
+    /* If the dimension text is just a wall of numbers with no labels, hide it */
+    var dimContent=t.textContent||'';
+    var cta2=t.querySelector('.dims-cta');
+    if(dimContent.replace(/[\s\n]/g,'').length>200){
+      var ratio=(dimContent.match(/\d/g)||[]).length/dimContent.replace(/[\s\n]/g,'').length;
+      if(ratio>0.3){
+        /* More than 30% numbers = Wondersign garbage, replace with clean message */
+        var ctaHTML2=cta2?cta2.outerHTML:'';
+        t.innerHTML='<p style="font-size:0.95em;line-height:1.7;">Dimensions vary by configuration. Text us at <a href="tel:+15024940376" style="font-weight:600;">(502) 494-0376</a> with your preferred setup and we\'ll send you the exact measurements.</p>'+(ctaHTML2||'');
       }
+    }
 
-      /* Also filter on initial load based on selected variant */
-      var selected=document.querySelector('variant-selects input[type="radio"]:checked, variant-selects select');
-      if(selected){
-        var initialTitle=selected.value||selected.textContent||'';
-        if(initialTitle)filterDimsByVariant(initialTitle);
+    /* Also clean garbage from overview */
+    var ovNodes=ov.childNodes;
+    for(var j=ovNodes.length-1;j>=0;j--){
+      var t2=ovNodes[j].textContent||'';
+      if(/\d+[\.\d]*\s*(lb|lbs)|\d+[\.\d]*"[WDHWDH]|\d+\.\d+"W\s*x/.test(t2)&&t2.length>100){
+        ovNodes[j].remove();
       }
     }
   })();
