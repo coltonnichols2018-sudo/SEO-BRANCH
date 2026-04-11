@@ -109,12 +109,6 @@
                     price_class: 'price--large'
                   -%}
                 </div>
-                {%- assign monthly = product.selected_or_first_available_variant.price | divided_by: 1200 -%}
-                {%- if monthly > 0 -%}
-                <p style="margin:6px 0 0;font-size:13px;color:rgba(var(--color-foreground),0.5);">
-                  As low as ${{ monthly }}/mo · <a href="/pages/financing" style="color:rgba(var(--color-foreground),0.5);text-decoration:underline;">See options</a>
-                </p>
-                {%- endif -%}
                 <style>
                   .product-info-bar{margin:16px 0;padding:14px 16px;background:rgba(var(--color-foreground),0.03);border:1px solid rgba(var(--color-foreground),0.08);border-radius:4px;font-size:13px;color:rgba(var(--color-foreground),0.7);line-height:2;}
                   .product-info-bar a{color:rgba(var(--color-foreground),0.7);text-decoration:underline;text-underline-offset:2px;}
