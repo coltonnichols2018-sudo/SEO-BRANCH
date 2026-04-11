@@ -250,7 +250,7 @@
     {%- endunless -%}
   {%- endif -%}
 
-  <div class="footer__seo-content page-width" style="padding: 20px 0; border-top: 1px solid rgba(var(--color-foreground), 0.08);" itemscope itemtype="https://schema.org/FurnitureStore">
+  <div class="footer__info-bar page-width" itemscope itemtype="https://schema.org/FurnitureStore">
     <meta itemprop="name" content="Bubba's Mattress & Furniture">
     <meta itemprop="url" content="https://www.bubbasmattressfurniturelouisville.com/">
     <meta itemprop="telephone" content="+1-502-494-0376">
@@ -263,28 +263,29 @@
       <meta itemprop="addressCountry" content="US">
     </div>
     <style>
-      .footer-seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.85em; opacity: 0.75; }
-      @media screen and (max-width: 749px) { .footer-seo-grid { grid-template-columns: 1fr; } }
+      .footer__info-bar{padding:24px 0;border-top:1px solid rgba(var(--color-foreground),0.06);}
+      .footer__info-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;font-size:0.82em;opacity:0.55;line-height:1.7;}
+      .footer__info-grid a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
+      .footer__info-heading{font-weight:600;margin:0 0 8px;letter-spacing:0.03em;text-transform:uppercase;font-size:0.85em;}
+      .footer__info-grid p{margin:0;}
+      @media(max-width:749px){.footer__info-grid{grid-template-columns:1fr;gap:24px;}}
     </style>
-    <div class="footer-seo-grid">
+    <div class="footer__info-grid">
       <div>
-        <p style="margin: 0 0 8px; font-weight: bold;">Store Hours</p>
-        <p style="margin: 0; line-height: 1.6;">
+        <p class="footer__info-heading">Hours</p>
+        <p>
           Mon–Wed: 11:30 AM – 6:30 PM<br>
-          Thursday: 11:30 AM – 5:00 PM<br>
-          Friday: 11:30 AM – 6:30 PM<br>
-          Saturday: 11:30 AM – 6:00 PM<br>
-          Sunday: Closed
+          Thu: 11:30 AM – 5:00 PM<br>
+          Fri: 11:30 AM – 6:30 PM<br>
+          Sat: 11:30 AM – 6:00 PM<br>
+          Sun: Closed
         </p>
       </div>
       <div>
-        <p style="margin: 0 0 8px; font-weight: bold;">We deliver to</p>
-        <p style="margin: 0; line-height: 1.6;">
-          Louisville &middot; Valley Station &middot; PRP &middot; Shively &middot; Okolona &middot; Fairdale &middot; Jeffersontown &middot; Shepherdsville &middot; Radcliff &middot; Elizabethtown &middot; New Albany &middot; Clarksville
-        </p>
-        <p style="margin: 8px 0 0;">
-          <a href="/pages/delivery" style="text-decoration: underline;">Delivery info</a> &middot;
-          <a href="/pages/financing" style="text-decoration: underline;">Financing</a>
+        <p class="footer__info-heading">Delivery</p>
+        <p>
+          Louisville and surrounding areas within 50 miles.<br>
+          <a href="/pages/delivery">Delivery info</a> · <a href="/pages/financing">Financing</a>
         </p>
       </div>
     </div>

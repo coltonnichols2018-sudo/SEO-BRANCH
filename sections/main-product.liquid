@@ -99,11 +99,6 @@
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
-                  <a href="{{ product.url }}" class="product__title">
-                    <h2 class="h1">
-                      {{ product.title | escape }}
-                    </h2>
-                  </a>
                 </div>
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
@@ -120,34 +115,15 @@
                   or ~${{ monthly }}/mo with <a href="/pages/financing" style="color:#555;text-decoration:underline;">financing</a>
                 </p>
                 {%- endif -%}
-                <div class="bubba-product-info">
-                
-
-                  <!-- Delivery & Pickup Info -->
-<div style="font-family:'Jost', sans-serif;margin:16px 0;border-top:1px solid #e8e8e8;padding-top:16px;">
-  <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;">
-    <span style="font-size:14px;">🚚</span>
-    <div>
-      <span style="font-size:14px;color:#111111;font-weight:500;">Order today — delivered in 1–2 weeks</span>
-      <span style="font-size:13px;color:#777777;"> · Within 50 miles of Louisville · <a href="/pages/delivery-and-pickup-information" style="color:#777777;text-decoration:underline;">Details</a></span>
-    </div>
-  </div>
-  <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;">
-    <span style="font-size:14px;">💳</span>
-    <div>
-      <span style="font-size:14px;color:#111111;font-weight:500;">$40 down — no credit check needed</span>
-      <span style="font-size:13px;color:#777777;"> · Flexible financing available · <a href="/pages/financing" style="color:#777777;text-decoration:underline;">Learn more</a></span>
-    </div>
-  </div>
-  <div style="display:flex;align-items:flex-start;gap:8px;">
-    <span style="font-size:14px;">📞</span>
-    <div>
-      <span style="font-size:14px;color:#111111;font-weight:500;">Questions?</span>
-      <span style="font-size:13px;color:#777777;"> Call or text Colton · <a href="tel:5024940376" style="color:#777777;text-decoration:underline;">(502) 494-0376</a></span>
-    </div>
-  </div>
-</div>
-</div>
+                <style>
+                  .product-info-bar{margin:16px 0;padding-top:16px;border-top:1px solid rgba(var(--color-foreground),0.08);font-size:13px;color:rgba(var(--color-foreground),0.6);line-height:1.8;}
+                  .product-info-bar a{color:rgba(var(--color-foreground),0.6);text-decoration:underline;}
+                </style>
+                <div class="product-info-bar">
+                  Delivered in 1–2 weeks · <a href="/pages/delivery-and-pickup-information">Delivery info</a><br>
+                  Financing from $40/mo · <a href="/pages/financing">Apply here</a><br>
+                  <a href="tel:5024940376">(502) 494-0376</a>
+                </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -1081,20 +1057,22 @@
 .sticky-atc{display:none}
 @media(max-width:749px){
   .sticky-atc{
-    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:998;
-    background:#fff;border-top:1px solid #ddd;padding:10px 16px;
-    align-items:center;justify-content:space-between;gap:12px;
-    box-shadow:0 -2px 12px rgba(0,0,0,0.08);
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:95;
+    background:rgb(var(--color-background));
+    border-top:1px solid rgba(var(--color-foreground),0.06);
+    padding:10px 16px;align-items:center;justify-content:space-between;gap:12px;
+    box-shadow:0 -1px 8px rgba(0,0,0,0.04);
   }
   .sticky-atc__info{flex:1;min-width:0;}
-  .sticky-atc__title{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0;}
-  .sticky-atc__price{font-size:13px;margin:2px 0 0;opacity:0.8;}
+  .sticky-atc__title{font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0;letter-spacing:0.01em;}
+  .sticky-atc__price{font-size:12px;margin:2px 0 0;opacity:0.6;}
   .sticky-atc__btn{
-    background:#111;color:#fff;border:none;padding:12px 20px;
-    border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;
-    white-space:nowrap;flex-shrink:0;
+    background:rgb(var(--color-button));color:rgb(var(--color-button-text));
+    border:none;padding:10px 18px;border-radius:4px;font-size:12px;
+    font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;
+    letter-spacing:0.03em;text-transform:uppercase;
   }
-  .text-colton-btn{bottom:70px !important;}
+  .sms-btn{bottom:60px !important;}
 }
 </style>
 <div class="sticky-atc">

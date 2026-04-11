@@ -36,7 +36,7 @@
           "
           src="{{ collection.image | image_url: width: 750 }}"
           sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt="{% if collection.image.alt != blank %}{{ collection.image.alt | escape }}{% else %}{{ collection.title | escape }} for sale at Bubba's Mattress & Furniture Louisville KY{% endif %}"
+          alt="{{ collection.image.alt | default: collection.title | escape }}"
           width="{{ collection.image.width }}"
           height="{{ collection.image.height }}"
         >
