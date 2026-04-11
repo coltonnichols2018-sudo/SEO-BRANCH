@@ -429,9 +429,11 @@
 </div>
 
 <style>
+.menu-drawer--is-open .sms-btn{display:none !important;}
 .sms-btn{display:none}
 @media(max-width:749px){
-  .sms-btn{
+  .menu-drawer--is-open .sms-btn{display:none !important;}
+.sms-btn{
     display:flex;position:fixed;bottom:16px;left:16px;z-index:90;
     background:rgb(var(--color-button));color:rgb(var(--color-button-text));
     padding:10px 16px;border-radius:50px;font-size:13px;font-weight:500;
