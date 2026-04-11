@@ -212,13 +212,12 @@
     }
     .product-accordion summary {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 16px 4px;
+      gap: 12px;
+      padding: 18px 4px;
       font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
       cursor: pointer;
       color: #111;
       list-style: none;
@@ -226,15 +225,19 @@
     }
     .product-accordion summary::-webkit-details-marker { display: none; }
     .product-accordion summary::after {
-      content: '+';
-      font-size: 20px;
-      font-weight: 300;
-      color: #666;
+      content: '';
+      margin-left: auto;
+      width: 10px; height: 10px;
+      border-right: 1.5px solid #888;
+      border-bottom: 1.5px solid #888;
+      transform: rotate(45deg);
       transition: transform 0.2s ease;
+      flex-shrink: 0;
     }
     .product-accordion details[open] summary::after {
-      content: '−';
+      transform: rotate(-135deg);
     }
+    .acc-icon { flex-shrink: 0; opacity: 0.5; }
     .product-accordion .accordion-content {
       padding: 0 4px 24px;
       line-height: 1.7;
@@ -315,9 +318,15 @@
 
   <div class="product-accordion quick-add-hidden" {{ block.shopify_attributes }}>
 
-    {%- comment -%} === OVERVIEW === {%- endcomment -%}
+    {%- comment -%} === HAVE QUESTIONS BOX === {%- endcomment -%}
+    <div style="background:#f5f0e8;padding:14px 18px;border-radius:4px;margin-bottom:20px;">
+      <p style="margin:0;font-size:0.9em;">Have questions? Text or call us at</p>
+      <p style="margin:4px 0 0;"><a href="tel:+15024940376" style="font-size:1.1em;font-weight:600;color:#111;text-decoration:none;">(502) 494-0376</a></p>
+    </div>
+
+    {%- comment -%} === DESCRIPTION === {%- endcomment -%}
     <details open>
-      <summary>Overview</summary>
+      <summary><svg class="acc-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>Description</summary>
       <div class="accordion-content rte">
         {%- if has_hr -%}
           {{ product.description | split: '<hr' | first }}
@@ -327,9 +336,9 @@
       </div>
     </details>
 
-    {%- comment -%} === DIMENSIONS === {%- endcomment -%}
+    {%- comment -%} === SIZE & DIMENSION === {%- endcomment -%}
     <details id="accordion-dimensions">
-      <summary>Dimensions</summary>
+      <summary><svg class="acc-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h20v20H2z"/><path d="M2 7h5M2 12h3M2 17h5M7 2v5M12 2v3M17 2v5"/></svg>Size & Dimension</summary>
       <div class="accordion-content" id="tab-dimensions">
         {%- if has_hr -%}
           <div class="rte" style="line-height:1.8;">
@@ -354,34 +363,35 @@
 
         <div class="dims-cta">
           <p style="font-size:0.9em; color:#555;">
-            Want measurements for a specific piece? Text Colton at <a href="tel:+15024940376" style="font-weight:600;">(502) 494-0376</a> and we'll get them to you.
+            Need measurements? Text us at <a href="tel:+15024940376" style="font-weight:600;">(502) 494-0376</a> and we'll get them to you.
           </p>
         </div>
       </div>
     </details>
 
-    {%- comment -%} === DETAILS === {%- endcomment -%}
+    {%- comment -%} === DELIVERY === {%- endcomment -%}
     <details>
-      <summary>Details</summary>
+      <summary><svg class="acc-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Delivery</summary>
       <div class="accordion-content">
-        <div class="details-list">
-          {%- if product.vendor != blank -%}
-            <div class="details-row"><span class="details-label">Brand</span><span>{{ product.vendor }}</span></div>
-          {%- endif -%}
-          {%- if product.type != blank -%}
-            <div class="details-row"><span class="details-label">Type</span><span>{{ product.type }}</span></div>
-          {%- endif -%}
-          {%- if product.selected_or_first_available_variant.sku != blank -%}
-            <div class="details-row"><span class="details-label">SKU</span><span>{{ product.selected_or_first_available_variant.sku }}</span></div>
-          {%- endif -%}
-          {%- if product.selected_or_first_available_variant.weight > 0 -%}
-            <div class="details-row"><span class="details-label">Weight</span><span>{{ product.selected_or_first_available_variant.weight | weight_with_unit: product.selected_or_first_available_variant.weight_unit }}</span></div>
-          {%- endif -%}
-          <div class="details-row"><span class="details-label">Availability</span><span>{%- if product.available -%}<span style="color:#2e7d32; font-weight:500;">&#10003; In Stock</span>{%- else -%}<span style="color:#c62828;">Currently Unavailable</span>{%- endif -%}</span></div>
-          <div class="details-row"><span class="details-label">Financing</span><span>$40 down, no credit check — <a href="/pages/financing" style="text-decoration:underline;">Apply now</a></span></div>
-          <div class="details-row"><span class="details-label">Delivery</span><span>1–2 weeks, within 50 miles — <a href="/pages/delivery" style="text-decoration:underline;">Learn more</a></span></div>
-          <div class="details-row"><span class="details-label">Warranty</span><span>Manufacturer warranty included</span></div>
-        </div>
+        <p>We deliver within 50 miles of Louisville. Most items arrive in 1–2 weeks from the Ashley warehouse.</p>
+        <p>You'll get a call or text when your item is ordered, and another when it arrives to schedule delivery or pickup.</p>
+        <p>Pickups at 5907 Terry Rd, Louisville, KY. Bring a valid ID and your order confirmation.</p>
+        <p><a href="/pages/delivery-and-pickup-information" style="text-decoration:underline;">Full delivery details</a></p>
+      </div>
+    </details>
+
+    {%- comment -%} === FINANCING === {%- endcomment -%}
+    <details>
+      <summary><svg class="acc-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>Financing</summary>
+      <div class="accordion-content">
+        <p>We offer flexible payment plans for every credit type:</p>
+        <ul style="padding-left:20px;line-height:2;">
+          <li><strong>Progressive Leasing</strong> — No credit needed, flexible payments</li>
+          <li><strong>Acima</strong> — Lowest initial payment, quick approval</li>
+          <li><strong>Koalifi</strong> — 100 days same as cash, transparent terms</li>
+          <li><strong>Synchrony</strong> — 0% interest promos for approved credit</li>
+        </ul>
+        <p>All plans start at just $40 down. <a href="/pages/financing" style="text-decoration:underline;">View all financing details & apply here</a></p>
       </div>
     </details>
 
