@@ -20,6 +20,28 @@
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte">{{ collection.description }}</div>
       {%- endif -%}
+
+      {%- comment -%} SEO intro content per collection {%- endcomment -%}
+      {%- assign ch = collection.handle -%}
+      {%- if ch == 'mattresses' or ch == 'sleep-bedding' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Shop quality mattresses in Louisville, KY at Bubba's. We carry Sierra Sleep by Ashley, Tempur-Pedic, Stearns & Foster, and more — in twin, full, queen, king, and California king sizes. Memory foam, hybrid, and innerspring options available. Financing from $25 down with no credit check needed for most plans.</p>
+      {%- elsif ch == 'bedroom' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Complete bedroom sets and individual pieces from Ashley Furniture in Louisville, KY. Beds, dressers, nightstands, chests, and headboards in queen and king sizes. Brand new with full warranty, financing from $40 down, and local delivery within 50 miles.</p>
+      {%- elsif ch == 'living-room' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Browse our full Ashley Furniture living room collection in Louisville, KY — sectionals, sofas, recliners, ottomans, and accent pieces. All brand new with manufacturer warranty. No credit check financing available with payments starting at $25 down.</p>
+      {%- elsif ch == 'living-room-recliners' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Power recliners, manual recliners, and lift chairs from Ashley Furniture in Louisville, KY. Single recliners, reclining loveseats, and full reclining sofas. Try them in our showroom at 5907 Terry Rd. Financing from $25 down with no credit check.</p>
+      {%- elsif ch == 'living-room-sectionals' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Modular sectionals, reclining sectionals, sleeper sectionals, and chaise sectionals from Ashley Furniture in Louisville, KY. Choose from 2-piece up to 6-piece configurations. Brand new, warrantied, with no credit check financing available.</p>
+      {%- elsif ch == 'dining-room' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Dining room sets, tables, chairs, bar stools, and counter-height sets from Ashley Furniture in Louisville, KY. 5-piece, 7-piece, and 9-piece dining sets available. Financing from $25 down with no credit check needed.</p>
+      {%- elsif ch == 'kids-teens' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Kids beds, bunk beds, twin beds, and teen bedroom furniture in Louisville, KY. Ashley Furniture quality at affordable prices. Financing options available — get the room your kid wants without a credit check.</p>
+      {%- elsif ch == 'outdoor' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Outdoor patio furniture, fire pits, and outdoor seating in Louisville, KY. Ashley Furniture outdoor collection — built to handle Kentucky weather. Local delivery within 50 miles.</p>
+      {%- elsif ch == 'home-office' -%}
+        <p style="line-height:1.7;margin:12px 0 0;max-width:720px;">Home office desks, office chairs, bookcases, and storage in Louisville, KY. Ashley Furniture home office collection with financing available from $25 down.</p>
+      {%- endif -%}
     </div>
 
     {%- if section.settings.show_collection_image and collection.image -%}
