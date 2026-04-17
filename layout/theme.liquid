@@ -321,6 +321,28 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+{%- comment -%} LocalBusiness schema injection {%- endcomment -%}
+{%- assign schema_injected = false -%}
+
+{%- if template.name == 'index' -%}
+  {%- render 'localbusiness-home' -%}
+  {%- assign schema_injected = true -%}
+{%- endif -%}
+
+{%- if schema_injected == false -%}
+  {%- if template.name == 'page' and page and page.handle == 'contact-us' -%}
+    {%- render 'localbusiness-contact' -%}
+    {%- assign schema_injected = true -%}
+  {%- elsif template.name == 'page' and page and page.template_suffix == 'contact' -%}
+    {%- render 'localbusiness-contact' -%}
+    {%- assign schema_injected = true -%}
+  {%- elsif request.path contains '/pages/contact' -%}
+    {%- render 'localbusiness-contact' -%}
+    {%- assign schema_injected = true -%}
+  {%- endif -%}
+{%- endif -%}
+
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
