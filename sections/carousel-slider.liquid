@@ -7,7 +7,7 @@
   </h2>
 
   <div class="carousel-outer">
-    <button class="carousel-arrow left" onclick="scrollCarousel(this, -1)">&#10094;</button>
+    <button class="carousel-arrow left" onclick="scrollCarousel(this, -1)" aria-label="Previous slide">&#10094;</button>
 
     <div class="carousel-container" id="carousel-{{ section.id }}">
       {% for i in (1..15) %}
@@ -15,13 +15,21 @@
         {% assign image = section.settings[image_key] %}
         {% if image %}
           <div class="carousel-slide">
-            <img src="{{ image | img_url: 'master' }}" alt="Carousel Image {{ i }}" />
+            <img
+              src="{{ image | image_url: width: 1200 }}"
+              srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w"
+              sizes="100vw"
+              alt="{{ section.settings.carousel_title | default: 'Featured' }} - Image {{ i }}"
+              loading="lazy"
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+            />
           </div>
         {% endif %}
       {% endfor %}
     </div>
 
-    <button class="carousel-arrow right" onclick="scrollCarousel(this, 1)">&#10095;</button>
+    <button class="carousel-arrow right" onclick="scrollCarousel(this, 1)" aria-label="Next slide">&#10095;</button>
   </div>
 </section>
 
@@ -98,10 +106,16 @@
     border: none;
     color: black;
     font-size: 20px;
+    min-width: 44px;
+    min-height: 44px;
     padding: 10px 15px;
     cursor: pointer;
     z-index: 10;
     transition: background 0.3s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-container { scroll-behavior: auto; }
   }
 
   .carousel-arrow:hover {

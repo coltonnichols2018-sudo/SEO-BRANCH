@@ -74,14 +74,16 @@
     <button class="related-arrow related-next" aria-label="Next" type="button">›</button>
   </div>
 
-  <div class="related-status" style="text-align:center;font-size:.9rem;color:#666"></div>
+  <div class="related-status" style="text-align:center;font-size:.9rem;opacity:0.5;"></div>
 
   <style>
     .related-slider{position:relative}
     .related-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
-      width:40px;height:40px;border-radius:999px;border:1px solid #e5e5e5;background:#fff;
-      box-shadow:0 2px 8px rgba(0,0,0,.08); cursor:pointer; z-index:2;
+      min-width:44px;min-height:44px;border-radius:999px;
+      border:1px solid rgba(var(--color-foreground),0.1);
+      background:rgb(var(--color-background));
+      box-shadow:0 2px 8px rgba(0,0,0,.06); cursor:pointer; z-index:2;
       display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1
     }
     .related-prev{left:-.5rem}
@@ -92,43 +94,48 @@
       display:flex; gap:1rem; overflow-x:auto; overscroll-behavior-x:contain;
       scroll-snap-type:x mandatory; padding:.25rem 0 .5rem; scrollbar-width:thin
     }
-    .related-track::-webkit-scrollbar{height:8px}
-    .related-track::-webkit-scrollbar-thumb{background:#ddd;border-radius:8px}
+    .related-track::-webkit-scrollbar{height:6px}
+    .related-track::-webkit-scrollbar-thumb{background:rgba(var(--color-foreground),0.15);border-radius:8px}
 
     .related-slide{
       scroll-snap-align:start;
       flex:0 0 calc((100% - 3rem)/4);
-      border:1px solid #e5e5e5;border-radius:12px;overflow:hidden;
-      transition:transform .2s ease, box-shadow .2s ease; background:#fff
+      border:1px solid rgba(var(--color-foreground),0.08);border-radius:8px;overflow:hidden;
+      transition:transform .2s ease, box-shadow .2s ease;
+      background:rgb(var(--color-background))
     }
-    .related-slide:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .related-slide:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
     @media (max-width:1200px){ .related-slide{flex-basis:calc((100% - 2rem)/3)} }
     @media (max-width:900px){  .related-slide{flex-basis:calc((100% - 1rem)/2)} }
     @media (max-width:600px){  .related-slide{flex-basis:80%} }
 
     .related-product-link{display:block;text-decoration:none;color:inherit}
 
-    /* SQUARE + ZOOMED-OUT (no crop) */
     .related-product-image{
       width:100%;
       aspect-ratio:1/1;
       overflow:hidden;
-      background:#f8f8f8;
+      background:rgba(var(--color-foreground),0.03);
       display:block;
     }
     .related-product-image img{
       width:100%;
       height:100%;
-      object-fit:contain;        /* ← changed from cover */
-      object-position:center;    /* keep centered inside the square */
+      object-fit:contain;
+      object-position:center;
       display:block;
     }
 
     .related-product-info{padding:1rem}
     .related-product-title{font-size:1rem;margin:.25rem 0 .5rem;font-weight:500}
-    .related-product-type{font-size:.875rem;color:#666;margin:0 0 .5rem;font-style:italic}
-    .related-product-price-compare{text-decoration:line-through;color:#999;font-size:.875rem;margin-left:.4rem}
-    .related-product-sold-out{color:#d73502;font-weight:500;font-size:.875rem;margin:0}
+    .related-product-type{font-size:.875rem;opacity:0.5;margin:0 0 .5rem;font-style:italic}
+    .related-product-price-compare{text-decoration:line-through;opacity:0.5;font-size:.875rem;margin-left:.4rem}
+    .related-product-sold-out{color:#c62828;font-weight:500;font-size:.875rem;margin:0}
+
+    @media (prefers-reduced-motion: reduce) {
+      .related-slide{transition:none}
+      .related-track{scroll-behavior:auto}
+    }
   </style>
 </div>
 
@@ -333,7 +340,7 @@
       var pool = [];
 
       for(var i=0;i<queries.length;i++){
-        var raw = await runQuery(queries[i], 200);
+        var raw = await runQuery(queries[i], 50);
         raw = uniqByHandle(raw.filter(function(p){ return p.handle !== exclude; }));
         var filtered = raw.filter(function(p){ return hasCollectionTag(p) && hasBrandOrVendor(p); });
         pool = uniqByHandle(pool.concat(filtered));
