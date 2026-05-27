@@ -1,0 +1,53 @@
+{%- if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'page' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ shop.url }}"
+    }
+    {%- if request.page_type == 'collection' and collection.handle -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ collection.title | escape }}",
+      "item": "{{ shop.url }}{{ collection.url }}"
+    }
+    {%- elsif request.page_type == 'product' -%}
+      {%- if collection.url -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ collection.title | escape }}",
+        "item": "{{ shop.url }}{{ collection.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ product.title | escape }}",
+        "item": "{{ shop.url }}{{ product.url }}"
+      }
+      {%- else -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ product.title | escape }}",
+        "item": "{{ shop.url }}{{ product.url }}"
+      }
+      {%- endif -%}
+    {%- elsif request.page_type == 'page' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ page.title | escape }}",
+      "item": "{{ shop.url }}{{ page.url }}"
+    }
+    {%- endif -%}
+  ]
+}
+</script>
+{%- endif -%}
