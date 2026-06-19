@@ -1,0 +1,82 @@
+{% comment %}
+  Simplified Dynamic Collection H1
+  Output:
+    Shop {Collection} from STORE NAME in City, State
+
+  Logic:
+    - Uses collection.title
+    - Supports titles like:
+        Parent > Child
+        Parent › Child
+        Parent / Child
+        Parent | Child
+    - Ambiguous children are prefixed with their parent
+{% endcomment %}
+
+{%- assign store_name = "Bubba's Mattress & Furniture" -%}
+{%- assign store_location = "Louisville, KY" -%}
+
+{%- comment %}
+  Ambiguous child collections that require parent context
+{% endcomment -%}
+{%- assign ambiguous_children_str = 'Sofas||Stools||Tables||Sectionals||Chairs||Cabinets||Bookcases||Beds||Chests||Desks & Vanities||Dresser & Mirror||Loveseats||Benches||Bedroom Sets||Mattresses||Pillows||Chaises||Headboards||Nightstands||Chair & Ottoman||Ottomans||Sideboards||Bar Stools' -%}
+{%- assign amb_children_lc = ambiguous_children_str | downcase | split: '||' -%}
+
+{%- comment %}
+  Parent + child combinations that should NOT be prefixed
+  Format: parent|child (lowercase)
+{% endcomment -%}
+{%- assign no_prefix_pairs_str = 'bedroom|beds||bedroom|bedroom sets||sleep & bedding|mattresses' -%}
+{%- assign no_prefix_pairs = no_prefix_pairs_str | split: '||' -%}
+
+{%- comment %}
+  Normalize separators so splitting is reliable
+{% endcomment -%}
+{%- assign title_norm = collection.title -%}
+{%- assign title_norm = title_norm | replace: '›', '>' -%}
+{%- assign title_norm = title_norm | replace: '/', '>' -%}
+{%- assign title_norm = title_norm | replace: '|', '>' -%}
+
+{%- comment %}
+  Split title into segments
+{% endcomment -%}
+{%- assign segs_raw = title_norm | split: '>' -%}
+{%- capture segs_joined -%}
+  {%- for s in segs_raw -%}
+    {%- if forloop.first == false -%}||{%- endif -%}{{ s | strip }}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign segs = segs_joined | split: '||' -%}
+
+{%- assign base_title = segs | last -%}
+{%- assign base_lc = base_title | downcase | strip -%}
+
+{%- assign parent_title = '' -%}
+{%- if segs.size > 1 -%}
+  {%- assign parent_index = segs.size | minus: 2 -%}
+  {%- assign parent_title = segs[parent_index] | strip -%}
+{%- endif -%}
+
+{%- assign display_title = base_title -%}
+
+{%- comment %}
+  Determine if prefix should be skipped
+{% endcomment -%}
+{%- assign skip_prefix = false -%}
+{%- if parent_title != '' -%}
+  {%- assign pair_key = parent_title | downcase | strip | append: '|' | append: base_lc -%}
+  {%- if no_prefix_pairs contains pair_key -%}
+    {%- assign skip_prefix = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- comment %}
+  Apply parent prefix only when appropriate
+{% endcomment -%}
+{%- if parent_title != '' and amb_children_lc contains base_lc and skip_prefix == false -%}
+  {%- assign display_title = parent_title | append: ' ' | append: base_title -%}
+{%- endif -%}
+
+<h1 class="collection__title heading h1">
+  Shop {{ display_title }} from {{ store_name }} in {{ store_location }}
+</h1>
