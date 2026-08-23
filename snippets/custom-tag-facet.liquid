@@ -1,0 +1,313 @@
+{% comment %}
+ Custom tag-based Material filter for Dawn.
+ Uses Shopify collection tag URLs, not Search & Discovery filter objects.
+
+
+ Usage:
+ {% render 'custom-tag-facet',
+   results: results,
+   filter_label: 'Material',
+   tag_prefix: 'Material_',
+   alternate_prefix: 'Material:',
+   filter_type: filter_type,
+   mode: 'desktop'
+ %}
+
+
+ Mobile:
+ {% render 'custom-tag-facet',
+   results: results,
+   filter_label: 'Material',
+   tag_prefix: 'Material_',
+   alternate_prefix: 'Material:',
+   mode: 'mobile'
+ %}
+{% endcomment %}
+
+
+{% liquid
+ assign filter_label = filter_label | default: 'Material'
+ assign tag_prefix = tag_prefix | default: 'Material_'
+ assign alternate_prefix = alternate_prefix | default: 'Material:'
+ assign mode = mode | default: 'desktop'
+ assign tag_values = ''
+ assign active_tag_handle = ''
+ assign should_render = false
+
+
+ if collection != blank and collection.url != blank and collection.all_tags != blank
+   assign should_render = true
+ endif
+
+
+ if current_tags
+   for tag in current_tags
+     assign tag_handle_check = tag | handleize
+
+
+     assign prefix_length = tag_prefix | size
+     assign tag_prefix_check = tag | slice: 0, prefix_length
+
+
+     assign alternate_prefix_length = alternate_prefix | size
+     assign alternate_prefix_check = tag | slice: 0, alternate_prefix_length
+
+
+     if tag_prefix_check == tag_prefix
+       assign active_tag_handle = tag_handle_check
+     elsif alternate_prefix != blank and alternate_prefix_check == alternate_prefix
+       assign active_tag_handle = tag_handle_check
+     endif
+   endfor
+ endif
+
+
+ if should_render
+   for tag in collection.all_tags
+     assign clean_value = ''
+     assign real_tag = ''
+
+
+     assign prefix_length = tag_prefix | size
+     assign tag_prefix_check = tag | slice: 0, prefix_length
+
+
+     assign alternate_prefix_length = alternate_prefix | size
+     assign alternate_prefix_check = tag | slice: 0, alternate_prefix_length
+
+
+     if tag_prefix_check == tag_prefix
+       assign clean_value = tag | remove_first: tag_prefix | strip
+       assign real_tag = tag
+     elsif alternate_prefix != blank and alternate_prefix_check == alternate_prefix
+       assign clean_value = tag | remove_first: alternate_prefix | strip
+       assign real_tag = tag
+     endif
+
+
+     if clean_value != blank and real_tag != blank
+       assign clean_handle = clean_value | handleize
+
+
+       unless tag_values contains clean_handle
+         assign tag_values = tag_values | append: clean_handle | append: '~~' | append: clean_value | append: '~~' | append: real_tag | append: '||'
+       endunless
+     endif
+   endfor
+ endif
+
+
+ assign tag_pairs = tag_values | split: '||' | sort
+ assign tag_filter_count = 0
+
+
+ for pair in tag_pairs
+   if pair != blank
+     assign tag_filter_count = tag_filter_count | plus: 1
+   endif
+ endfor
+%}
+
+
+{% if should_render and tag_filter_count > 0 %}
+ {% if mode == 'mobile' %}
+   <details
+     id="Details-Mobile-Custom-{{ filter_label | handleize }}-{{ section.id }}"
+     class="mobile-facets__details cfb-dawn-tag-filter"
+   >
+     <summary class="mobile-facets__summary focus-inset">
+       <div>
+         <span>{{ filter_label }}</span>
+         <span class="mobile-facets__arrow">
+           {{- 'icon-arrow.svg' | inline_asset_content -}}
+         </span>
+       </div>
+     </summary>
+
+
+     <div
+       id="FacetMobile-Custom-{{ filter_label | handleize }}-{{ section.id }}"
+       class="mobile-facets__submenu gradient"
+     >
+       <button
+         class="mobile-facets__close-button link link--text focus-inset"
+         aria-expanded="true"
+         type="button"
+       >
+         {{- 'icon-arrow.svg' | inline_asset_content -}}
+         <span>{{ filter_label }}</span>
+       </button>
+
+
+       <ul class="mobile-facets__list list-unstyled" role="list">
+         {% for pair in tag_pairs %}
+           {% if pair != blank %}
+             {% liquid
+               assign parts = pair | split: '~~'
+               assign tag_value = parts[1]
+               assign real_tag = parts[2]
+               assign real_tag_handle = real_tag | handleize
+
+
+               assign is_active = false
+               if active_tag_handle == real_tag_handle
+                 assign is_active = true
+               endif
+
+
+               if is_active
+                 assign target_url = collection.url
+               else
+                 assign target_url = collection.url | append: '/' | append: real_tag_handle
+               endif
+             %}
+
+
+             <li class="mobile-facets__item list-menu__item">
+               <a
+                 href="{{ target_url }}"
+                 class="facets__label mobile-facets__label{% if is_active %} active{% endif %} cfb-dawn-tag-filter__link"
+               >
+                 <span class="mobile-facets__highlight"></span>
+                 {{- 'square.svg' | inline_asset_content -}}
+                 {{- 'icon-checkmark.svg' | inline_asset_content -}}
+
+
+                 <span class="facet-checkbox__text" aria-hidden="true">
+                   <span class="facet-checkbox__text-label">{{ tag_value | escape }}</span>
+                 </span>
+               </a>
+             </li>
+           {% endif %}
+         {% endfor %}
+       </ul>
+
+
+       <div class="mobile-facets__footer gradient">
+         <a href="{{ collection.url }}" class="mobile-facets__clear underlined-link">
+           Clear
+         </a>
+         <button
+           type="button"
+           class="button button--primary"
+           onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+         >
+           {{ 'products.facets.apply' | t }}
+         </button>
+       </div>
+     </div>
+   </details>
+ {% else %}
+   <details
+     id="Details-Custom-{{ filter_label | handleize }}-{{ section.id }}"
+     class="{% if filter_type == 'horizontal' %}disclosure-has-popup facets__disclosure{% else %}facets__disclosure-vertical{% endif %} cfb-dawn-tag-filter"
+   >
+     <summary
+       class="facets__summary caption-large focus-offset"
+       aria-label="{{ filter_label | escape }}"
+     >
+       <div>
+         <span class="facets__summary-label">
+           {{ filter_label }}
+           {% if active_tag_handle != blank and filter_type == 'vertical' %}
+             <span class="facets__selected">(1)</span>
+           {% endif %}
+         </span>
+         {{- 'icon-caret.svg' | inline_asset_content -}}
+       </div>
+     </summary>
+
+
+     <div
+       id="Facet-Custom-{{ filter_label | handleize }}-{{ section.id }}"
+       class="parent-display {% if filter_type == 'horizontal' %}facets__display{% else %}facets__display-vertical{% endif %}"
+     >
+       {% if filter_type != 'vertical' %}
+         <div class="facets__header">
+           <div>
+             <span class="facets__selected">
+               {% if active_tag_handle != blank %}1 selected{% else %}0 selected{% endif %}
+             </span>
+           </div>
+           <a href="{{ collection.url }}" class="facets__reset link underlined-link">Reset</a>
+         </div>
+       {% endif %}
+
+
+       <fieldset class="facets-wrap parent-wrap {% if filter_type == 'vertical' %}facets-wrap-vertical{% endif %}">
+         <legend class="visually-hidden">{{ filter_label }}</legend>
+
+
+         <ul
+           class="facets-layout facets-layout-list facets-layout-list--text{% if filter_type == 'vertical' %} facets__list--vertical{% else %} facets__list{% endif %} list-unstyled"
+           role="list"
+         >
+           {% for pair in tag_pairs %}
+             {% if pair != blank %}
+               {% liquid
+                 assign parts = pair | split: '~~'
+                 assign tag_value = parts[1]
+                 assign real_tag = parts[2]
+                 assign real_tag_handle = real_tag | handleize
+
+
+                 assign is_active = false
+                 if active_tag_handle == real_tag_handle
+                   assign is_active = true
+                 endif
+
+
+                 if is_active
+                   assign target_url = collection.url
+                 else
+                   assign target_url = collection.url | append: '/' | append: real_tag_handle
+                 endif
+               %}
+
+
+               <li class="list-menu__item facets__item">
+                 <a
+                   href="{{ target_url }}"
+                   class="facets__label facet-checkbox{% if is_active %} active{% endif %} cfb-dawn-tag-filter__link"
+                 >
+                   {{- 'square.svg' | inline_asset_content -}}
+
+
+                   <div class="svg-wrapper">
+                     {{- 'icon-checkmark.svg' | inline_asset_content -}}
+                   </div>
+
+
+                   <span class="facet-checkbox__text" aria-hidden="true">
+                     <span class="facet-checkbox__text-label">{{ tag_value | escape }}</span>
+                   </span>
+                 </a>
+               </li>
+             {% endif %}
+           {% endfor %}
+         </ul>
+       </fieldset>
+     </div>
+   </details>
+ {% endif %}
+
+
+ <style>
+   .cfb-dawn-tag-filter__link {
+     text-decoration: none;
+     color: inherit;
+   }
+
+
+   .cfb-dawn-tag-filter__link svg {
+     flex-shrink: 0;
+   }
+
+
+   .cfb-dawn-tag-filter__link.active .icon-checkmark,
+   .cfb-dawn-tag-filter__link.active .svg-wrapper {
+     visibility: visible;
+     opacity: 1;
+   }
+ </style>
+{% endif %}
