@@ -61,6 +61,14 @@
     background: #222;
     color: #fff;
   }
+  /* The Messenger bubble, the reviews badge and the Klaviyo popup all sit
+     bottom-right and stack over the checkout button while the drawer is
+     open. Messenger is the only one the theme can reach; the other two are
+     app-side display settings. */
+  body:has(cart-drawer.active) .fb_dialog,
+  body:has(cart-drawer.active) .fb_dialog_content {
+    display: none !important;
+  }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -96,8 +104,8 @@
                 <p style="margin: 0 0 10px; font-weight: 600;">Popular Categories</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
                   <a href="/collections/mattresses" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Mattresses</a>
-                  <a href="/collections/living-room-recliners" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Recliners</a>
-                  <a href="/collections/living-room-sofas" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Sofas</a>
+                  <a href="/collections/recliners" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Recliners</a>
+                  <a href="/collections/sofas" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Sofas</a>
                   <a href="/collections/bedroom" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Bedroom</a>
                 </div>
                 <p style="margin: 12px 0 0; opacity: 0.7;">
@@ -563,7 +571,7 @@
               <span>Acima Leasing</span>
               <span>Progressive Leasing</span>
             </div>
-            <p style="font-size: 0.78em; margin-top: 6px; opacity: 0.7;">Scroll past credit card &mdash; no credit needed</p>
+            <p style="font-size: 0.78em; margin-top: 6px; opacity: 0.7;">They are last in the list &mdash; scroll past Credit card, Shop Pay, Apple Pay and PayPal. No credit needed.</p>
           </div>
         {%- endif -%}
 
@@ -583,10 +591,10 @@
           </button>
         </div>
 
-        <!-- TEXT COLTON OPTION -->
+        <!-- TEXT BUBBA OPTION - fallback, not the primary path -->
         {%- if cart != empty -%}
-          <a href="sms:5024940376&body=Hey%20Colton%2C%20I%27m%20interested%20in%20financing%20furniture.%20Can%20you%20help%20me%20get%20qualified%3F" class="drawer-text-cta">
-            Text Colton &mdash; $40 Down, 90 Days No Interest
+          <a href="sms:+15024940376?body=Hi%20Bubba%2C%20I%27m%20interested%20in%20financing%20furniture.%20Can%20you%20help%3F" class="drawer-text-cta">
+            Text Bubba &mdash; we'll walk you through it
           </a>
           <p style="text-align:center; font-size:0.78em; color:#666; margin: 4px 0 0;">Or call <a href="tel:5024940376" style="color:#333; font-weight:600;">502-494-0376</a></p>
         {%- endif -%}
