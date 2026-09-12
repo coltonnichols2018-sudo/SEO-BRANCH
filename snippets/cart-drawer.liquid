@@ -15,6 +15,52 @@
   .drawer {
     visibility: hidden;
   }
+  .drawer-financing-box {
+    background: #f0faf0;
+    border: 1.5px solid #2e7d32;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .drawer-financing-box p {
+    margin: 0;
+    font-size: 0.85em;
+    line-height: 1.5;
+  }
+  .drawer-financing-box strong {
+    color: #1a5c2e;
+  }
+  .drawer-financing-logos {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .drawer-financing-logos span {
+    background: #2e7d32;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 600;
+  }
+  .drawer-text-cta {
+    display: block;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 0.88em;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+  .drawer-text-cta:hover {
+    background: #222;
+    color: #fff;
+  }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -47,12 +93,16 @@
               </a>
 
               <div style="margin-top: 20px; font-size: 0.85em; text-align: center;">
+                <p style="margin: 0 0 10px; font-weight: 600;">Popular Categories</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
                   <a href="/collections/mattresses" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Mattresses</a>
                   <a href="/collections/living-room-recliners" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Recliners</a>
                   <a href="/collections/living-room-sofas" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Sofas</a>
                   <a href="/collections/bedroom" class="button button--secondary" style="font-size: 0.85em; padding: 6px 12px;">Bedroom</a>
                 </div>
+                <p style="margin: 12px 0 0; opacity: 0.7;">
+                  Starting at <strong>$40 down</strong> &middot; No credit check
+                </p>
               </div>
 
               {%- if shop.customer_accounts_enabled and customer == null -%}
@@ -291,20 +341,9 @@
                             <div class="cart-item__quantity-wrapper quantity-popover-wrapper">
                               <div class="quantity-popover-container{% if has_qty_rules or has_vol_pricing %} quantity-popover-container--hover{% endif %}">
                                 <quantity-input class="quantity cart-quantity">
-                                  <button
-                                    class="quantity__button"
-                                    name="minus"
-                                    type="button"
-                                    {% if item.instructions and item.instructions.can_update_quantity == false %}
-                                      disabled
-                                    {% endif %}
-                                  >
+                                  <button class="quantity__button" name="minus" type="button">
                                     <span class="visually-hidden">
-                                      {{-
-                                        'products.product.quantity.decrease'
-                                        | t: product: item.product.title
-                                        | escape
-                                      -}}
+                                      {{- 'products.product.quantity.decrease' | t: product: item.product.title | escape -}}
                                     </span>
                                     <span class="svg-wrapper">
                                       {{- 'icon-minus.svg' | inline_asset_content -}}
@@ -328,24 +367,10 @@
                                     aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
                                     id="Drawer-quantity-{{ item.index | plus: 1 }}"
                                     data-index="{{ item.index | plus: 1 }}"
-                                    {% if item.instructions and item.instructions.can_update_quantity == false %}
-                                      disabled
-                                    {% endif %}
                                   >
-                                  <button
-                                    class="quantity__button"
-                                    name="plus"
-                                    type="button"
-                                    {% if item.instructions and item.instructions.can_update_quantity == false %}
-                                      disabled
-                                    {% endif %}
-                                  >
+                                  <button class="quantity__button" name="plus" type="button">
                                     <span class="visually-hidden">
-                                      {{-
-                                        'products.product.quantity.increase'
-                                        | t: product: item.product.title
-                                        | escape
-                                      -}}
+                                      {{- 'products.product.quantity.increase' | t: product: item.product.title | escape -}}
                                     </span>
                                     <span class="svg-wrapper">
                                       {{- 'icon-plus.svg' | inline_asset_content -}}
@@ -362,9 +387,6 @@
                                   class="button button--tertiary cart-remove-button"
                                   aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
                                   data-variant-id="{{ item.variant.id }}"
-                                  {% if item.instructions and item.instructions.can_remove == false %}
-                                    class="hidden"
-                                  {% endif %}
                                 >
                                   <span class="svg-wrapper">
                                     {{- 'icon-remove.svg' | inline_asset_content -}}
@@ -404,26 +426,17 @@
                                 <div class="quantity__rules caption">
                                   {%- if item.variant.quantity_rule.increment > 1 -%}
                                     <span class="divider">
-                                      {{-
-                                        'products.product.quantity.multiples_of'
-                                        | t: quantity: item.variant.quantity_rule.increment
-                                      -}}
+                                      {{- 'products.product.quantity.multiples_of' | t: quantity: item.variant.quantity_rule.increment -}}
                                     </span>
                                   {%- endif -%}
                                   {%- if item.variant.quantity_rule.min > 1 -%}
                                     <span class="divider">
-                                      {{-
-                                        'products.product.quantity.min_of'
-                                        | t: quantity: item.variant.quantity_rule.min
-                                      -}}
+                                      {{- 'products.product.quantity.min_of' | t: quantity: item.variant.quantity_rule.min -}}
                                     </span>
                                   {%- endif -%}
                                   {%- if item.variant.quantity_rule.max != null -%}
                                     <span class="divider">
-                                      {{-
-                                        'products.product.quantity.max_of'
-                                        | t: quantity: item.variant.quantity_rule.max
-                                      -}}
+                                      {{- 'products.product.quantity.max_of' | t: quantity: item.variant.quantity_rule.max -}}
                                     </span>
                                   {%- endif -%}
                                 </div>
@@ -504,9 +517,7 @@
           </details>
         {%- endif -%}
 
-        <!-- Start blocks -->
         <!-- Subtotals -->
-
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
           <div>
             {%- if cart.cart_level_discount_applications.size > 0 -%}
@@ -528,48 +539,35 @@
           </div>
 
           <small class="tax-note caption-large rte">
-            {%- if cart.duties_included and cart.taxes_included -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
-              {%- endif -%}
-            {%- elsif cart.duties_included == false and cart.taxes_included -%}
+            {%- if cart.taxes_included -%}
               {%- if shop.shipping_policy.body == blank -%}
                 {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
               {%- else -%}
-                {{
-                  'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
+                {{ 'sections.cart.taxes_included_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
               {%- endif -%}
-            {%- elsif cart.duties_included and cart.taxes_included == false -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
-              {%- endif -%}
-            {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
+            {%- else -%}
               {%- if shop.shipping_policy.body == blank -%}
                 {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
               {%- else -%}
-                {{
-                  'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
+                {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
               {%- endif -%}
             {%- endif -%}
           </small>
         </div>
 
-        <!-- CTAs -->
+        <!-- FINANCING CALLOUT - ABOVE CHECKOUT -->
+        {%- if cart != empty -%}
+          <div class="drawer-financing-box">
+            <p><strong>Need financing? Select at checkout:</strong></p>
+            <div class="drawer-financing-logos">
+              <span>Acima Leasing</span>
+              <span>Progressive Leasing</span>
+            </div>
+            <p style="font-size: 0.78em; margin-top: 6px; opacity: 0.7;">Scroll past credit card &mdash; no credit needed</p>
+          </div>
+        {%- endif -%}
 
+        <!-- CTAs -->
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button
             type="submit"
@@ -585,12 +583,12 @@
           </button>
         </div>
 
+        <!-- TEXT COLTON OPTION -->
         {%- if cart != empty -%}
-          <div style="padding: 12px 0 4px; text-align: center; font-size: 0.8em; line-height: 1.6;">
-            <p style="margin: 0; opacity: 0.7;">
-              <strong>Lease-to-own from $25 down</strong> · <a href="/pages/financing" style="text-decoration: underline;">Apply here</a>
-            </p>
-          </div>
+          <a href="sms:5024940376&body=Hey%20Colton%2C%20I%27m%20interested%20in%20financing%20furniture.%20Can%20you%20help%20me%20get%20qualified%3F" class="drawer-text-cta">
+            Text Colton &mdash; $40 Down, 90 Days No Interest
+          </a>
+          <p style="text-align:center; font-size:0.78em; color:#666; margin: 4px 0 0;">Or call <a href="tel:5024940376" style="color:#333; font-weight:600;">502-494-0376</a></p>
         {%- endif -%}
       </div>
     </div>
