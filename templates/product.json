@@ -1,1 +1,132 @@
-{"sections":{"main":{"type":"main-product","blocks":{"sku_H8fhFw":{"type":"sku","settings":{"text_style":"body"}},"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"inventory_Em6Xka":{"type":"inventory","settings":{"text_style":"uppercase","inventory_threshold":5,"show_inventory_quantity":true}},"quantity_selector":{"type":"quantity_selector","settings":{}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"share":{"type":"share","settings":{"share_label":"Share"}},"judge_me_reviews_preview_badge_errc8B":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{}}},"block_order":["sku_H8fhFw","vendor","title","price","variant_picker","inventory_Em6Xka","quantity_selector","buy_buttons","description","share","judge_me_reviews_preview_badge_errc8B"],"settings":{"enable_sticky_info":false,"color_scheme":"scheme-1","media_size":"large","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"thumbnail_slider","mobile_thumbnails":"hide","media_position":"left","image_zoom":"lightbox","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":12}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":true,"show_rating":false,"padding_top":36,"padding_bottom":28}}},"order":["main","related-products"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "bubba_title": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- liquid\n  assign parts = product.title | split: ' - '\n  assign main_title = product.title\n  assign sub_title = ''\n  if parts.size >= 3\n    assign name = parts[0] | replace: '-', ' '\n    assign main_title = name | append: ' ' | append: parts[1]\n    assign rest = parts | slice: 2, 5\n    assign sub_title = rest | join: ' · '\n  elsif parts.size == 2\n    assign name = parts[0] | replace: '-', ' '\n    assign main_title = name | append: ' ' | append: parts[1]\n  endif\n-%}\n<p class=\"bb-pbrand\">{{ product.vendor | default: 'Ashley Furniture' | escape }}</p>\n<h1 class=\"bb-ptitle\">{{ main_title | escape }}</h1>\n{%- if sub_title != blank -%}<p class=\"bb-psub\">{{ sub_title | escape }}</p>{%- endif -%}"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "inventory_Em6Xka": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 5,
+            "show_inventory_quantity": true
+          }
+        },
+        "acima_calculator": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\niframe[src*=ecom] { z-index: 999; }\n.acima-calculator-container { position: sticky; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; }\n.open-acima-calculator { position: sticky; top: 0; left: 0; border: none; outline: none; background: transparent; color: black; padding: 0; cursor: pointer; font-size: 16px; line-height: 1.6; text-align: left; }\ndiv.open-acima-calculator { display: block; }\n.acima-wrap { margin: 4px 0 32px; padding: 18px 0 20px; border-bottom: 1px solid #e0e0e0; }\n</style>\n<div class=\"acima-wrap\">\n<button style=\"border:0\" type=\"button\" aria-label=\"Estimate Leasing Costs\" class=\"open-acima-calculator\"></button>\n</div>\n<script src=\"https://ecom.acima.com/js/acima.min.js\"></script>\n<script src=\"https://ecom.acima.com/js/ecom-calculator.js\"></script>\n<script>\n(function(){\n  var productPriceCents = {{ product.selected_or_first_available_variant.price }};\n  var productPrice = productPriceCents / 100;\n  AcimaCalculator.init({\n    location: \"loca-7994c60f-5bc9-4c77-a304-41a998197eaa\",\n    env: \"production\",\n    initItemPrice: productPrice,\n    useDynamicCta: true,\n    Language: \"en\"\n  });\n})();\n</script>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "dropdown",
+            "swatch_shape": "circle"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "bubba_cta": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- liquid\n  assign parts = product.title | split: ' - '\n  assign main_title = product.title\n  if parts.size >= 2\n    assign name = parts[0] | replace: '-', ' '\n    assign main_title = name | append: ' ' | append: parts[1]\n  endif\n  assign msg = 'Hi Bubba, I saw the ' | append: main_title | append: ' on your site (' | append: shop.url | append: product.url | append: '). Is it in stock and what would $40 down look like?'\n  assign encoded_msg = msg | url_encode | replace: '+', '%20'\n-%}\n<a class=\"bb-text-btn\" href=\"sms:+15024940376?&body={{ encoded_msg }}\">\n  <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/></svg>\n  Text Bubba about this piece\n</a>\n<div class=\"bb-trust\">\n  <span>&#9733; 5.0 &middot; 320+ Google reviews</span>\n  <span>Family-owned &middot; Louisville, KY</span>\n  <span>Delivered &amp; set up in your home</span>\n</div>"
+          }
+        },
+        "bubba_info_upgrade": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<script src=\"{{ 'bubba-info.js' | asset_url }}\" defer></script><script src=\"{{ 'bubba-desc-clean.js' | asset_url }}\" defer></script>"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "judge_me_reviews_preview_badge_errc8B": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "bubba_title",
+        "price",
+        "inventory_Em6Xka",
+        "acima_calculator",
+        "variant_picker",
+        "buy_buttons",
+        "bubba_cta",
+        "bubba_info_upgrade",
+        "description",
+        "share",
+        "judge_me_reviews_preview_badge_errc8B"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 20,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}
