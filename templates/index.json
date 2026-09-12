@@ -9,198 +9,36 @@
  */
 {
   "sections": {
-    "slideshow_kUQKmT": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_qGRXL3": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/113947f3-a279-46ec-bed4-20dfe371ea89.jpg",
-            "image_link": "/collections/living-room-sectionals",
-            "image_overlay_opacity": 50,
-            "heading": "<strong>Labor Day Sale - Shop Now!</strong>",
-            "heading_size": "h1",
-            "subheading": "<strong>Lease-to-Own from $40 Down · No Credit Needed · Delivered Within 50 Miles</strong>",
-            "button_label": "Shop Now",
-            "link": "/collections/living-room-sectionals",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-2517ee05-4b4e-4e81-893d-c90f9a06717e"
-          }
-        },
-        "slide_44Hp7f": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Banner_2_9.png",
-            "image_link": "",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_nGratx": {
-          "type": "slide",
-          "name": "feb 2026",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Banner_3_24.png",
-            "image_link": "shopify://collections",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_K8fFe9": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Banner_1_1.png",
-            "image_link": "",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_DaGcRG": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/HOME.png",
-            "image_link": "",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_qGRXL3",
-        "slide_44Hp7f",
-        "slide_nGratx",
-        "slide_K8fFe9",
-        "slide_DaGcRG"
-      ],
-      "name": "t:sections.slideshow.presets.name",
+    "bb_hero": {
+      "type": "custom-liquid",
       "settings": {
-        "layout": "full_bleed",
-        "slide_height": "adapt_image",
-        "slider_visual": "dots",
-        "auto_rotate": true,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": false,
-        "accessibility_info": "Slideshow about our brand"
+        "custom_liquid": "{%- assign hero_img = '2c64b8fc-ea68-4120-9128-343ed0727609.jpg' | file_img_url: '2200x' -%}\n{%- assign hero_img_m = '2c64b8fc-ea68-4120-9128-343ed0727609.jpg' | file_img_url: '1100x' -%}\n<style>\n.bb-hero{position:relative;min-height:76vh;display:flex;align-items:center;color:#fff;overflow:hidden;background:#111}\n.bb-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:78% 55%}\n.bb-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.82) 0%,rgba(10,10,10,.6) 38%,rgba(10,10,10,.12) 68%,rgba(10,10,10,0) 100%),linear-gradient(180deg,rgba(0,0,0,0) 60%,rgba(0,0,0,.35) 100%)}\n.bb-hero__inner{position:relative;z-index:1;width:100%;max-width:120rem;margin:0 auto;padding:7rem 5rem 6rem}\n.bb-hero__eyebrow{display:inline-block;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.5rem 1.2rem;font-size:1.2rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:1.6rem}\n.bb-hero__h1{font-size:5.4rem;line-height:1.02;letter-spacing:-0.025em;font-weight:800;margin:0 0 1.4rem;max-width:76rem;color:#fff!important;text-shadow:0 2px 20px rgba(0,0,0,.4)}\n.bb-hero__h1 em{font-style:normal;color:#e0463a;text-shadow:0 2px 16px rgba(0,0,0,.45)}\n.bb-hero__sub{font-size:1.8rem;line-height:1.5;max-width:58rem;margin:0 0 2.6rem;color:rgba(255,255,255,.88)}\n.bb-hero__btns{display:flex;flex-wrap:wrap;gap:1.2rem;margin-bottom:2.4rem}\n.bb-btn{display:inline-flex;align-items:center;justify-content:center;gap:.8rem;padding:1.5rem 2.6rem;border-radius:10px;font-size:1.55rem;font-weight:700;text-decoration:none;transition:transform .15s ease,background .15s ease}\n.bb-btn--red{background:#c0392b;color:#fff;box-shadow:0 8px 24px rgba(192,57,43,.35)}\n.bb-btn--red:hover{background:#a93226;transform:translateY(-1px)}\n.bb-btn--ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.7);backdrop-filter:blur(6px)}\n.bb-btn--ghost:hover{background:#fff;color:#141414}\n.bb-hero__chips{display:flex;flex-wrap:wrap;gap:.8rem 2.2rem;font-size:1.3rem;color:rgba(255,255,255,.92);font-weight:600}\n.bb-hero__chips span::before{content:'\\2713';margin-right:.6rem;color:#7ee2a0}\n@media (max-width:749px){\n  .bb-hero{min-height:84vh;align-items:flex-end}\n  .bb-hero::after{background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.45) 45%,rgba(0,0,0,.85) 100%)}\n  .bb-hero__img{object-position:70% 50%}\n  .bb-hero__inner{padding:4rem 2rem 3rem}\n  .bb-hero__h1{font-size:3.4rem}\n  .bb-hero__sub{font-size:1.45rem}\n  .bb-btn{width:100%;padding:1.5rem}\n  .bb-hero__chips{font-size:1.2rem;gap:.6rem 1.4rem}\n}\n</style>\n<section class=\"bb-hero\">\n  <picture>\n    <source media=\"(max-width:749px)\" srcset=\"{{ hero_img_m }}\">\n    <img class=\"bb-hero__img\" src=\"{{ hero_img }}\" alt=\"Ashley Furniture living room set at Bubba's Mattress and Furniture in Louisville KY\" fetchpriority=\"high\">\n  </picture>\n  <div class=\"bb-hero__inner\">\n    <span class=\"bb-hero__eyebrow\">Louisville, KY &middot; Family-owned since 2021</span>\n    <h1 class=\"bb-hero__h1\">Real Ashley furniture.<br><em>$40 takes it home today.</em></h1>\n    <p class=\"bb-hero__sub\">Sofas from $450. Sectionals from $875. Delivered and set up within 50 miles.</p>\n    <div class=\"bb-hero__btns\">\n      <a class=\"bb-btn bb-btn--red\" href=\"/collections/sectionals\">Shop Sectionals</a>\n      <a class=\"bb-btn bb-btn--ghost\" href=\"sms:+15024940376?&body=Hi%20Bubba%2C%20I%27m%20looking%20for%20furniture%20and%20saw%20the%20%2440%20down%20deal.\">Text Bubba</a>\n    </div>\n    <div class=\"bb-hero__chips\">\n      <span>5.0 &middot; 320+ Google reviews</span>\n      <span>Payment plans, approved in minutes</span>\n      <span>1&ndash;2 week delivery &middot; free pickup</span>\n    </div>\n  </div>\n</section>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
-    "collection_list_tELBbP": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_Yjp7B4": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "living-room"
-          }
-        },
-        "featured_collection_Q3Vk8G": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "dining-room"
-          }
-        },
-        "featured_collection_6LAFTg": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bedroom"
-          }
-        },
-        "featured_collection_Gnr4kE": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "sleep-bedding"
-          }
-        },
-        "featured_collection_gwRPR6": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "outdoor"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_Yjp7B4",
-        "featured_collection_Q3Vk8G",
-        "featured_collection_6LAFTg",
-        "featured_collection_Gnr4kE",
-        "featured_collection_gwRPR6"
-      ],
-      "custom_css": [
-        "img {border-radius: 50%;}"
-      ],
+    "bb_rooms": {
+      "type": "custom-liquid",
       "settings": {
-        "title": "Popular Collections",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 5,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
+        "custom_liquid": "{%- assign tiles = 'living-room|Living Room|Sofas, sectionals & recliners;bedroom|Bedroom|Beds, dressers & sets;dining-room|Dining Room|Tables, chairs & bar stools;mattresses|Mattresses|Queens from $150;recliners|Recliners|Rockers, lifts & power;outdoor|Outdoor|Patio sets & seating' | split: ';' -%}\n<style>\n.bb-rooms{max-width:120rem;margin:0 auto;padding:5rem 5rem 2rem}\n.bb-rooms__head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2.4rem}\n.bb-rooms__h2{font-size:3rem;letter-spacing:-0.02em;margin:0;font-weight:800}\n.bb-rooms__sub{margin:.4rem 0 0;color:#6b6b6b;font-size:1.45rem}\n.bb-rooms__all{font-size:1.35rem;font-weight:700;color:#c0392b;text-decoration:none;white-space:nowrap}\n.bb-rooms__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}\n.bb-tile{position:relative;display:block;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#eee;text-decoration:none;color:#fff}\n.bb-tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}\n.bb-tile:hover img{transform:scale(1.05)}\n.bb-tile::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.72) 100%)}\n.bb-tile__txt{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:1.8rem 2rem}\n.bb-tile__name{font-size:2rem;font-weight:800;letter-spacing:-0.01em;margin:0}\n.bb-tile__sub{font-size:1.25rem;opacity:.9;margin:.3rem 0 0}\n.bb-tile__arrow{position:absolute;right:1.6rem;bottom:1.6rem;z-index:1;width:3.4rem;height:3.4rem;border-radius:50%;background:#fff;color:#141414;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;opacity:0;transform:translateX(6px);transition:all .25s ease}\n.bb-tile:hover .bb-tile__arrow{opacity:1;transform:none}\n@media (max-width:989px){.bb-rooms__grid{grid-template-columns:repeat(2,1fr)}}\n@media (max-width:749px){.bb-rooms{padding:3.2rem 1.6rem 1rem}.bb-rooms__h2{font-size:2.4rem}.bb-rooms__grid{gap:1rem}.bb-tile{aspect-ratio:1/1}.bb-tile__name{font-size:1.6rem}.bb-tile__sub{display:none}.bb-tile__txt{padding:1.2rem}}\n</style>\n<section class=\"bb-rooms\">\n  <div class=\"bb-rooms__head\">\n    <div><h2 class=\"bb-rooms__h2\">Shop by room</h2><p class=\"bb-rooms__sub\">Same Ashley pieces the big stores carry, without the markup.</p></div>\n    <a class=\"bb-rooms__all\" href=\"/collections/all\">See everything &rarr;</a>\n  </div>\n  <div class=\"bb-rooms__grid\">\n    {%- for t in tiles -%}\n      {%- assign p = t | split: '|' -%}\n      {%- assign c = collections[p[0]] -%}\n      {%- assign img = c.image -%}{%- if img == blank -%}{%- assign img = c.products.first.featured_image -%}{%- endif -%}\n      {%- if c and c.handle and img != blank -%}\n      <a class=\"bb-tile\" href=\"{{ c.url }}\">\n        <img src=\"{{ img | image_url: width: 900 }}\" alt=\"{{ p[1] }} furniture at Bubba's Louisville\" loading=\"lazy\" width=\"900\" height=\"675\">\n        <div class=\"bb-tile__txt\"><p class=\"bb-tile__name\">{{ p[1] }}</p><p class=\"bb-tile__sub\">{{ p[2] }}</p></div>\n        <span class=\"bb-tile__arrow\">&rarr;</span>\n      </a>\n      {%- endif -%}\n    {%- endfor -%}\n  </div>\n</section>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
-    "best_sellers": {
+    "bestsellers_section": {
       "type": "featured-collection",
       "settings": {
-        "collection": "best-sellers",
-        "products_to_show": 6,
-        "title": "Best Sellers",
+        "collection": "coltons-picks-bestsellers",
+        "products_to_show": 8,
+        "title": "Bubba's Bestsellers",
         "heading_size": "h2",
-        "description": "",
-        "show_description": false,
+        "description": "<p>What Louisville is taking home this month.</p>",
+        "show_description": true,
         "description_style": "body",
-        "columns_desktop": 3,
-        "enable_desktop_slider": true,
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
@@ -208,128 +46,33 @@
         "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
-        "show_vendor": true,
+        "show_vendor": false,
         "show_rating": false,
-        "quick_add": "standard",
+        "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
-    "featured_collection_yEi7nP": {
-      "type": "featured-collection",
+    "bb_steps": {
+      "type": "custom-liquid",
       "settings": {
-        "collection": "living-room-sectionals",
-        "products_to_show": 8,
-        "title": "Shop Living Room",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 3,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-2",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": true,
-        "show_rating": false,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
+        "custom_liquid": "<style>\n.bb-steps{background:#faf7f2;padding:5rem 5rem}\n.bb-steps__in{max-width:120rem;margin:0 auto}\n.bb-steps__h2{font-size:3rem;font-weight:800;letter-spacing:-0.02em;margin:0 0 .6rem;text-align:center}\n.bb-steps__sub{text-align:center;color:#6b6b6b;font-size:1.45rem;margin:0 0 3.2rem}\n.bb-steps__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}\n.bb-step{background:#fff;border:1px solid #eee3d2;border-radius:14px;padding:2.4rem 2.2rem;position:relative}\n.bb-step__n{width:4rem;height:4rem;border-radius:50%;background:#c0392b;color:#fff;font-weight:800;font-size:1.7rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem}\n.bb-step__t{font-size:1.8rem;font-weight:700;margin:0 0 .6rem;letter-spacing:-0.01em}\n.bb-step__p{font-size:1.4rem;line-height:1.6;color:#444;margin:0}\n.bb-steps__cta{text-align:center;margin-top:3rem;font-size:1.4rem;color:#6b6b6b}\n.bb-steps__cta a{color:#c0392b;font-weight:700;text-decoration:none}\n@media (max-width:749px){.bb-steps{padding:3.2rem 1.6rem}.bb-steps__h2{font-size:2.4rem}.bb-steps__grid{grid-template-columns:1fr;gap:1.2rem}}\n</style>\n<section class=\"bb-steps\"><div class=\"bb-steps__in\">\n  <h2 class=\"bb-steps__h2\">How $40 down works</h2>\n  <p class=\"bb-steps__sub\">Most people are approved in under 10 minutes. No credit needed on most plans.</p>\n  <div class=\"bb-steps__grid\">\n    <div class=\"bb-step\"><div class=\"bb-step__n\">1</div><h3 class=\"bb-step__t\">Pick your piece</h3><p class=\"bb-step__p\">Browse here or walk the showroom at 5907 Terry Rd. Every piece is real Ashley, in stock or 1&ndash;2 weeks out.</p></div>\n    <div class=\"bb-step\"><div class=\"bb-step__n\">2</div><h3 class=\"bb-step__t\">Text Bubba or come in</h3><p class=\"bb-step__p\">A standard checking account is all you need. Progressive, Acima, Koalafi and Synchrony &mdash; we find the plan that fits.</p></div>\n    <div class=\"bb-step\"><div class=\"bb-step__n\">3</div><h3 class=\"bb-step__t\">Take it home</h3><p class=\"bb-step__p\">$40 down and it's yours. Pick it up today or we deliver and set it up in your living room. 90 days same as cash on most plans.</p></div>\n  </div>\n  <p class=\"bb-steps__cta\">Questions? <a href=\"sms:+15024940376\">Text (502) 494-0376</a> &middot; <a href=\"/pages/financing\">Payment plan details</a></p>\n</div></section>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
-    "featured_collection_qt9dU9": {
-      "type": "featured-collection",
+    "meet_colton_section": {
+      "type": "bubba-meet-colton",
       "settings": {
-        "collection": "dining-room-sets",
-        "products_to_show": 8,
-        "title": "Shop Dining Room",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 3,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-2",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": true,
-        "show_rating": false,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
+        "owner_image": "shopify://shop_images/IMG_0721.jpg",
+        "review_count": "320",
+        "color_scheme": "scheme-1"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "bedroom-sets",
-        "products_to_show": 8,
-        "title": "Shop Bedroom",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 3,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-2",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": true,
-        "show_rating": false,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
-      }
-    },
-    "featured_collection_gYVNrD": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "mattresses",
-        "products_to_show": 8,
-        "title": "Shop Mattresses",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 3,
-        "enable_desktop_slider": true,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-2",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": true,
-        "show_rating": false,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
-      }
-    },
-    "17743841608bd9bb61": {
+    "reviews_apps": {
       "type": "apps",
       "blocks": {
         "judge_me_reviews_featured_carousel_bMrLhH": {
@@ -346,422 +89,30 @@
         "include_margins": true
       }
     },
-    "rich_text_3VLD8a": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_86FR4L": {
-          "type": "heading",
-          "settings": {
-            "heading": "Bubba's Mattress & Furniture",
-            "heading_size": "h2"
-          }
-        },
-        "text_YN47KF": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Bubba’s Mattress & Furniture is Louisville's #1 Ashley Furniture destination. Locally owned and operated by Colton Nichols since 2021, we carry the full Ashley Furniture lineup — sectionals, bedroom sets, dining rooms and mattresses — all brand new and delivered to your door within 50 miles of Louisville in 1–2 weeks. We believe everyone deserves a home they're proud of, which is why we offer lease-to-own and credit options for every budget. 285 five-star Google reviews and counting. Call or text Colton personally at (502) 494-0376.</p>"
-          }
-        },
-        "button_kqWnqX": {
-          "type": "button",
-          "settings": {
-            "button_label": "About Us",
-            "button_link": "shopify://pages/about-us",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_86FR4L",
-        "text_YN47KF",
-        "button_kqWnqX"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-5",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "custom_liquid_LEWWWT": {
+    "bb_visit": {
       "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3136.8846223426276!2d-85.8666865!3d38.166120899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88691501cfe0428b%3A0xf0697f17b1074278!2sBubba&#39;s%20Mattress%20and%20Furniture!5e0!3m2!1sen!2sus!4v1756393883295!5m2!1sen!2sus\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>\n\n<script type=\"application/ld+json\">\n{\"@context\":\"https://schema.org\",\"@type\":\"FurnitureStore\",\"name\":\"Bubba's Mattress & Furniture\",\"image\":\"https://www.bubbasmattressfurniturelouisville.com/cdn/shop/files/Screenshot_2024-08-11_120852.png\",\"url\":\"https://www.bubbasmattressfurniturelouisville.com\",\"telephone\":\"(502) 494-0376\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"5907 Terry Rd\",\"addressLocality\":\"Louisville\",\"addressRegion\":\"KY\",\"postalCode\":\"40258\",\"addressCountry\":\"US\"},\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":38.1661,\"longitude\":-85.8667},\"openingHoursSpecification\":[{\"@type\":\"OpeningHoursSpecification\",\"dayOfWeek\":[\"Monday\",\"Tuesday\",\"Wednesday\"],\"opens\":\"11:30\",\"closes\":\"18:30\"},{\"@type\":\"OpeningHoursSpecification\",\"dayOfWeek\":\"Thursday\",\"opens\":\"11:30\",\"closes\":\"17:00\"},{\"@type\":\"OpeningHoursSpecification\",\"dayOfWeek\":\"Friday\",\"opens\":\"11:30\",\"closes\":\"18:30\"},{\"@type\":\"OpeningHoursSpecification\",\"dayOfWeek\":\"Saturday\",\"opens\":\"11:30\",\"closes\":\"18:00\"}],\"priceRange\":\"$$\",\"areaServed\":[\"Louisville\",\"Shively\",\"Valley Station\",\"Pleasure Ridge Park\",\"Okolona\"],\"description\":\"Affordable Ashley Furniture store in Louisville, KY. Lease-to-own and credit options available. Mattresses, bedroom sets, sofas, dining sets and more. Local delivery within 50 miles.\",\"aggregateRating\":{\"@type\":\"AggregateRating\",\"ratingValue\":\"5.0\",\"reviewCount\":\"287\"},\"sameAs\":[\"https://www.facebook.com/Bubbasmattressfurniturelouisville/\"]}\n</script>",
+        "custom_liquid": "<style>\n.bb-visit{max-width:120rem;margin:0 auto;padding:5rem 5rem;display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:stretch}\n.bb-visit__map{border-radius:14px;overflow:hidden;border:1px solid #e8e8e8;min-height:38rem}\n.bb-visit__map iframe{width:100%;height:100%;min-height:38rem;border:0;display:block}\n.bb-visit__card{background:#faf7f2;border:1px solid #eee3d2;border-radius:14px;padding:3rem}\n.bb-visit__h2{font-size:2.8rem;font-weight:800;letter-spacing:-0.02em;margin:0 0 .6rem}\n.bb-visit__addr{font-size:1.5rem;margin:0 0 1.8rem;line-height:1.5}\n.bb-visit__addr a{color:#1a56db;text-decoration:none;font-weight:600}\n.bb-hours{width:100%;border-collapse:collapse;font-size:1.4rem;margin-bottom:2rem}\n.bb-hours td{padding:.5rem 0;border-bottom:1px solid #eee3d2}\n.bb-hours td:last-child{text-align:right;font-weight:600}\n.bb-visit__btns{display:flex;gap:1rem;flex-wrap:wrap}\n.bb-visit__btns .bb-btn{padding:1.3rem 2rem;font-size:1.45rem}\n.bb-btn--dark{background:#141414;color:#fff}\n@media (max-width:989px){.bb-visit{grid-template-columns:1fr}}\n@media (max-width:749px){.bb-visit{padding:3.2rem 1.6rem}.bb-visit__card{padding:2.2rem}.bb-visit__h2{font-size:2.3rem}.bb-visit__map,.bb-visit__map iframe{min-height:28rem}}\n</style>\n<section class=\"bb-visit\">\n  <div class=\"bb-visit__map\"><iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3136.8846223426276!2d-85.8666865!3d38.166120899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88691501cfe0428b%3A0xf0697f17b1074278!2sBubba's%20Mattress%20and%20Furniture!5e0!3m2!1sen!2sus!4v1756393883295!5m2!1sen!2sus\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" title=\"Map to Bubba's Mattress and Furniture\"></iframe></div>\n  <div class=\"bb-visit__card\">\n    <h2 class=\"bb-visit__h2\">Come see it in person</h2>\n    <p class=\"bb-visit__addr\">5907 Terry Road, Louisville, KY 40216<br><a href=\"tel:5024940376\">(502) 494-0376</a> &middot; <a href=\"https://www.google.com/maps/search/?api=1&query=Bubba%27s+Mattress+and+Furniture+5907+Terry+Rd+Louisville+KY+40216\" target=\"_blank\" rel=\"noopener\">Get directions</a></p>\n    <table class=\"bb-hours\">\n      <tr><td>Monday &ndash; Wednesday</td><td>11:30 AM &ndash; 6:30 PM</td></tr>\n      <tr><td>Thursday</td><td>11:30 AM &ndash; 5:00 PM</td></tr>\n      <tr><td>Friday</td><td>11:30 AM &ndash; 6:30 PM</td></tr>\n      <tr><td>Saturday</td><td>11:30 AM &ndash; 6:00 PM</td></tr>\n      <tr><td>Sunday</td><td>Closed</td></tr>\n    </table>\n    <div class=\"bb-visit__btns\"><a class=\"bb-btn bb-btn--red\" href=\"sms:+15024940376\">Text Bubba</a><a class=\"bb-btn bb-btn--dark\" href=\"tel:5024940376\">Call now</a></div>\n  </div>\n</section>",
         "color_scheme": "",
         "padding_top": 0,
         "padding_bottom": 0
       }
     },
-    "custom_liquid_NnTykD": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
+    "seo_text_section": {
+      "type": "bubba-seo-text",
       "settings": {
-        "custom_liquid": "<div style=\"max-width:850px;margin:0 auto;padding:32px 20px;\">\n\n<h2 style=\"font-size:1.6em;line-height:1.3;margin:0 0 20px;text-align:center;\">Louisville's Authorized Ashley Furniture Dealer</h2>\n\n<p style=\"font-size:1.05em;line-height:1.7;margin:0 0 24px;text-align:center;color:#444;\">Quality furniture, mattresses, and bedroom sets — with financing for every budget. Locally owned in Louisville, KY since 2021.</p>\n\n<div style=\"display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin:32px 0;\">\n  <div style=\"text-align:center;padding:20px;border:1px solid #eee;border-radius:6px;\">\n    <p style=\"font-weight:600;margin:0 0 8px;font-size:1.05em;\">Wide Selection</p>\n    <p style=\"margin:0;font-size:0.9em;opacity:0.7;line-height:1.6;\">Full Ashley Furniture catalog — sectionals, sofas, bedroom sets, mattresses, dining, recliners, and more.</p>\n  </div>\n  <div style=\"text-align:center;padding:20px;border:1px solid #eee;border-radius:6px;\">\n    <p style=\"font-weight:600;margin:0 0 8px;font-size:1.05em;\">Easy Financing</p>\n    <p style=\"margin:0;font-size:0.9em;opacity:0.7;line-height:1.6;\">Lease-to-own options from Progressive, Acima, Koalifi (no credit needed), plus 0% interest promos with Synchrony for good credit.</p>\n  </div>\n  <div style=\"text-align:center;padding:20px;border:1px solid #eee;border-radius:6px;\">\n    <p style=\"font-weight:600;margin:0 0 8px;font-size:1.05em;\">Local Delivery</p>\n    <p style=\"margin:0;font-size:0.9em;opacity:0.7;line-height:1.6;\">Delivered to your door within 50 miles of Louisville in 1–2 weeks.</p>\n  </div>\n</div>\n\n<h3 style=\"font-size:1.2em;margin:32px 0 12px;\">Furniture Financing in Louisville — Bad Credit OK</h3>\n<p style=\"line-height:1.7;margin:0 0 16px;\">Bubba's offers more financing options than any other furniture store in Louisville. Whether you have great credit, no credit, or rebuilding credit, we have a plan that works. Start with as little as <strong>$25 down with Acima</strong>, or take advantage of early purchase options. <a href=\"/pages/financing\" style=\"text-decoration:underline;\">See all financing options</a>.</p>\n\n<h3 style=\"font-size:1.2em;margin:32px 0 12px;\">Authorized Ashley Furniture Dealer</h3>\n<p style=\"line-height:1.7;margin:0 0 16px;\">Every piece in our store is brand new from the Ashley Furniture warehouse, complete with manufacturer warranty. We carry the full Ashley lineup at prices below the big-box retailers. Browse our <a href=\"/collections/living-room\" style=\"text-decoration:underline;\">living room</a>, <a href=\"/collections/bedroom\" style=\"text-decoration:underline;\">bedroom</a>, <a href=\"/collections/sleep-bedding\" style=\"text-decoration:underline;\">mattress</a>, and <a href=\"/collections/dining-room\" style=\"text-decoration:underline;\">dining room</a> collections.</p>\n\n<h3 style=\"font-size:1.2em;margin:32px 0 12px;\">Serving Louisville and Surrounding Areas</h3>\n<p style=\"line-height:1.7;margin:0 0 24px;\">We deliver to Louisville, Shively, Valley Station, Pleasure Ridge Park, Okolona, Fairdale, Jeffersontown, Shepherdsville, Radcliff, Elizabethtown, New Albany IN, and Clarksville IN.</p>\n\n<div style=\"text-align:center;padding:24px;background:#f9f7f3;border-radius:8px;margin-top:32px;\">\n  <p style=\"margin:0 0 8px;font-weight:600;\">Visit our showroom</p>\n  <p style=\"margin:0 0 4px;\">5907 Terry Rd, Louisville, KY 40258</p>\n  <p style=\"margin:0;\"><a href=\"tel:+15024940376\" style=\"font-weight:600;color:#111;text-decoration:none;\">(502) 494-0376</a></p>\n</div>\n\n</div>",
-        "color_scheme": "",
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "rich_text_xjwBKb": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_YNKtkA": {
-          "type": "heading",
-          "settings": {
-            "heading": "Flexible Financing Available",
-            "heading_size": "h2"
-          }
-        },
-        "text_LayqJV": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Take home any Ashley Furniture piece today with flexible financing options. No credit check required for most plans. Traditional bank account required for lease-to-own options.</p><p>💳 <strong>Progressive Leasing</strong> — No credit check · Flexible payments 💳 <strong>Acima</strong> — Lowest initial payment · Quick approval 💳 <strong>Koalifi</strong> — 100 days same as cash · Transparent terms 💳 <strong>Synchrony</strong> — 0% interest promos · For good credit</p>"
-          }
-        },
-        "button_6WaqpB": {
-          "type": "button",
-          "settings": {
-            "button_label": "Apply Now",
-            "button_link": "https://www.bubbasmattressfurniturelouisville.com/pages/financing",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_YNKtkA",
-        "text_LayqJV",
-        "button_6WaqpB"
-      ],
-      "disabled": true,
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-5",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "image_banner_znQeiH": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_e7bBV8": {
-          "type": "heading",
-          "settings": {
-            "heading": "Comfort Every Day",
-            "heading_size": "h0"
-          }
-        },
-        "buttons_WcGWzG": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Living",
-            "button_link_1": "shopify://collections/living-room",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_e7bBV8",
-        "buttons_WcGWzG"
-      ],
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/4d8d2a72-c346-4215-ae4c-313f7a1154a2.jpg",
-        "image_overlay_opacity": 20,
-        "image_height": "medium",
-        "image_behavior": "ambient",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
-    "image_banner_jQnmQP": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_ycMxxn": {
-          "type": "heading",
-          "settings": {
-            "heading": "Dining Done Right",
-            "heading_size": "h0"
-          }
-        },
-        "buttons_Cntzc6": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Dining",
-            "button_link_1": "shopify://collections/dining-room",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_ycMxxn",
-        "buttons_Cntzc6"
-      ],
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/346aadb4-bf01-48c2-ba88-40e9dbb4030b.jpg",
-        "image_overlay_opacity": 20,
-        "image_height": "medium",
-        "image_behavior": "ambient",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
-    "image_banner_pYMjgY": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_b3BzkP": {
-          "type": "heading",
-          "settings": {
-            "heading": "Nightly Comfort",
-            "heading_size": "h0"
-          }
-        },
-        "buttons_ixPBwm": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Bedroom",
-            "button_link_1": "shopify://collections/bedroom",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_b3BzkP",
-        "buttons_ixPBwm"
-      ],
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/2a623835-1bf8-4919-8d8a-f68fbd0629af.jpg",
-        "image_overlay_opacity": 20,
-        "image_height": "medium",
-        "image_behavior": "ambient",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
-    "image_banner_nM878x": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_py4dRK": {
-          "type": "heading",
-          "settings": {
-            "heading": "Rest Made Simple",
-            "heading_size": "h0"
-          }
-        },
-        "buttons_Lfph4A": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Mattresses",
-            "button_link_1": "shopify://collections/sleep-bedding",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_py4dRK",
-        "buttons_Lfph4A"
-      ],
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/94082a5e-5bf7-4cb9-8037-116c290f7191.jpg",
-        "image_overlay_opacity": 20,
-        "image_height": "medium",
-        "image_behavior": "ambient",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
-    "collection_list_GMyUhA": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_b9eNDw": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "kids-teens"
-          }
-        },
-        "featured_collection_ikDUCy": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "home-office"
-          }
-        },
-        "featured_collection_kQNw7C": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "home-entertainment"
-          }
-        },
-        "featured_collection_yVLATV": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "home-accents"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_b9eNDw",
-        "featured_collection_ikDUCy",
-        "featured_collection_kQNw7C",
-        "featured_collection_yVLATV"
-      ],
-      "disabled": true,
-      "custom_css": [
-        "img {border-radius: 50%;}"
-      ],
-      "settings": {
-        "title": "Popular Collections",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
-      }
-    },
-    "rich_text_ykxWwR": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_bh3XpR": {
-          "type": "heading",
-          "settings": {
-            "heading": "Contact Us",
-            "heading_size": "h0"
-          }
-        },
-        "text_U3F6FX": {
-          "type": "text",
-          "settings": {
-            "text": "<h2><strong>Bubba’s Mattress & Furniture</strong></h2><p><strong>5907 Terry Road</strong><br/><strong>Louisville, KY 40216</strong></p><p><strong>502-494-0376</strong><br/>📧 <a><strong>coltonnichols@bubbasmattressandfurntiture.com</strong></a></p><p>We provide <strong>local delivery within a 50-mile radius of Louisville, Kentucky</strong>, and all items typically arrive within <strong>1–2 weeks</strong> from the Ashley warehouse.</p><p><strong>You will receive a call or text when your item is ordered to confirm all information is correct.</strong><br/>You will receive another call or text as soon as your item arrives so you can schedule delivery or pickup.</p><h2><strong>Store Hours</strong></h2><p><strong>Monday – Wednesday:</strong> 11:30 AM – 6:30 PM<br/><strong>Thursday:</strong> 11:30 AM – 5:00 PM<br/><strong>Friday:</strong> 11:30 AM – 6:30 PM<br/><strong>Saturday:</strong> 11:30 AM – 6:00 PM<br/><strong>Sunday:</strong> Closed</p><h2><strong>Pickup Location</strong></h2><p>All pickups are done at:</p><p>📍 <strong>Bubba’s Mattress & Furniture</strong><br/><strong>5907 Terry Road</strong><br/><strong>Louisville, KY 40216</strong></p><p>Please bring a valid ID and your order confirmation when picking up.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_bh3XpR",
-        "text_U3F6FX"
-      ],
-      "disabled": true,
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "custom_liquid_A9ygL7": {
-      "type": "custom-liquid",
-      "disabled": true,
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "custom_liquid": "<div class=\"sk-ww-google-reviews\" data-embed-id=\"25629761\"></div><script src=\"https://widgets.sociablekit.com/google-reviews/widget.js\" defer></script>",
-        "color_scheme": "",
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "rich_text_kpYhre": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_3xjkNB": {
-          "type": "heading",
-          "settings": {
-            "heading": "",
-            "heading_size": "h1"
-          }
-        },
-        "text_8HjFVG": {
-          "type": "text",
-          "settings": {
-            "text": ""
-          }
-        }
-      },
-      "block_order": [
-        "heading_3xjkNB",
-        "text_8HjFVG"
-      ],
-      "disabled": true,
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
+        "color_scheme": "scheme-1"
       }
     }
   },
   "order": [
-    "slideshow_kUQKmT",
-    "collection_list_tELBbP",
-    "best_sellers",
-    "featured_collection_yEi7nP",
-    "featured_collection_qt9dU9",
-    "featured_collection",
-    "featured_collection_gYVNrD",
-    "17743841608bd9bb61",
-    "rich_text_3VLD8a",
-    "custom_liquid_LEWWWT",
-    "custom_liquid_NnTykD",
-    "rich_text_xjwBKb",
-    "image_banner_znQeiH",
-    "image_banner_jQnmQP",
-    "image_banner_pYMjgY",
-    "image_banner_nM878x",
-    "collection_list_GMyUhA",
-    "rich_text_ykxWwR",
-    "custom_liquid_A9ygL7",
-    "rich_text_kpYhre"
+    "bb_hero",
+    "bb_rooms",
+    "bestsellers_section",
+    "bb_steps",
+    "meet_colton_section",
+    "reviews_apps",
+    "bb_visit",
+    "seo_text_section"
   ]
 }
