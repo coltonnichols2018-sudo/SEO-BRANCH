@@ -79,6 +79,19 @@
   body.bubba-atc-on .fb_dialog,
   body.bubba-atc-on .fb_dialog_content{bottom:calc(112px + env(safe-area-inset-bottom))!important;}
   .fb_dialog{transition:bottom 0.3s ease;}
+  /* The live chat on this store is Tidio, not Facebook Messenger - the
+     tidio-live-chat-chatbots app embed is enabled while google-reviews is
+     disabled. Targeting only .fb_dialog missed the widget actually on
+     screen, so cover Tidio's launcher too. */
+  body.bubba-atc-on #tidio-chat,
+  body.bubba-atc-on #tidio-chat-iframe{bottom:calc(112px + env(safe-area-inset-bottom))!important;}
+  #tidio-chat,#tidio-chat-iframe{transition:bottom 0.3s ease;}
+  /* While the cart drawer is open the launcher sits on the checkout button,
+     so hide it outright rather than nudging it. */
+  body:has(cart-drawer.active) #tidio-chat,
+  body:has(cart-drawer.active) #tidio-chat-iframe,
+  body:has(cart-drawer.active) .fb_dialog,
+  body:has(cart-drawer.active) .fb_dialog_content{display:none!important;}
 }
 
 /* ===== TAP-TO-CALL ANNOUNCEMENT BAR ===== */
