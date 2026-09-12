@@ -1,25 +1,30 @@
-{% raw %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://bubbamattressesandfurniture.com/#website",
-      "url": "https://bubbamattressesandfurniture.com/",
-      "name": "Bubbas Mattress & Furniture",
+      "@id": "https://www.bubbasmattressfurniturelouisville.com/#website",
+      "url": "https://www.bubbasmattressfurniturelouisville.com/",
+      "name": "Bubba's Mattress & Furniture",
+      "publisher": { "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization" },
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://bubbamattressesandfurniture.com/search?q={search_term_string}",
+        "target": "https://www.bubbasmattressfurniturelouisville.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     },
     {
       "@type": "FurnitureStore",
-      "@id": "https://bubbamattressesandfurniture.com/pages/contact#store",
-      "name": "Bubbas Mattress & Furniture",
-      "url": "https://bubbamattressesandfurniture.com/pages/contact",
+      "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization",
+      "name": "Bubba's Mattress & Furniture",
+      "alternateName": "Bubba's Mattress and Furniture Louisville",
+      "url": "https://www.bubbasmattressfurniturelouisville.com/",
       "telephone": "+1-502-494-0376",
+      "email": "coltonnichols@bubbasmattressandfurniture.com",
+      "image": "https://www.bubbasmattressfurniturelouisville.com/cdn/shop/files/Bubba_s_Logo.png",
+      "logo": "https://www.bubbasmattressfurniturelouisville.com/cdn/shop/files/Bubba_s_Logo.png",
+      "description": "Affordable Ashley Furniture store in Louisville, KY. Payment plans from $40 down, no credit check on most plans. Mattresses, sectionals, sofas, bedroom and dining sets. $125 flat-rate delivery within 50 miles, free store pickup.",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "5907 Terry Road",
@@ -28,37 +33,19 @@
         "postalCode": "40216",
         "addressCountry": "US"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 38.16624,
-        "longitude": -85.86675
-      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 38.1661209, "longitude": -85.8666865 },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Bubba%27s+Mattress+and+Furniture+5907+Terry+Rd+Louisville+KY+40216",
       "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday"],
-          "opens": "11:30",
-          "closes": "18:30"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Thursday",
-          "opens": "11:30",
-          "closes": "17:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Friday","Saturday"],
-          "opens": "11:30",
-          "closes": "18:00"
-        }
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Friday"], "opens": "11:30", "closes": "18:30" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "11:30", "closes": "17:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:30", "closes": "18:00" }
       ],
-      "hasMap": "https://www.google.com/maps/search/?api=1&query=5907 Terry Rd, Louisville, KY 40216",
-      "sameAs": [
-        "https://www.facebook.com/Bubbasmattressfurniturelouisville/"
-      ]
+      "priceRange": "$$",
+      "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Financing", "Lease-to-Own"],
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "310" },
+      "areaServed": ["Louisville", "Shively", "Valley Station", "Pleasure Ridge Park", "Okolona", "Fairdale", "Jeffersontown", "St. Matthews", "Shepherdsville", "Radcliff", "Elizabethtown", "New Albany", "Clarksville"],
+      "sameAs": ["https://www.facebook.com/Bubbasmattressfurniturelouisville/"]
     }
   ]
 }
 </script>
-{% endraw %}

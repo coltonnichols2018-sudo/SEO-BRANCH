@@ -1,0 +1,130 @@
+<style>
+  .meet-colton {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .meet-colton__image {
+    flex: 0 0 260px;
+    max-width: 260px;
+  }
+  .meet-colton__image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  }
+  .meet-colton__text {
+    flex: 1;
+  }
+  .meet-colton__text h2 {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+  }
+  .meet-colton__text p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 12px;
+  }
+  .meet-colton__cta {
+    display: inline-block;
+    margin-top: 16px;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .meet-colton__cta:hover {
+    background: #333;
+    color: #fff;
+  }
+  @media (max-width: 749px) {
+    .meet-colton {
+      flex-direction: column;
+      text-align: center;
+      padding: 30px 16px;
+      gap: 20px;
+    }
+    .meet-colton__image {
+      flex: 0 0 auto;
+      width: 55%;
+      max-width: 240px;
+      margin: 0 auto;
+    }
+    .meet-colton__image img {
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-position: center 20%;
+      border-radius: 50%;
+    }
+    .meet-colton__text h2 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .meet-colton__text p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .meet-colton__cta {
+      padding: 12px 24px;
+      font-size: 14px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<div class="meet-colton color-{{ section.settings.color_scheme }}">
+  <div class="meet-colton__image">
+    {%- if section.settings.owner_image != blank -%}
+      {{ section.settings.owner_image | image_url: width: 800 | image_tag:
+        alt: 'Colton Nichols - Owner of Bubbas Mattress and Furniture',
+        loading: 'lazy',
+        widths: '352, 800'
+      }}
+    {%- endif -%}
+  </div>
+  <div class="meet-colton__text">
+    <h2>Meet Colton</h2>
+    <p>I started Bubba’s back in 2021 and it’s been one of the best things I’ve ever done. I love what I do — helping people get nice furniture without paying crazy prices for it. Same Ashley pieces the big stores sell, just without all the markup. I’m at the store six days a week and I wouldn’t have it any other way.</p>
+    <p>You’re not dealing with a sales team or some corporate 1-800 number — you’re dealing with me. I answer every call, I handle every delivery, and I make sure you’re taken care of start to finish. {{ section.settings.review_count }}+ five-star reviews from real Louisville families and counting.</p>
+    <a href="tel:5024940376" class="meet-colton__cta">Call or Text Bubba — (502) 494-0376</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Meet Colton",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "owner_image",
+      "label": "Owner photo"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "285"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [{ "name": "Meet Colton" }]
+}
+{% endschema %}
