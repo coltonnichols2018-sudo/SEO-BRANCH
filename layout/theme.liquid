@@ -467,6 +467,12 @@
     gap:6px;align-items:center;letter-spacing:0.02em;
   }
   .sms-btn svg{width:16px;height:16px;fill:currentColor;}
+  /* The Messenger bubble is bottom-right at a very high z-index, which puts it
+     directly over the Add to Cart button in the sticky bar. Lift it while that
+     bar is showing. */
+  body.sticky-atc-shown .fb_dialog,
+  body.sticky-atc-shown .fb_dialog_content{bottom:calc(80px + env(safe-area-inset-bottom)) !important;}
+  .fb_dialog{transition:bottom .22s ease;}
 }
 </style>
 <a href="sms:+15024940376" class="sms-btn">
