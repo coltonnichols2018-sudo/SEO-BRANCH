@@ -68,6 +68,18 @@
   display:block;text-align:center;margin-top:4px;
   font-size:11px;color:#c0392b;text-decoration:none;font-weight:500;
 }
+#bubba-sticky-atc .satc-btn[disabled]{opacity:0.5;cursor:default;}
+/* clear the home indicator on notched iPhones */
+#bubba-sticky-atc{padding-bottom:calc(10px + env(safe-area-inset-bottom));}
+@media(max-width:749px){
+  /* the bar is fixed, so pad the page or it covers the end of the footer */
+  body.bubba-atc-on{padding-bottom:104px;}
+  /* the Messenger bubble is bottom-right at a very high z-index, landing
+     right on top of the Add to Cart button - lift it while the bar shows */
+  body.bubba-atc-on .fb_dialog,
+  body.bubba-atc-on .fb_dialog_content{bottom:calc(112px + env(safe-area-inset-bottom))!important;}
+  .fb_dialog{transition:bottom 0.3s ease;}
+}
 
 /* ===== TAP-TO-CALL ANNOUNCEMENT BAR ===== */
 @media(max-width:749px){
@@ -112,49 +124,97 @@
 
   var stickyBar = document.getElementById('bubba-sticky-atc');
 
-  /* Populate product info */
-  var nameEl = document.querySelector('.bb-ptitle, .product__title h1, .product__title h2, .product__title');
-  var priceEl = document.querySelector('.price-item--regular, .price-item--sale');
-  var satcName = stickyBar.querySelector('.satc-name');
+  var satcName  = stickyBar.querySelector('.satc-name');
   var satcPrice = stickyBar.querySelector('.satc-price');
+  var satcBtn   = stickyBar.querySelector('.satc-btn');
+  var textLink  = stickyBar.querySelector('.satc-text-link');
+  var info      = document.querySelector('.product__info-container');
 
-  if(nameEl) satcName.textContent = nameEl.textContent.trim();
-  if(priceEl){
-    satcPrice.innerHTML = priceEl.textContent.trim() +
-      '<span class="satc-down">payment plans available</span>';
+  function nameEl(){
+    return document.querySelector('.bb-ptitle, .product__title h1, .product__title h2, .product__title');
+  }
+  function scope(){ return info || document; }
+  function realBtn(){
+    return scope().querySelector('button[name="add"], .product-form__submit')
+        || document.querySelector('[type="submit"][name="add"]');
   }
 
-  /* Update text link with product name */
-  var textLink = stickyBar.querySelector('.satc-text-link');
-  if(textLink && nameEl){
-    var prodName = encodeURIComponent(nameEl.textContent.trim());
-    textLink.href = 'sms:+15024940376?&body=Hi%20Bubba%2C%20I%27m%20interested%20in%20the%20' + prodName;
+  /* Dawn renders the struck-through regular price BEFORE the sale price, so a
+     plain querySelector('.price-item--regular, .price-item--sale') returns the
+     ORIGINAL price on a discounted item. Read the sale node when on sale. */
+  function readPrice(){
+    var pb = scope().querySelector('.price');
+    if(!pb) return '';
+    var node = pb.classList.contains('price--on-sale')
+      ? pb.querySelector('.price-item--sale')
+      : pb.querySelector('.price-item--regular');
+    if(!node) node = pb.querySelector('.price-item--sale, .price-item--regular');
+    return node ? node.textContent.trim() : '';
   }
 
-  /* Watch the real Add to Cart button */
-  var realBtn = document.querySelector('button[name="add"], .product-form__submit, button.shopify-payment-button__button--unbranded');
-  if(!realBtn) realBtn = document.querySelector('[type="submit"][name="add"]');
+  function sync(){
+    var n = nameEl();
+    if(n && satcName) satcName.textContent = n.textContent.trim();
 
-  if(realBtn && 'IntersectionObserver' in window){
-    var observer = new IntersectionObserver(function(entries){
+    var price = readPrice();
+    if(price && satcPrice){
+      satcPrice.innerHTML = price +
+        '<span class="satc-down">payment plans available</span>';
+    }
+
+    var b = realBtn();
+    if(b && satcBtn){
+      var sold = b.hasAttribute('disabled');
+      satcBtn.disabled = sold;
+      satcBtn.textContent = sold ? 'Sold Out' : 'Add to Cart';
+    }
+
+    if(textLink && n){
+      textLink.href = 'sms:+15024940376?&body=' +
+        encodeURIComponent("Hi Bubba, I'm interested in the " + n.textContent.trim())
+          .replace(/%20/g, '%20');
+    }
+    watch();
+  }
+
+  /* Re-point the visibility observer if Dawn re-renders the buy button */
+  var observed = null, io = null;
+  function show(on){
+    stickyBar.classList.toggle('visible', on);
+    document.body.classList.toggle('bubba-atc-on', on);
+  }
+  function watch(){
+    if(!('IntersectionObserver' in window)) return;
+    var b = realBtn();
+    if(!b || b === observed) return;
+    if(io) io.disconnect();
+    observed = b;
+    io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          stickyBar.classList.remove('visible');
-        } else {
-          if(entry.boundingClientRect.top < 0){
-            stickyBar.classList.add('visible');
-          }
-        }
+        if(entry.isIntersecting) show(false);
+        else if(entry.boundingClientRect.top < 0) show(true);
       });
     }, {threshold:0, rootMargin:'0px'});
-    observer.observe(realBtn);
+    io.observe(b);
   }
 
+  /* Keep the bar honest when the shopper switches variant. The bar lives
+     outside .product__info-container, so writing to it cannot re-trigger this. */
+  if(info){
+    new MutationObserver(sync).observe(info, {
+      subtree:true, childList:true, characterData:true,
+      attributes:true, attributeFilter:['disabled','class']
+    });
+  }
+
+  sync();
+
   /* Sticky bar button clicks the real Add to Cart */
-  var satcBtn = stickyBar.querySelector('.satc-btn');
   satcBtn.addEventListener('click', function(){
-    if(realBtn){
-      realBtn.click();
+    if(satcBtn.disabled) return;
+    var b = realBtn();
+    if(b){
+      b.click();
       satcBtn.textContent = 'Added!';
       setTimeout(function(){ satcBtn.textContent = 'Add to Cart'; }, 1500);
     } else {
