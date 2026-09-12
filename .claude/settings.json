@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Shopify__graphql_query",
+      "mcp__Shopify__graphql_schema",
+      "mcp__Shopify__run-analytics-query",
+      "mcp__github__get_file_contents"
+    ]
+  }
+}
