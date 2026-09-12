@@ -16,14 +16,23 @@
   var BTN_HTML =
     '<button style="border:0" type="button" aria-label="Estimate Leasing Costs" class="open-acima-calculator"></button>';
 
-  var info = document.querySelector('.product__info-container');
-  var wrap = document.querySelector('.acima-wrap');
-  if (!info || !wrap) return;
+  /* Re-query every time. Dawn re-renders parts of the product info column on
+     variant change, so anything cached at load can end up detached from the
+     page - writing into it then has no visible effect. */
+  function info() {
+    return document.querySelector('.product__info-container');
+  }
+  function wrap() {
+    return document.querySelector('.acima-wrap');
+  }
+  if (!info() || !wrap()) return;
 
   /* Dawn renders the struck-through regular price BEFORE the sale price, so
      read the sale node when the product is actually on sale. */
   function currentPrice() {
-    var pb = info.querySelector('.price');
+    var root = info();
+    if (!root) return null;
+    var pb = root.querySelector('.price');
     if (!pb) return null;
     var node = pb.classList.contains('price--on-sale')
       ? pb.querySelector('.price-item--sale')
@@ -41,6 +50,7 @@
   function apply(price) {
     if (!ready()) return;
     var A = window.AcimaCalculator;
+    window.__bubbaAcimaPrice = price;
 
     // Use a documented update call if this version of the library has one.
     var names = ['updatePrice', 'setPrice', 'updateItemPrice', 'update'];
@@ -48,6 +58,7 @@
       if (typeof A[names[i]] === 'function') {
         try {
           A[names[i]](price);
+          window.__bubbaAcimaVia = names[i];
           return;
         } catch (e) {
           /* fall through to rebuild */
@@ -59,7 +70,9 @@
     try {
       if (typeof A.destroy === 'function') A.destroy();
     } catch (e) {}
-    wrap.innerHTML = BTN_HTML;
+    var w = wrap();
+    if (!w) return;
+    w.innerHTML = BTN_HTML;
     try {
       A.init({
         location: LOCATION,
@@ -68,7 +81,10 @@
         useDynamicCta: true,
         Language: 'en'
       });
-    } catch (e) {}
+      window.__bubbaAcimaVia = 're-init';
+    } catch (e) {
+      window.__bubbaAcimaVia = 'failed';
+    }
   }
 
   var last = currentPrice();
@@ -91,11 +107,23 @@
     }
   }
 
-  new MutationObserver(sync).observe(info, {
-    subtree: true,
-    childList: true,
-    characterData: true
-  });
+  var observedRoot = null;
+  function watch() {
+    var root = info();
+    if (!root || root === observedRoot) return;
+    observedRoot = root;
+    new MutationObserver(sync).observe(root, {
+      subtree: true,
+      childList: true,
+      characterData: true
+    });
+  }
+  watch();
+  /* If Dawn swaps the whole info column, re-attach the observer to the new one. */
+  new MutationObserver(function () {
+    watch();
+    sync();
+  }).observe(document.body, { subtree: true, childList: true });
 
   // Acima's library loads from their CDN; don't assume it is ready yet.
   if (!ready()) {
