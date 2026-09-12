@@ -1,0 +1,165 @@
+{% comment %} ===== BUBBA'S MOBILE UX ENHANCEMENTS ===== {% endcomment %}
+
+<style>
+/* ===== HIDE OLD INLINE SMS BUTTON ===== */
+.sms-btn { display: none !important; }
+
+/* ===== MOBILE HEADER: Shrink logo, tighten spacing ===== */
+@media(max-width:749px){
+  .header__heading-logo-wrapper{max-width:180px!important;}
+  .header__heading-logo{max-height:75px!important;width:auto!important;}
+  .header__heading-link{padding:4px 0!important;}
+  .header{padding-top:2px!important;padding-bottom:2px!important;}
+  .section-header{margin-bottom:0!important;}
+}
+
+/* ===== HIDE SKU ON PRODUCT PAGES ===== */
+.product__text.caption-with-letter-spacing{display:none!important;}
+
+/* ===== FOOTER PADDING FIX ===== */
+@media(max-width:749px){
+  .footer .footer__content-top,
+  .footer .footer__content-bottom,
+  .footer .footer__blocks-wrapper{
+    padding-left:20px!important;
+    padding-right:20px!important;
+  }
+}
+
+/* ===== STICKY ADD TO CART BAR (product pages only) ===== */
+#bubba-sticky-atc{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:95;
+  background:#fff;border-top:2px solid #c0392b;
+  padding:10px 16px;
+  box-shadow:0 -4px 16px rgba(0,0,0,0.1);
+  transform:translateY(100%);
+  transition:transform 0.3s ease;
+}
+#bubba-sticky-atc.visible{transform:translateY(0);}
+@media(max-width:749px){
+  #bubba-sticky-atc{display:block;}
+}
+@media(min-width:750px){
+  #bubba-sticky-atc{display:none!important;}
+}
+#bubba-sticky-atc .satc-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+#bubba-sticky-atc .satc-info{flex:1;min-width:0;}
+#bubba-sticky-atc .satc-name{
+  font-size:12px;font-weight:500;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;margin:0;line-height:1.3;
+  color:#666;
+}
+#bubba-sticky-atc .satc-price{
+  font-size:16px;font-weight:700;margin:2px 0 0;line-height:1;color:#111;
+}
+#bubba-sticky-atc .satc-price .satc-down{
+  font-size:11px;font-weight:500;color:#c0392b;margin-left:6px;
+}
+#bubba-sticky-atc .satc-btn{
+  background:#c0392b;color:#fff;border:none;
+  padding:14px 22px;border-radius:6px;font-size:14px;font-weight:700;
+  cursor:pointer;white-space:nowrap;letter-spacing:0.03em;
+  flex-shrink:0;text-transform:uppercase;
+}
+#bubba-sticky-atc .satc-btn:active{opacity:0.85;}
+#bubba-sticky-atc .satc-text-link{
+  display:block;text-align:center;margin-top:4px;
+  font-size:11px;color:#c0392b;text-decoration:none;font-weight:500;
+}
+
+/* ===== TAP-TO-CALL ANNOUNCEMENT BAR ===== */
+@media(max-width:749px){
+  .announcement-bar a[href^="tel:"]{
+    color:inherit!important;text-decoration:underline;
+  }
+}
+</style>
+
+{% comment %} Sticky Add to Cart bar — product pages only {% endcomment %}
+{%- if template contains 'product' -%}
+<div id="bubba-sticky-atc">
+  <div class="satc-inner">
+    <div class="satc-info">
+      <p class="satc-name"></p>
+      <p class="satc-price"></p>
+    </div>
+    <button class="satc-btn" type="button">Add to Cart</button>
+  </div>
+  <a href="sms:+15024940376?&body=Hi%20Bubba%2C%20I%27m%20interested%20in%20" class="satc-text-link">
+    Questions? Text Bubba directly
+  </a>
+</div>
+{%- endif -%}
+
+<script>
+(function(){
+  /* === Make announcement bar phone number tappable === */
+  var ann = document.querySelector('.announcement-bar__message, .announcement-bar');
+  if(ann){
+    var html = ann.innerHTML;
+    if(html.indexOf('502') !== -1 && html.indexOf('tel:') === -1){
+      ann.innerHTML = html.replace(
+        /\(502\)\s*494[\s-]*0376/g,
+        '<a href="tel:+15024940376" style="color:inherit">(502) 494-0376</a>'
+      );
+    }
+  }
+
+  /* === Sticky Add to Cart on product pages === */
+  if(!document.getElementById('bubba-sticky-atc')) return;
+
+  var stickyBar = document.getElementById('bubba-sticky-atc');
+
+  /* Populate product info */
+  var nameEl = document.querySelector('.bb-ptitle, .product__title h1, .product__title h2, .product__title');
+  var priceEl = document.querySelector('.price-item--regular, .price-item--sale');
+  var satcName = stickyBar.querySelector('.satc-name');
+  var satcPrice = stickyBar.querySelector('.satc-price');
+
+  if(nameEl) satcName.textContent = nameEl.textContent.trim();
+  if(priceEl){
+    satcPrice.innerHTML = priceEl.textContent.trim() +
+      '<span class="satc-down">payment plans available</span>';
+  }
+
+  /* Update text link with product name */
+  var textLink = stickyBar.querySelector('.satc-text-link');
+  if(textLink && nameEl){
+    var prodName = encodeURIComponent(nameEl.textContent.trim());
+    textLink.href = 'sms:+15024940376?&body=Hi%20Bubba%2C%20I%27m%20interested%20in%20the%20' + prodName;
+  }
+
+  /* Watch the real Add to Cart button */
+  var realBtn = document.querySelector('button[name="add"], .product-form__submit, button.shopify-payment-button__button--unbranded');
+  if(!realBtn) realBtn = document.querySelector('[type="submit"][name="add"]');
+
+  if(realBtn && 'IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          stickyBar.classList.remove('visible');
+        } else {
+          if(entry.boundingClientRect.top < 0){
+            stickyBar.classList.add('visible');
+          }
+        }
+      });
+    }, {threshold:0, rootMargin:'0px'});
+    observer.observe(realBtn);
+  }
+
+  /* Sticky bar button clicks the real Add to Cart */
+  var satcBtn = stickyBar.querySelector('.satc-btn');
+  satcBtn.addEventListener('click', function(){
+    if(realBtn){
+      realBtn.click();
+      satcBtn.textContent = 'Added!';
+      setTimeout(function(){ satcBtn.textContent = 'Add to Cart'; }, 1500);
+    } else {
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+})();
+</script>
