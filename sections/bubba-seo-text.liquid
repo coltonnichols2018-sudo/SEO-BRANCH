@@ -1,0 +1,130 @@
+<style>
+  .seo-content {
+    background: #f9f9f9;
+    padding: 50px 20px;
+  }
+  .seo-content__inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .seo-content__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 50px;
+  }
+  .seo-content__block {
+    padding: 28px 0;
+  }
+  .seo-content__block--full {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 36px;
+  }
+  .seo-content__block h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .seo-content__block p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #555;
+    margin: 0 0 12px;
+  }
+  .seo-content__block p:last-child {
+    margin-bottom: 0;
+  }
+  .seo-content__block strong {
+    color: #1a1a1a;
+  }
+  .seo-content__block a {
+    color: #1a1a1a;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .seo-content__block a:hover {
+    color: #c0392b;
+  }
+  .seo-content__links {
+    grid-column: 1 / -1;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 28px;
+    text-align: center;
+  }
+  .seo-content__links p {
+    font-size: 14px;
+    color: #777;
+    line-height: 1.7;
+  }
+  @media (max-width: 749px) {
+    .seo-content {
+      padding: 36px 16px;
+    }
+    .seo-content__grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .seo-content__block {
+      padding: 22px 0;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .seo-content__block--full {
+      grid-column: 1;
+    }
+    .seo-content__block h2 {
+      font-size: 19px;
+    }
+    .seo-content__block p {
+      font-size: 14px;
+    }
+    .seo-content__links {
+      grid-column: 1;
+      padding-top: 22px;
+      border-top: none;
+    }
+  }
+</style>
+
+<div class="seo-content">
+  <div class="seo-content__inner">
+    <div class="seo-content__grid">
+
+      <div class="seo-content__block seo-content__block--full">
+        <h2>Affordable Furniture Store in Louisville, KY</h2>
+        <p><strong>Bubba's Mattress &amp; Furniture</strong> is Louisville's go-to destination for quality, affordable home furnishings. Located at <strong>5907 Terry Rd in Louisville, KY 40216</strong>, we carry a huge selection of <strong>Ashley Furniture</strong> products including sofas, sectionals, bedroom sets, mattresses, dining room furniture, recliners, and more — all priced well below big box retailers.</p>
+      </div>
+
+      <div class="seo-content__block">
+        <h2>No Credit Check Financing — Starting at $40 Down</h2>
+        <p>We believe everyone deserves a comfortable home. That's why we offer <strong>no credit check furniture financing</strong> with payments starting at just <strong>$40 down</strong>. Whether you need a new mattress, a complete bedroom set, or a living room makeover, our easy approval process gets you the furniture you need today without the hassle.</p>
+      </div>
+
+      <div class="seo-content__block">
+        <h2>Why Louisville Chooses Bubba's</h2>
+        <p>Since 2021, families across Louisville, Shively, Valley Station, Pleasure Ridge Park, and surrounding areas have trusted Bubba's for honest prices and real value. We offer <strong>$125 flat-rate delivery within 50 miles</strong>, free pickup, a friendly no-pressure shopping experience, and financing options that work for every budget. Stop by our showroom or call <a href="tel:5024940376"><strong>(502) 494-0376</strong></a> to see why our customers rate us <strong>5 stars on Google</strong>.</p>
+      </div>
+
+      <div class="seo-content__links">
+        <p>Have questions? Check out our <a href="/pages/faq">frequently asked questions</a>, learn about <a href="/pages/financing">no credit check financing</a>, or <a href="/collections/all">browse our full furniture catalog</a>.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SEO Text",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [{ "name": "SEO Text" }]
+}
+{% endschema %}

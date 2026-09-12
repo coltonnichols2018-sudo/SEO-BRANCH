@@ -68,16 +68,13 @@ const DIMENSIONS = {
   const dimTab = document.getElementById('tab-dimensions');
   if (!dimTab) return;
 
-  // Get product handle from URL
   const path = window.location.pathname;
   const match = path.match(/\/products\/([^/?#]+)/);
   if (!match) return;
   const handle = match[1].toLowerCase();
 
-  // Try exact match first
   let html = DIMENSIONS[handle];
 
-  // Try partial match if no exact match
   if (!html) {
     for (const [key, val] of Object.entries(DIMENSIONS)) {
       if (handle.includes(key) || key.includes(handle)) {
@@ -88,18 +85,15 @@ const DIMENSIONS = {
   }
 
   if (html) {
-    // Find the variant table or CTA and insert dimensions BEFORE it
     const existingTable = dimTab.querySelector('table');
     const cta = dimTab.querySelector('.product-tabs__cta');
 
     if (existingTable) {
       existingTable.insertAdjacentHTML('beforebegin', html);
-      // Keep the CTA but hide the fallback variant table
       existingTable.style.display = 'none';
     } else if (cta) {
       cta.insertAdjacentHTML('beforebegin', html);
     } else {
-      // Just prepend to the tab
       dimTab.insertAdjacentHTML('afterbegin', html);
     }
   }
