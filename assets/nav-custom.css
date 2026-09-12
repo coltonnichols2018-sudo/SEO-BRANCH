@@ -1,0 +1,59 @@
+@media screen and (min-width: 990px) {
+  .header__inline-menu .list-menu--inline {
+    gap: 4px;
+  }
+
+  /* Nav link styling */
+  .header__inline-menu .header__menu-item {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 22px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    position: relative;
+    border-radius: 0;
+  }
+  .header__inline-menu .header__menu-item:hover {
+    background-color: #f0f0f0;
+  }
+
+  /* Kill Dawn's default underlines — these are the exact selectors from base.css */
+  .header__inline-menu .header__menu-item:hover span {
+    text-decoration: none !important;
+  }
+  .header__inline-menu details[open] > .header__menu-item {
+    text-decoration: none !important;
+  }
+  .header__inline-menu details[open]:hover > .header__menu-item {
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+  }
+  .header__inline-menu .header__active-menu-item {
+    text-decoration: none !important;
+  }
+  .header__inline-menu .header__menu-item:hover .header__active-menu-item {
+    text-decoration: none !important;
+    text-decoration-thickness: 0 !important;
+  }
+
+  /* Custom red underline on hover only */
+  .header__inline-menu .header__menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 22px;
+    right: 22px;
+    height: 2px;
+    background-color: #c62828;
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+  }
+  .header__inline-menu .header__menu-item:hover::after {
+    transform: scaleX(1);
+  }
+
+  .header__inline-menu summary.list-menu__item {
+    padding-right: 2.2rem;
+  }
+}

@@ -1,0 +1,28 @@
+{%- liquid
+  assign should_noindex = false
+
+  comment
+    Noindex collection tag filter pages - these create thousands of
+    thin duplicate pages that waste Google's crawl budget
+  endcomment
+  if current_tags and current_tags.size > 0
+    assign should_noindex = true
+  endif
+
+  comment
+    Noindex paginated pages (page 2+) - only page 1 should be indexed
+  endcomment
+  if current_page > 1
+    assign should_noindex = true
+  endif
+
+  comment
+    Noindex search results pages
+  endcomment
+  if template.name == 'search'
+    assign should_noindex = true
+  endif
+-%}
+{%- if should_noindex -%}
+<meta name="robots" content="noindex, follow">
+{%- endif -%}

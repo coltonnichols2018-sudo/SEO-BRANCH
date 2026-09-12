@@ -1,0 +1,79 @@
+<style>
+  .why-bubbas {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .why-bubbas__facts {
+    text-align: left;
+  }
+  .why-bubbas__fact {
+    padding: 14px 0;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .why-bubbas__fact:first-child {
+    border-top: 1px solid #e5e5e5;
+  }
+  .why-bubbas__fact-bold {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    white-space: nowrap;
+  }
+  .why-bubbas__fact-detail {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+  }
+  @media (max-width: 749px) {
+    .why-bubbas {
+      padding: 28px 16px;
+    }
+    .why-bubbas__fact {
+      flex-direction: column;
+      gap: 2px;
+      padding: 12px 0;
+    }
+    .why-bubbas__fact-bold {
+      font-size: 16px;
+    }
+    .why-bubbas__fact-detail {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<div class="why-bubbas color-{{ section.settings.color_scheme }}">
+  <div class="why-bubbas__facts">
+    <div class="why-bubbas__fact">
+      <span class="why-bubbas__fact-bold">Payment plans available.</span>
+      <span class="why-bubbas__fact-detail">Walk out with furniture today. No credit check on most plans — just a standard checking account.</span>
+    </div>
+    <div class="why-bubbas__fact">
+      <span class="why-bubbas__fact-bold">{{ section.settings.review_count }}+ five-star reviews.</span>
+      <span class="why-bubbas__fact-detail">All on Google, all from real Louisville families. Look us up.</span>
+    </div>
+    <div class="why-bubbas__fact">
+      <span class="why-bubbas__fact-bold">1-2 week delivery.</span>
+      <span class="why-bubbas__fact-detail">$125 flat rate within 50 miles. Free pickup at the store. We call before we show up.</span>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Why Bubbas",
+  "settings": [
+    {"type": "text", "id": "review_count", "label": "Review count", "default": "285"},
+    {"type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1"}
+  ],
+  "presets": [
+    {
+      "name": "Why Bubbas"
+    }
+  ]
+}
+{% endschema %}

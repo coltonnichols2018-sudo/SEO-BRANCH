@@ -1,0 +1,14 @@
+{% if collection.description != blank %}
+<div class="collection-seo-text page-width" style="max-width: 780px; margin: 0 auto; padding: 24px 20px 40px;">
+  <div style="font-size: 13px; line-height: 1.6; color: #888;">
+    {{ collection.description }}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection SEO Text",
+  "settings": []
+}
+{% endschema %}
