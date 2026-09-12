@@ -59,7 +59,7 @@
         "bubba_info_upgrade": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "<script src=\"{{ 'bubba-info.js' | asset_url }}\" defer></script><script src=\"{{ 'bubba-desc-clean.js' | asset_url }}\" defer></script>"
+            "custom_liquid": "<script src=\"{{ 'bubba-info.js' | asset_url }}\" defer></script><script src=\"{{ 'bubba-desc-clean.js' | asset_url }}\" defer></script><script src=\"{{ 'bubba-acima-sync.js' | asset_url }}\" defer></script>"
           }
         },
         "description": {
