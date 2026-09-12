@@ -61,6 +61,23 @@
     background: #222;
     color: #fff;
   }
+  /* Extra costs appearing late in checkout is the single biggest documented
+     cause of abandonment. The $125 delivery is stated on the product page,
+     then vanishes here and only reappears after the shopper has typed a full
+     address. State it before they click Check out. */
+  .drawer-delivery-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: #f7f7f7;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 10px 0 12px;
+    font-size: 0.8em;
+    line-height: 1.45;
+    color: #444;
+  }
+  .drawer-delivery-note strong { color: #1a1a1a; }
   /* The Messenger bubble, the reviews badge and the Klaviyo popup all sit
      bottom-right and stack over the checkout button while the drawer is
      open. Messenger is the only one the theme can reach; the other two are
@@ -562,6 +579,15 @@
             {%- endif -%}
           </small>
         </div>
+
+        {%- if cart != empty -%}
+          <div class="drawer-delivery-note">
+            <div>
+              <strong>Delivery $125 flat</strong> anywhere within 50 miles, or
+              <strong>free pickup</strong> at 5907 Terry Rd. Added at checkout.
+            </div>
+          </div>
+        {%- endif -%}
 
         <!-- FINANCING CALLOUT - ABOVE CHECKOUT -->
         {%- if cart != empty -%}
