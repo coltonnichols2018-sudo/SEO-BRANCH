@@ -8,32 +8,95 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+  .cart-financing-banner {
+    background: linear-gradient(135deg, #1a5c2e 0%, #2e7d32 100%);
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .cart-financing-banner h3 {
+    font-size: 1.2em;
+    margin: 0 0 8px;
+    font-weight: 700;
+  }
+  .cart-financing-banner p {
+    margin: 0 0 12px;
+    font-size: 0.95em;
+    line-height: 1.5;
+    opacity: 0.95;
+  }
+  .cart-financing-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .cart-financing-logos span {
+    background: rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+  .cart-financing-or {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+    color: #888;
+    font-size: 0.85em;
+  }
+  .cart-financing-or::before,
+  .cart-financing-or::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ddd;
+  }
+  .cart-text-cta {
+    display: block;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 8px;
+  }
+  .cart-text-cta:hover {
+    background: #222;
+    color: #fff;
+  }
+  .cart-trust-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    font-size: 0.82em;
+    color: #666;
+  }
 {%- endstyle -%}
 
-<div
-  class="gradient color-{{ section.settings.color_scheme }}{% if cart == empty %} is-empty{% endif %}"
-  id="main-cart-footer"
-  data-id="{{ section.id }}"
->
+<div class="gradient color-{{ section.settings.color_scheme }}{% if cart == empty %} is-empty{% endif %}" id="main-cart-footer" data-id="{{ section.id }}">
   <div class="page-width">
     <div class="cart__footer isolate section-{{ section.id }}-padding">
       {%- if settings.show_cart_note -%}
         <cart-note class="cart__note field">
           <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
-          <textarea
-            class="text-area field__input"
-            name="note"
-            form="cart"
-            id="Cart-note"
-            placeholder="{{ 'sections.cart.note' | t }}"
-          >{{ cart.note }}</textarea>
+          <textarea class="text-area field__input" name="note" form="cart" id="Cart-note" placeholder="{{ 'sections.cart.note' | t }}">{{ cart.note }}</textarea>
         </cart-note>
       {%- endif -%}
 
@@ -57,64 +120,41 @@
                     </ul>
                   {%- endif -%}
                 </div>
-
                 <div class="totals">
                   <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
                   <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
                 </div>
-
                 <small class="tax-note caption-large rte">
-                  {%- if cart.duties_included and cart.taxes_included -%}
-                    {%- if shop.shipping_policy.body == blank -%}
-                      {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
-                    {%- else -%}
-                      {{
-                        'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-                        | t: link: shop.shipping_policy.url
-                      }}
-                    {%- endif -%}
-                  {%- elsif cart.duties_included == false and cart.taxes_included -%}
+                  {%- if cart.taxes_included -%}
                     {%- if shop.shipping_policy.body == blank -%}
                       {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
                     {%- else -%}
-                      {{
-                        'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
-                        | t: link: shop.shipping_policy.url
-                      }}
+                      {{ 'sections.cart.taxes_included_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
                     {%- endif -%}
-                  {%- elsif cart.duties_included and cart.taxes_included == false -%}
-                    {%- if shop.shipping_policy.body == blank -%}
-                      {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-                    {%- else -%}
-                      {{
-                        'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                        | t: link: shop.shipping_policy.url
-                      }}
-                    {%- endif -%}
-                  {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
+                  {%- else -%}
                     {%- if shop.shipping_policy.body == blank -%}
                       {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
                     {%- else -%}
-                      {{
-                        'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                        | t: link: shop.shipping_policy.url
-                      }}
+                      {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}
                     {%- endif -%}
                   {%- endif -%}
                 </small>
               </div>
             {%- else -%}
+
+              <!-- FINANCING BANNER -->
+              <div class="cart-financing-banner">
+                <h3>Don't Pay Full Price Today</h3>
+                <p>Apply for financing right at checkout. Just scroll past the credit card form and select:</p>
+                <div class="cart-financing-logos">
+                  <span>Acima Leasing</span>
+                  <span>Progressive Leasing</span>
+                </div>
+                <p style="font-size:0.85em; opacity:0.8; margin:0;">No credit needed &mdash; get approved in minutes</p>
+              </div>
+
               <div class="cart__ctas" {{ block.shopify_attributes }}>
-                <button
-                  type="submit"
-                  id="checkout"
-                  class="cart__checkout-button button"
-                  name="checkout"
-                  {% if cart == empty %}
-                    disabled
-                  {% endif %}
-                  form="cart"
-                >
+                <button type="submit" id="checkout" class="cart__checkout-button button" name="checkout" {% if cart == empty %}disabled{% endif %} form="cart">
                   {{ 'sections.cart.checkout' | t }}
                 </button>
               </div>
@@ -125,10 +165,17 @@
                 </div>
               {%- endif -%}
 
-              <div style="margin-top: 16px; text-align: center; font-size: 0.85em; line-height: 1.7;">
-                <p style="margin: 0; opacity: 0.7;">
-                  <strong>Lease-to-own from $25 down.</strong> <a href="/pages/financing" style="text-decoration: underline;">Apply here</a> · Delivered in 1-2 weeks
-                </p>
+              <div class="cart-financing-or">or get qualified instantly</div>
+
+              <a href="sms:5024940376&body=Hey%20Colton%2C%20I%27m%20interested%20in%20financing%20furniture.%20Can%20you%20help%20me%20get%20qualified%3F" class="cart-text-cta">
+                Text Colton to Finance &mdash; $40 Down, 90 Days No Interest
+              </a>
+              <p style="text-align:center; font-size:0.82em; color:#666; margin: 4px 0 0;">Or call <a href="tel:5024940376" style="color:#333; font-weight:600;">502-494-0376</a></p>
+
+              <div class="cart-trust-row">
+                <span>Secure checkout</span>
+                <span>285+ five-star Google reviews</span>
+                <span>Delivered in 1-2 weeks</span>
               </div>
           {%- endcase -%}
         {% endfor %}
@@ -153,7 +200,7 @@
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
-    },    
+    },
     {
       "type": "range",
       "id": "padding_top",
