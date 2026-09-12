@@ -171,8 +171,7 @@
 
     if(textLink && n){
       textLink.href = 'sms:+15024940376?&body=' +
-        encodeURIComponent("Hi Bubba, I'm interested in the " + n.textContent.trim())
-          .replace(/%20/g, '%20');
+        encodeURIComponent("Hi Bubba, I'm interested in the " + n.textContent.trim());
     }
     watch();
   }
@@ -209,7 +208,6 @@
 
   sync();
 
-  /* Sticky bar button clicks the real Add to Cart */
   satcBtn.addEventListener('click', function(){
     if(satcBtn.disabled) return;
     var b = realBtn();
