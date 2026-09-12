@@ -1,88 +1,58 @@
-{% comment %}
-  ============================================================
-  SCHEMA MARKUP SNIPPET FOR SHOPIFY
-  ============================================================
-
-  HOW TO INSTALL:
-  1. Go to Shopify Admin > Online Store > Themes
-  2. Click "Actions" > "Edit Code"
-  3. Under "Snippets", click "Add a new snippet"
-  4. Name it "schema-markup"
-  5. Paste this entire file content
-  6. Save
-  7. Add {% render 'schema-markup' %} to your theme.liquid
-     just before the closing </body> tag
-  ============================================================
-{% endcomment %}
-
-{% comment %} ===== LOCAL BUSINESS SCHEMA (non-homepage pages only) ===== {% endcomment %}
-{% comment %} Homepage already has LocalBusiness schema in its custom liquid section {% endcomment %}
-{% unless template == 'index' %}
+{% comment %} Site-wide schema. Homepage renders localbusiness-home (WebSite + FurnitureStore); contact page renders localbusiness-contact. This file adds the store entity on all other pages plus Product / Collection / FAQ schema. {% endcomment %}
+{% unless template == 'index' or request.path contains '/pages/contact' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FurnitureStore",
-  "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization",
-  "name": "Bubba's Mattress & Furniture",
-  "alternateName": "Bubba's Mattress and Furniture Louisville",
-  "description": "Ashley Furniture store in Louisville, KY. Lease-to-own and credit options available. Mattresses, bedroom sets, sofas, dining sets and more. Local delivery within 50 miles.",
-  "url": "https://www.bubbasmattressfurniturelouisville.com/",
-  "telephone": "+1-502-494-0376",
-  "image": "{{ 'logo.png' | asset_url }}",
-  "logo": "{{ 'logo.png' | asset_url }}",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "5907 Terry Rd",
-    "addressLocality": "Louisville",
-    "addressRegion": "KY",
-    "postalCode": "40258",
-    "addressCountry": "US"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 38.1661,
-    "longitude": -85.8667
-  },
-  "openingHoursSpecification": [
-    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday"], "opens": "11:30", "closes": "18:30"},
-    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "11:30", "closes": "17:00"},
-    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "11:30", "closes": "18:30"},
-    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:30", "closes": "18:00"}
-  ],
-  "priceRange": "$$",
-  "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Financing"],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "reviewCount": "285"
-  },
-  "areaServed": ["Louisville", "Shively", "Valley Station", "Pleasure Ridge Park", "Okolona", "Jeffersontown", "Shepherdsville", "Radcliff", "Elizabethtown"],
-  "sameAs": [
-    "https://www.facebook.com/Bubbasmattressfurniturelouisville/",
-    "https://www.instagram.com/bubbasfurnitureandmattress/"
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.bubbasmattressfurniturelouisville.com/#website",
+      "url": "https://www.bubbasmattressfurniturelouisville.com/",
+      "name": "Bubba's Mattress & Furniture",
+      "publisher": { "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.bubbasmattressfurniturelouisville.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "FurnitureStore",
+      "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization",
+      "name": "Bubba's Mattress & Furniture",
+      "alternateName": "Bubba's Mattress and Furniture Louisville",
+      "url": "https://www.bubbasmattressfurniturelouisville.com/",
+      "telephone": "+1-502-494-0376",
+      "email": "coltonnichols@bubbasmattressandfurniture.com",
+      "image": "https://www.bubbasmattressfurniturelouisville.com/cdn/shop/files/Bubba_s_Logo.png",
+      "logo": "https://www.bubbasmattressfurniturelouisville.com/cdn/shop/files/Bubba_s_Logo.png",
+      "description": "Affordable Ashley Furniture store in Louisville, KY. Payment plans from $40 down, no credit check on most plans. Mattresses, sectionals, sofas, bedroom and dining sets. $125 flat-rate delivery within 50 miles, free store pickup.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "5907 Terry Road",
+        "addressLocality": "Louisville",
+        "addressRegion": "KY",
+        "postalCode": "40216",
+        "addressCountry": "US"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 38.1661209, "longitude": -85.8666865 },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Bubba%27s+Mattress+and+Furniture+5907+Terry+Rd+Louisville+KY+40216",
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Friday"], "opens": "11:30", "closes": "18:30" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "11:30", "closes": "17:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:30", "closes": "18:00" }
+      ],
+      "priceRange": "$$",
+      "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Financing", "Lease-to-Own"],
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": "310" },
+      "areaServed": ["Louisville", "Shively", "Valley Station", "Pleasure Ridge Park", "Okolona", "Fairdale", "Jeffersontown", "St. Matthews", "Shepherdsville", "Radcliff", "Elizabethtown", "New Albany", "Clarksville"],
+      "sameAs": ["https://www.facebook.com/Bubbasmattressfurniturelouisville/"]
+    }
   ]
 }
 </script>
 {% endunless %}
 
-{% comment %} ===== WEBSITE SCHEMA ===== {% endcomment %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Bubba's Mattress & Furniture",
-  "url": "https://www.bubbasmattressfurniturelouisville.com/",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://www.bubbasmattressfurniturelouisville.com/search?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
-
-{% comment %} ===== BREADCRUMB SCHEMA handled by breadcrumbs.liquid snippet ===== {% endcomment %}
-
-{% comment %} ===== PRODUCT SCHEMA (product pages only) ===== {% endcomment %}
 {% if template contains 'product' %}
 <script type="application/ld+json">
 {
@@ -90,28 +60,21 @@
   "@type": "Product",
   "name": "{{ product.title | escape }}",
   "description": "{{ product.description | strip_html | truncate: 200 | escape }}",
-  "image": "{{ product.featured_image | img_url: '1024x1024' }}",
-  "brand": {
-    "@type": "Brand",
-    "name": "{% if product.vendor != blank %}{{ product.vendor }}{% else %}Ashley Furniture{% endif %}"
-  },
-  "sku": "{{ product.selected_or_first_available_variant.sku }}",
+  "image": "{{ product.featured_image | image_url: width: 1024 }}",
+  "brand": { "@type": "Brand", "name": "{% if product.vendor != blank %}{{ product.vendor | escape }}{% else %}Ashley Furniture{% endif %}" },
+  "sku": "{{ product.selected_or_first_available_variant.sku | escape }}",
   "offers": {
     "@type": "Offer",
     "url": "https://www.bubbasmattressfurniturelouisville.com{{ product.url }}",
     "priceCurrency": "USD",
     "price": "{{ product.selected_or_first_available_variant.price | money_without_currency | remove: ',' }}",
     "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
-    "seller": {
-      "@type": "FurnitureStore",
-      "name": "Bubba's Mattress & Furniture"
-    }
+    "seller": { "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization" }
   }
 }
 </script>
 {% endif %}
 
-{% comment %} ===== COLLECTION SCHEMA (collection pages only) ===== {% endcomment %}
 {% if template contains 'collection' %}
 <script type="application/ld+json">
 {
@@ -121,17 +84,7 @@
   "description": "{{ collection.description | strip_html | truncate: 200 | escape }}",
   "url": "https://www.bubbasmattressfurniturelouisville.com{{ collection.url }}",
   "numberOfItems": {{ collection.products_count }},
-  "provider": {
-    "@type": "FurnitureStore",
-    "name": "Bubba's Mattress & Furniture",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "5907 Terry Road",
-      "addressLocality": "Louisville",
-      "addressRegion": "KY",
-      "postalCode": "40216"
-    }
-  }
+  "provider": { "@id": "https://www.bubbasmattressfurniturelouisville.com/#organization" }
 }
 </script>
 {% endif %}
@@ -143,54 +96,12 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Where is Bubba's Mattress & Furniture located in Louisville?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Bubba's Mattress & Furniture is located at 5907 Terry Road, Louisville, KY 40216. We serve the entire Louisville metro area and offer local delivery within 50 miles."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does Bubba's Mattress & Furniture offer financing?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes! We offer easy financing options so you can get the furniture and mattresses you need today. Apply online or in-store to get approved quickly."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What brands does Bubba's carry?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We are Louisville's Ashley Furniture destination, carrying a full selection of Ashley products including mattresses, living room sets, bedroom furniture, dining room furniture, and outdoor furniture."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does Bubba's offer mattress delivery in Louisville?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, we offer local delivery within 50 miles of our Louisville store. Contact us at (502) 494-0376 to schedule your delivery."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What are Bubba's store hours?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Monday-Wednesday 11:30 AM - 6:30 PM, Thursday 11:30 AM - 5:00 PM, Friday 11:30 AM - 6:30 PM, Saturday 11:30 AM - 6:00 PM. Closed Sunday."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What types of mattresses are available?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We carry memory foam, hybrid, innerspring, and adjustable bases from Ashley Sleep in Twin, Full, Queen, King, and California King sizes."
-      }
-    }
+    { "@type": "Question", "name": "Where is Bubba's Mattress & Furniture located in Louisville?", "acceptedAnswer": { "@type": "Answer", "text": "Bubba's Mattress & Furniture is located at 5907 Terry Road, Louisville, KY 40216. We serve the entire Louisville metro area and offer local delivery within 50 miles." } },
+    { "@type": "Question", "name": "Does Bubba's Mattress & Furniture offer financing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Payment plans start at $40 down with no credit check on most plans. Apply online or in-store and get approved in minutes." } },
+    { "@type": "Question", "name": "What brands does Bubba's carry?", "acceptedAnswer": { "@type": "Answer", "text": "We are Louisville's Ashley Furniture destination, carrying a full selection of Ashley products including mattresses, living room sets, bedroom furniture, dining room furniture, and outdoor furniture." } },
+    { "@type": "Question", "name": "Does Bubba's offer delivery in Louisville?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. $125 flat-rate delivery within 50 miles of our Louisville store, or free pickup at the store. Call or text (502) 494-0376 to schedule." } },
+    { "@type": "Question", "name": "What are Bubba's store hours?", "acceptedAnswer": { "@type": "Answer", "text": "Monday-Wednesday 11:30 AM - 6:30 PM, Thursday 11:30 AM - 5:00 PM, Friday 11:30 AM - 6:30 PM, Saturday 11:30 AM - 6:00 PM. Closed Sunday." } },
+    { "@type": "Question", "name": "What types of mattresses are available?", "acceptedAnswer": { "@type": "Answer", "text": "We carry memory foam, hybrid, innerspring, and adjustable bases from Ashley Sleep in Twin, Full, Queen, King, and California King sizes." } }
   ]
 }
 </script>

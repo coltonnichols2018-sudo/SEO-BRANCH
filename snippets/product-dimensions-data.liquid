@@ -8,11 +8,11 @@
 {% endcomment %}
 
 {%- assign dimension_data = '' -%}
-{%- assign product_title_lower = product.title | downcase | remove: "'" | remove: "'" | remove: "'" -%}
-{%- assign product_handle = product.handle | downcase -%}
+{%- assign product_title_lower = product.title | downcase -%}
 
-{%- if product_title_lower contains 'ophannon' or product_handle contains 'ophannon' -%}
-  {%- capture dimension_data -%}
+{%- if product_title_lower contains 'ophannon' -%}
+  {%- if product_title_lower contains '2-piece' or product.variants.size <= 3 -%}
+    {%- capture dimension_data -%}
       <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">O'Phannon 2-Piece Sectional with Chaise</h3>
       <table>
         <thead><tr><th>Piece</th><th>Width</th><th>Depth</th><th>Height</th><th>Weight</th></tr></thead>
@@ -28,9 +28,10 @@
           Seat Depth: 23" &middot; Seat Height: 21" &middot; Arm Height: 26"
         </p>
       </div>
-  {%- endcapture -%}
+    {%- endcapture -%}
+  {%- endif -%}
 
-{%- elsif product_title_lower contains 'rawcliffe' or product_handle contains 'rawcliffe' -%}
+{%- elsif product_title_lower contains 'rawcliffe' -%}
   {%- if product_title_lower contains '4-piece' or product_title_lower contains '4 piece' -%}
     {%- capture dimension_data -%}
       <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Rawcliffe 4-Piece Sectional</h3>
@@ -72,7 +73,7 @@
     {%- endcapture -%}
   {%- endif -%}
 
-{%- elsif product_title_lower contains 'barrelton' or product_handle contains 'barrelton' -%}
+{%- elsif product_title_lower contains 'barrelton' -%}
   {%- capture dimension_data -%}
     <h3 style="margin:0 0 16px; font-size:1em; font-weight:600;">Barrelton Modular Sectional</h3>
     <table>
