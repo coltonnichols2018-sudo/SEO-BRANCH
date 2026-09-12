@@ -1135,14 +1135,6 @@
             {{- 'icon-arrow.svg' | inline_asset_content -}}
           </a>
 
-</script>
-
-
-
-
-</section>   <!-- this is your line 700 -->
-
-        </section>
       </div>
     </div>
 
@@ -1211,7 +1203,12 @@
     border-top:1px solid rgba(var(--color-foreground),0.06);
     padding:10px 16px;align-items:center;justify-content:space-between;gap:12px;
     box-shadow:0 -1px 8px rgba(0,0,0,0.04);
+    transform:translateY(100%);transition:transform .22s ease;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom));
   }
+  .sticky-atc.is-visible{transform:translateY(0);}
+  /* keep the fixed bar from covering the end of the page */
+  body{padding-bottom:72px;}
   .sticky-atc__info{flex:1;min-width:0;}
   .sticky-atc__title{font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0;letter-spacing:0.01em;}
   .sticky-atc__price{font-size:12px;margin:2px 0 0;opacity:0.6;}
@@ -1221,7 +1218,9 @@
     font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;
     letter-spacing:0.03em;text-transform:uppercase;
   }
-  .sms-btn{bottom:60px !important;}
+  /* lift the Text Bubba button only while the cart bar is actually showing */
+  body.sticky-atc-shown .sms-btn{bottom:calc(72px + env(safe-area-inset-bottom)) !important;}
+  .sms-btn{transition:bottom .22s ease;}
 }
 </style>
 <div class="sticky-atc">
@@ -1239,6 +1238,80 @@
   </a>
   {%- endif -%}
 </div>
+
+<script>
+(function(){
+  var bar = document.querySelector('.sticky-atc');
+  if(!bar) return;
+
+  var barPrice = bar.querySelector('.sticky-atc__price');
+  var barBtn   = bar.querySelector('.sticky-atc__btn');
+  var info     = document.querySelector('.product__info-container');
+  if(!info) return;
+
+  var priceBlock = info.querySelector('.price');
+  var realBtn    = info.querySelector('.product-form__submit, [name=add]');
+
+  // Mirror the real price into the bar. Dawn renders the struck-through
+  // regular price BEFORE the sale price, so read the sale node when on sale.
+  function syncPrice(){
+    if(!priceBlock || !barPrice) return;
+    var onSale = priceBlock.classList.contains('price--on-sale');
+    var node = onSale
+      ? priceBlock.querySelector('.price-item--sale')
+      : priceBlock.querySelector('.price-item--regular');
+    node = node || priceBlock.querySelector('.price-item--sale, .price-item--regular');
+    var txt = node && node.textContent.trim();
+    if(txt) barPrice.textContent = txt;
+  }
+
+  // Mirror sold-out state so the bar can't offer a variant you can't buy.
+  function syncAvailability(){
+    if(!realBtn || !barBtn || barBtn.tagName !== 'BUTTON') return;
+    var sold = realBtn.hasAttribute('disabled');
+    barBtn.disabled = sold;
+    barBtn.textContent = sold ? 'Sold Out' : 'Add to Cart';
+    barBtn.style.opacity = sold ? '0.5' : '';
+  }
+
+  function sync(){ syncPrice(); syncAvailability(); }
+
+  if(priceBlock){
+    new MutationObserver(sync).observe(priceBlock, {subtree:true, childList:true, characterData:true});
+  }
+  if(realBtn){
+    new MutationObserver(syncAvailability).observe(realBtn, {attributes:true, attributeFilter:['disabled']});
+  }
+  // Dawn re-renders the whole info column on some variant changes.
+  new MutationObserver(function(){
+    var p = info.querySelector('.price');
+    var b = info.querySelector('.product-form__submit, [name=add]');
+    if(p !== priceBlock || b !== realBtn){
+      priceBlock = p; realBtn = b;
+      if(priceBlock) new MutationObserver(sync).observe(priceBlock,{subtree:true,childList:true,characterData:true});
+      if(realBtn) new MutationObserver(syncAvailability).observe(realBtn,{attributes:true,attributeFilter:['disabled']});
+    }
+    sync();
+  }).observe(info, {subtree:true, childList:true});
+
+  sync();
+
+  // Only reveal the bar once the real Add to Cart has scrolled out of view,
+  // so there aren't two buy buttons on screen at the same time.
+  var anchor = realBtn || info;
+  function show(on){
+    bar.classList.toggle('is-visible', on);
+    document.body.classList.toggle('sticky-atc-shown', on);
+  }
+  if('IntersectionObserver' in window && anchor){
+    new IntersectionObserver(function(entries){
+      show(!entries[0].isIntersecting);
+    }, {rootMargin:'0px 0px -40px 0px'}).observe(anchor);
+  } else {
+    show(true);
+  }
+})();
+</script>
 
 {% schema %}
 {
