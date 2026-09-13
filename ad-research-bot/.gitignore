@@ -1,0 +1,5 @@
+data/*.sqlite3
+data/*.log
+reports/weekly-*.md
+__pycache__/
+*.pyc

@@ -1,0 +1,86 @@
+{
+  "updated_on": "2026-09-13",
+  "seed_target": [25, 30],
+  "target_metros": [
+    "Memphis", "Birmingham", "Indianapolis", "Nashville", "Columbus",
+    "Oklahoma City", "Knoxville", "Dayton", "Greensboro"
+  ],
+  "pages": [
+    {
+      "page_id": "91223253446",
+      "page_name": "Louisville Overstock",
+      "role": "local",
+      "metro": "Louisville",
+      "verified": true,
+      "note": "Local competitor. Baseline Sept 12 2026: 2 active ads (started Sept 3, Sept 10), no long-runners."
+    },
+    {
+      "page_id": "503984643076551",
+      "page_name": "Kassa Mall Home Furniture and Mattress",
+      "role": "out_of_market",
+      "metro": null,
+      "verified": true,
+      "note": "Baseline Sept 12 2026: running 'Walk-In Exclusive - Extra Savings This Week Only' since ~Sept 5. Watch for the 45-day crossing."
+    },
+    {
+      "page_id": "195174843849250",
+      "page_name": "NashCo Furniture",
+      "role": "out_of_market",
+      "metro": null,
+      "verified": true,
+      "note": null
+    },
+    {
+      "page_id": "331829770579060",
+      "page_name": "Sawmill Unfinished Furniture & Mattress",
+      "role": "out_of_market",
+      "metro": null,
+      "verified": true,
+      "note": null
+    },
+    {
+      "page_id": "204694107113639",
+      "page_name": "Universal Furniture-Nola",
+      "role": "out_of_market",
+      "metro": null,
+      "verified": true,
+      "note": null
+    },
+    {
+      "page_id": "697784620583217",
+      "page_name": "Furniture Corner",
+      "role": "out_of_market",
+      "metro": null,
+      "verified": true,
+      "note": null
+    },
+    {
+      "page_id": "1946223755466710",
+      "page_name": "ROYAL FURNITURE",
+      "role": "out_of_market",
+      "metro": null,
+      "verified": true,
+      "note": null
+    }
+  ],
+  "pending": [
+    {
+      "page_name": "BoxDrop Louisville",
+      "role": "local",
+      "metro": "Louisville",
+      "note": "Manual lookup: Facebook page -> About -> Page Transparency -> Page ID. Do NOT search the name; search_terms matches creative text only."
+    },
+    {
+      "page_name": "Sims Furniture",
+      "role": "local",
+      "metro": "Louisville",
+      "note": "Manual lookup via Page Transparency."
+    },
+    {
+      "page_name": "Ashley",
+      "role": "reference",
+      "metro": null,
+      "note": "Corporate Ashley returns hundreds of national ads and drowns the local signal. Reference role only; excluded from trend scoring."
+    }
+  ]
+}
